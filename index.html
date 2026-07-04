@@ -8,11 +8,27 @@ q<!DOCTYPE html>
 <style>
   :root {
   --accent: #003A35;
-  --accent-2: #1F73C2;
+  --accent-2: #2563EB;
   --accent-bright: #34D399;
   --text-main: #001F27;
   --text-sub: #6b7280;
   --border: #e5e7eb;
+}
+html {
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-2);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
   ::selection {
   background: var(--accent-bright);
