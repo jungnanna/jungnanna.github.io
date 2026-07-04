@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+q<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -9,9 +9,14 @@
   :root {
   --accent: #003A35;
   --accent-2: #1F73C2;
+  --accent-bright: #34D399;
   --text-main: #001F27;
   --text-sub: #6b7280;
   --border: #e5e7eb;
+}
+  ::selection {
+  background: #719A73;
+  color: var(--text-main);
 }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -39,7 +44,7 @@
   height: 200px;
   border-radius: 50%;
   padding: 8px;
-  background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent));
+  background: conic-gradient(from 180deg, var(--accent-bright), var(--accent-2), var(--accent-bright));
   margin: 0 auto 16px;
   }
   .profile-photo {
