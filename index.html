@@ -83,14 +83,24 @@ html {
   .sidebar nav {
   text-align: center;
 }
+.sidebar nav {
+  text-align: center;
+}
 .sidebar nav a {
-  display: block;
+  display: inline-block;
   font-size: 0.9rem;
   color: var(--text-sub);
   text-decoration: none;
-  padding: 10px 0;
+  padding: 10px 20px;
   margin-bottom: 4px;
+  border-radius: 20px;
   transition: all 0.2s;
+}
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background: var(--accent-2);
+  color: white;
+  font-weight: bold;
 }
  .portfolio-btn {
   display: inline-block;
