@@ -118,10 +118,26 @@
   .exp-date, .edu-date { font-size: 0.8rem; color: var(--text-sub); }
   .exp-desc { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
 
-  .skill-row { display: flex; padding: 14px 0; border-top: 1px solid var(--border); font-size: 0.9rem; gap: 24px; }
-  .skill-row:last-child { border-bottom: 1px solid var(--border); }
-  .skill-row .label { width: 100px; flex-shrink: 0; color: var(--text-sub); font-size: 0.8rem; letter-spacing: 0.5px; padding-top: 2px; }
-  .skill-row .values { flex: 1; }
+.skill-bullets {
+  list-style: none;
+}
+.skill-bullets li {
+  position: relative;
+  padding: 10px 0 10px 20px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+.skill-bullets li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--text-sub);
+}
+.skill-bullets li b {
+  color: var(--accent);
+  font-weight: 700;
+  margin-right: 8px;
+}
 
   .project-item { padding: 28px 0; border-top: 1px solid var(--border); }
   .project-item:last-child { border-bottom: 1px solid var(--border); }
@@ -189,12 +205,17 @@
       </div>
     </section>
     <section id="skill">
-      <h2>Skill</h2>
-      <div class="skill-row"><span class="label">CORE</span><span class="values">Java</span></div>
-      <div class="skill-row"><span class="label">웹 프론트엔드</span><span class="values">HTML5, CSS3, JavaScript, React</span></div>
-      <div class="skill-row"><span class="label">그 외 다뤄본 것</span><span class="values">Python, Django, Firebase, Supabase</span></div>
-      <div class="skill-row"><span class="label">LEARNING</span><span class="values">Spring Boot</span></div>
-    </section>
+    <h2>Skill</h2>
+    <ul class="skill-bullets">
+      <li><b>Language</b> Java, Python, JavaScript, TypeScript, HTML5, CSS3</li>
+      <li><b>Frontend</b> React, React Native</li>
+      <li><b>Backend</b> Django, Node.js</li>
+      <li><b>Database</b> Supabase (PostgreSQL), Firebase, SQLite</li>
+      <li><b>AI / API</b> OpenAI API, Gemini API, Google Maps API, 공공데이터포털 API</li>
+      <li><b>Tools</b> VS Code, Cursor, Android Studio, Figma, Git</li>
+      <li><b>Learning</b> Spring Boot</li>
+    </ul>
+  </section>
     <section id="project">
       <h2>Project</h2>
       <div class="project-item">
