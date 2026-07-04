@@ -15,7 +15,7 @@ q<!DOCTYPE html>
   --border: #e5e7eb;
 }
   ::selection {
-  background: #719A73;
+  background: var(--accent-bright);
   color: var(--text-main);
 }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,7 +57,7 @@ q<!DOCTYPE html>
   .sidebar h1 { font-size: 1.3rem; margin-bottom: 6px; }
   .sidebar .role { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 18px; }
   .sidebar .links { display: flex; flex-direction: column; gap: 6px; margin-bottom: 34px; }
-  .sidebar .links a { font-size: 0.8rem; color: var(--accent); text-decoration: none; }
+  .sidebar .links a { font-size: 0.8rem; color: var(--accent-2); text-decoration: none; }
   .sidebar nav {
   text-align: center;
   }
@@ -75,7 +75,7 @@ q<!DOCTYPE html>
 }
 .sidebar nav a:hover,
 .sidebar nav a.active {
-  background: var(--accent);
+  background: var(--accent-2);
   color: white;
   font-weight: bold;
 }
