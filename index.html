@@ -337,6 +337,13 @@
         currentId = section.getAttribute('id');
       }
     });
+
+    // 페이지 맨 아래까지 스크롤했으면, 무조건 마지막 섹션(Education)을 활성화
+    const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 5;
+    if (scrolledToBottom) {
+      currentId = sections[sections.length - 1].getAttribute('id');
+    }
+
     links.forEach(link => {
       link.classList.remove('active');
       if (link.getAttribute('href') === '#' + currentId) {
