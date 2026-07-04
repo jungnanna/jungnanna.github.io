@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정윤서 프로젝트 포트폴리오</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<style>
+  /* ============================================================
+     아래 :root 부터 .repo-pending 까지는 이력서(index.html)에서
+     쓰던 스타일을 그대로 가져온 거예요. 사이드바 디자인을
+     똑같이 유지하기 위해서 색/폰트/구조를 전부 동일하게 맞췄어요.
+     ============================================================ */
+  :root {
+    --accent: #003A35;
+    --accent-2: #2563EB;
+    --accent-bright: #34D399;
+    --accent-amber: #F59E0B;   /* 이번 페이지에서 새로 추가한 포인트 색 (레디플레이용) */
+    --pending: #94A3B8;        /* 아직 시작 안 한 프로젝트용 회색 */
+    --text-main: #001F27;
+    --text-sub: #6b7280;
+    --border: #e5e7eb;
+  }
+  html { overflow-y: scroll; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #f1f1f1; }
+  ::-webkit-scrollbar-thumb { background: var(--accent-2); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  ::selection { background: var(--accent-bright); color: var(--text-main); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', sans-serif; color: var(--text-main); line-height: 1.75; }
+
+  .page-wrap { max-width: 1300px; margin: 0 auto; display: flex; }
+
+  .sidebar {
+    width: 280px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 60px 30px;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .avatar-ring {
+    width: 200px;
+    height: 260px;
+    border-radius: 50%;
+    padding: 6px;
+    background: conic-gradient(from 180deg, var(--accent-bright), var(--accent-2), var(--accent-bright));
+    margin: 0 auto 16px;
+  }
+  .profile-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 25%;
+    border: 3px solid white;
+    display: block;
+    filter: contrast(1.1) saturate(1.05);
+  }
+  .sidebar h1 { font-size: 1.3rem; margin-bottom: 6px; }
+  .sidebar .role { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 18px; }
+  .sidebar .links { display: flex; flex-direction: column; gap: 6px; margin-bottom: 34px; }
+  .sidebar .links a { font-size: 0.8rem; color: var(--accent-2); text-decoration: none; }
+  .sidebar nav { text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .sidebar nav a {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-bottom: 4px;
+    transition: all 0.2s;
+  }
+  .sidebar nav a:hover,
+  .sidebar nav a.active {
+    background: var(--accent-2);
+    color: white;
+    font-weight: bold;
+  }
+  .portfolio-btn {
+    display: inline-block;
+    background: transparent;
+    color: var(--accent-2);
+    font-size: 0.85rem;
+    font-weight: bold;
+    padding: 9px 22px;
+    border-radius: 20px;
+    border: 2px solid var(--accent-2);
+    text-decoration: none;
+    margin-bottom: 18px;
+    transition: all 0.2s;
+  }
+  .portfolio-btn:hover { background: var(--accent-2); color: white; }
+  .sidebar nav a.external-link {
+    margin-top: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  .repo-link { color: var(--accent-2); text-decoration: none; font-weight: 600; }
+  .repo-link:hover { text-decoration: underline; }
+  .repo-pending { color: var(--text-sub); font-style: italic; font-size: 0.85rem; }
+
+  .hero-statement { font-size: 2.2rem; font-weight: 900; line-height: 1.4; margin-bottom: 20px; }
+  .hero-statement .highlight {
+    background: var(--accent-bright);
+    color: var(--text-main);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding: 2px 10px;
+  }
+  .intro-text { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 60px; max-width: 640px; }
+
+  main { flex: 1; max-width: 1020px; padding: 80px 60px 120px; }
+
+  /* ============================================================
+     여기서부터는 이번에 새로 만든, 4개짜리 호버 아코디언 스타일이에요
+     ============================================================ */
+
+  /* 4개의 패널을 가로로 나란히 놓는 컨테이너 */
+  .panel-row {
+    display: flex;
+    gap: 16px;
+    height: 620px;
+  }
+
+  /* 패널 하나. flex: 1 이 "평소 너비는 다 똑같이 나눠 가져라" 라는 뜻이에요 */
+  .panel {
+    flex: 1;
+    position: relative;
+    border-radius: 24px;
+    padding: 28px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 0.5s ease;      /* 너비가 바뀔 때 부드럽게 움직이도록 */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 마우스를 올리면 flex 값을 키워서 그 패널만 넓어지게 만들어요 */
+  .panel:hover {
+    flex: 2.6;
+  }
+
+  .panel-blue   { background: var(--accent-2);     color: white; }
+  .panel-green  { background: var(--accent-bright);color: var(--text-main); }
+  .panel-amber  { background: var(--accent-amber); color: var(--text-main); }
+  .panel-pending{
+    background: #f4f5f7;
+    color: var(--text-main);
+    border: 2px dashed var(--pending);
+  }
+
+  .panel-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .panel-head h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .panel-tagline {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-bottom: 8px;
+  }
+
+  .panel-status {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: var(--pending);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+
+  /* 펼쳐지는 내용물. 평소엔 투명하게 숨겨뒀다가, hover될 때 보이게 해요 */
+  .panel-body {
+    opacity: 0;
+    transition: opacity 0.25s ease 0.15s;
+    overflow-y: auto;
+    flex: 1;
+    min-width: 300px; /* 패널이 좁아졌을 때 내용물이 안 찌그러지게 최소 너비 지정 */
+  }
+
+  .panel:hover .panel-body {
+    opacity: 1;
+  }
+
+  .panel-desc { font-size: 0.9rem; margin-bottom: 14px; }
+
+  .panel-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .panel-tags span {
+    font-size: 0.72rem;
+    background: rgba(255,255,255,0.35);
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+  .panel-green .panel-tags span,
+  .panel-amber .panel-tags span,
+  .panel-pending .panel-tags span {
+    background: rgba(0,0,0,0.06);
+  }
+
+  /* 사진 넣을 자리 - 지금은 준비된 이미지가 없으니 점선 박스로 표시해뒀어요.
+     실제 스크린샷이 생기면 이 div를 <img src="images/파일명.png"> 로 바꾸면 돼요. */
+  .media-placeholder {
+    border: 1.5px dashed rgba(255,255,255,0.6);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.78rem;
+    margin-bottom: 14px;
+    opacity: 0.85;
+  }
+  .panel-green .media-placeholder,
+  .panel-amber .media-placeholder,
+  .panel-pending .media-placeholder {
+    border-color: rgba(0,0,0,0.25);
+  }
+
+  /* 코드 스니펫 넣을 자리 */
+  .panel-code {
+    background: rgba(0,0,0,0.25);
+    color: #f1f5f9;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+  .panel-green .panel-code,
+  .panel-amber .panel-code,
+  .panel-pending .panel-code {
+    background: rgba(0,0,0,0.08);
+    color: #1f2937;
+  }
+
+  .panel-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  footer { font-size: 0.8rem; color: var(--text-sub); margin-top: 60px; }
+
+  /* ============================================================
+     모바일 화면에서는 가로로 나란히 + hover 방식이 잘 안 맞기 때문에
+     세로로 쌓고, 항상 펼쳐진 상태로 보여줘요.
+     ============================================================ */
+  @media (max-width: 900px) {
+    .page-wrap { flex-direction: column; }
+    .sidebar { position: static; width: 100%; height: auto; padding: 30px 24px; }
+    main { padding: 40px 24px 80px; max-width: 100%; }
+
+    .panel-row {
+      flex-direction: column;
+      height: auto;
+    }
+    .panel {
+      flex: none !important;
+      padding: 24px;
+    }
+    .panel-body {
+      opacity: 1; /* 모바일에서는 항상 내용이 보이게 */
+      min-width: 0;
+    }
+    .panel-head h3 { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- ============================================================
+       사이드바: 이력서(index.html)와 완전히 동일한 구조예요.
+       portfolio-btn 만 "이력서 보기"로 방향을 반대로 바꿨고,
+       nav 링크는 이 페이지의 4개 프로젝트 섹션을 가리키도록 바꿨어요.
+       ============================================================ -->
+  <aside class="sidebar">
+    <div class="avatar-ring">
+      <img src="../images/profile4.png" class="profile-photo" alt="정윤서">
+    </div>
+    <h1>정윤서(난나)</h1>
+    <div class="role">IT 개발자 지망</div>
+    <a href="../index.html" class="portfolio-btn">← 이력서 보기</a>
+    <div class="links">
+      <a href="mailto:nannamaisons@gmail.com">E-mail</a>
+      <a href="https://github.com/jungnanna">Github</a>
+      <a href="https://velog.io/@nannamaisons">Velog</a>
+    </div>
+    <nav>
+      <a href="#ggabiteo">깨비터</a>
+      <a href="#caniEat">먹어도 돼?</a>
+      <a href="#readyplay">레디플레이</a>
+      <a href="#mainproject">메인 프로젝트</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section class="portfolio-intro">
+      <p class="hero-statement"><span class="highlight">프로젝트로 증명합니다.</span></p>
+      <p class="intro-text">
+        마우스를 올리면 각 프로젝트가 펼쳐져요. 화면, 코드, 트러블슈팅까지 한 곳에 모아뒀습니다.
+      </p>
+    </section>
+
+    <section class="panel-row" aria-label="프로젝트 목록">
+
+      <!-- 01. 깨비터 -->
+      <article class="panel panel-blue" id="ggabiteo">
+        <div class="panel-head">
+          <span class="panel-num">01</span>
+          <h3>깨비터</h3>
+        </div>
+        <p class="panel-tagline">React Native · 빈집 매칭 &amp; AI 리모델링</p>
+
+        <div class="panel-body">
+          <p class="panel-desc">
+            빈집 매칭 및 AI 리모델링 시뮬레이션 앱입니다. 2026 충청북도 공공데이터 활용 공모전에 출품했어요.
+            OpenAI API로 이미지를 분석해서 리모델링 시뮬레이션을 보여주고, Naver/Google 로그인을 연동했습니다.
+            API 할당량 이슈가 있었는데, 원인을 나눠서 키 분리와 재시도 로직으로 해결했습니다.
+          </p>
+          <div class="panel-tags">
+            <span>React Native</span><span>TypeScript</span><span>Supabase</span><span>OpenAI API</span>
+          </div>
+
+          <!-- TODO: 스크린샷 준비되면 아래 div를
+               <img src="../images/ggabiteo-1.png" alt="깨비터 스크린샷"> 로 교체하세요 -->
+          <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+
+          <!-- TODO: 아래 주석 안에 실제로 보여주고 싶은 핵심 코드를 붙여넣으세요 -->
+          <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
+// 예: OpenAI API 이미지 분석 호출 부분</pre>
+
+          <a class="panel-link" href="https://github.com/jungnanna/ggabiteo" target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+
+      <!-- 02. 먹어도 돼? -->
+      <article class="panel panel-green" id="caniEat">
+        <div class="panel-head">
+          <span class="panel-num">02</span>
+          <h3>먹어도 돼?</h3>
+        </div>
+        <p class="panel-tagline">Django · 백엔드 팀장</p>
+
+        <div class="panel-body">
+          <p class="panel-desc">
+            개인별 맞춤형 식단 추천과 영양 분석 서비스예요. AI 챗봇과 AI 퍼스널 주간 식단 계획을 연동했습니다.
+            백엔드 팀장으로서 Firebase/SQLite 이중 저장 구조를 설계했고, Gemini 503 오류와 할당량 소진 문제를
+            재시도 로직 + 키 분리로 해결했습니다.
+          </p>
+          <div class="panel-tags">
+            <span>Django</span><span>Firebase</span><span>Gemini API</span><span>Celery</span>
+          </div>
+
+          <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+
+          <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
+// 예: 이중 저장 구조 처리 부분</pre>
+
+          <a class="panel-link" href="https://github.com/jungnanna/CANIEAT" target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+
+      <!-- 03. 레디플레이 -->
+      <article class="panel panel-amber" id="readyplay">
+        <div class="panel-head">
+          <span class="panel-num">03</span>
+          <h3>레디플레이</h3>
+        </div>
+        <p class="panel-tagline">HTML/CSS/JS · 팀장</p>
+
+        <div class="panel-body">
+          <p class="panel-desc">
+            스포츠 입문자를 위한 큐레이션 커머스 웹사이트예요. fetch API로 공통 헤더·푸터 구조를 만들고,
+            Session Storage로 로그인/장바구니 상태를 유지했습니다. 3인 팀의 팀장으로서 Discord 자동 알림
+            CS 시스템도 구축했습니다.
+          </p>
+          <div class="panel-tags">
+            <span>HTML5</span><span>JavaScript</span><span>Supabase</span><span>Toss Payments</span>
+          </div>
+
+          <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+
+          <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
+// 예: 공통 헤더/푸터 fetch 처리 부분</pre>
+
+          <span class="repo-pending">Repo 업로드 예정</span>
+        </div>
+      </article>
+
+      <!-- 04. 메인 프로젝트 (아직 진행 전) -->
+      <article class="panel panel-pending" id="mainproject">
+        <div class="panel-head">
+          <span class="panel-num">04</span>
+          <h3>메인 프로젝트</h3>
+        </div>
+        <span class="panel-status">예정 · 2026.08</span>
+
+        <div class="panel-body">
+          <p class="panel-desc">
+            KDT 부트캠프 메인 프로젝트로, Java와 생성형 AI를 활용한 차세대 CRM 플랫폼을 Spring Boot 기반으로
+            개발할 예정입니다. 진행되면 이 자리에 배경, 기능, 트러블슈팅을 채워 넣을 거예요.
+          </p>
+          <div class="panel-tags">
+            <span>Spring Boot</span><span>Java</span><span>CRM</span>
+          </div>
+
+          <div class="media-placeholder">🚧 프로젝트 진행 후 스크린샷 추가 예정</div>
+
+          <pre class="panel-code">// 프로젝트 진행 후 대표 코드가 여기에 들어갈 예정입니다</pre>
+        </div>
+      </article>
+
+    </section>
+
+    <footer>© 2026 정윤서</footer>
+  </main>
+</div>
+
+<!-- ============================================================
+     사이드바 nav의 active 표시를 위한 스크롤 스파이 스크립트예요.
+     이력서(index.html)에 있던 것과 똑같은 방식이라, 지금 당장
+     이해 안 되셔도 괜찮아요. 나중에 자바스크립트 배우실 때
+     같이 짚어드릴게요.
+     ============================================================ -->
+<script>
+  const links = document.querySelectorAll('.sidebar nav a');
+  const sections = document.querySelectorAll('main section[id], main article[id]');
+  window.addEventListener('scroll', () => {
+    let currentId = '';
+    const triggerLine = window.innerHeight * 0.3;
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= triggerLine) {
+        currentId = section.getAttribute('id');
+      }
+    });
+    links.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + currentId) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>
