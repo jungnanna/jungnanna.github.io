@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>정윤서 이력서</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 <style>
   :root {
     --accent: #0f766e;
@@ -13,19 +14,15 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-family: 'Pretendard', sans-serif;
     color: var(--text-main);
     line-height: 1.75;
   }
-
-  /* 전체를 가운데로 모으는 큰 틀 */
   .page-wrap {
     max-width: 1100px;
     margin: 0 auto;
     display: flex;
   }
-
-  /* 왼쪽 고정 메뉴 */
   .sidebar {
     width: 220px;
     height: 100vh;
@@ -43,84 +40,55 @@
     background: #d1d5db;
     margin: 0 auto 16px;
   }
-  .sidebar h1 {
-    font-size: 1.3rem;
-    margin-bottom: 6px;
-  }
-  .sidebar .role {
-    font-size: 0.85rem;
-    color: var(--text-sub);
-    margin-bottom: 18px;
-  }
-  .sidebar .links {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 34px;
-  }
-  .sidebar .links a {
-    font-size: 0.8rem;
-    color: var(--accent);
-    text-decoration: none;
-  }
-  .sidebar nav {
-    text-align: left;
-  }
+  .sidebar h1 { font-size: 1.3rem; margin-bottom: 6px; }
+  .sidebar .role { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 18px; }
+  .sidebar .links { display: flex; flex-direction: column; gap: 6px; margin-bottom: 34px; }
+  .sidebar .links a { font-size: 0.8rem; color: var(--accent); text-decoration: none; }
+  .sidebar nav { text-align: left; }
   .sidebar nav a {
-    display: block;
-    font-size: 0.9rem;
-    color: var(--text-sub);
-    text-decoration: none;
-    padding: 8px 0;
-    border-left: 2px solid transparent;
-    padding-left: 12px;
-    margin-left: -12px;
+    display: block; font-size: 0.9rem; color: var(--text-sub); text-decoration: none;
+    padding: 8px 0; border-left: 2px solid transparent; padding-left: 12px; margin-left: -12px;
     transition: all 0.15s;
   }
-  .sidebar nav a:hover,
-  .sidebar nav a.active {
-    color: var(--accent);
-    border-left: 2px solid var(--accent);
-    font-weight: bold;
+  .sidebar nav a:hover, .sidebar nav a.active {
+    color: var(--accent); border-left: 2px solid var(--accent); font-weight: bold;
   }
 
-  /* 오른쪽 본문 - 더 넓게 */
-  main {
-    flex: 1;
-    max-width: 820px;
-    padding: 80px 60px 120px;
-  }
-   section h2 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--text-main);
-  letter-spacing: 0;
-  text-transform: none;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 10px;
-  margin-bottom: 30px;
-}
-section h2::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 6px;
-  background: #f97316;
-  border-radius: 3px;
-}
+  main { flex: 1; max-width: 820px; padding: 80px 60px 120px; }
 
-  .intro-text {
-    font-size: 1.15rem;
+  /* 섹션 전체 - 간격과 스크롤 위치 */
+  section {
+    margin-bottom: 130px;
+    scroll-margin-top: 60px;
+  }
+
+  /* 섹션 제목 - 폰트 크고 굵게, 밑줄은 글자에 붙게 */
+  section h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
     color: var(--text-main);
-    margin-bottom: 28px;
-    line-height: 1.8;
+    letter-spacing: 0;
+    text-transform: none;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+    margin-bottom: 50px;
   }
+  section h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 6px;
+    background: #f97316;
+    border-radius: 3px;
+  }
+
+  .intro-text { font-size: 1.15rem; color: var(--text-main); margin-bottom: 28px; line-height: 1.8; }
   .strengths { list-style: none; }
   .strengths li {
-    padding: 16px 0;
+    padding: 26px 0;
     border-top: 1px solid var(--border);
     font-size: 0.93rem;
   }
@@ -128,7 +96,7 @@ section h2::after {
   .strengths li b { display: block; margin-bottom: 4px; }
 
   .exp-item, .edu-item {
-    padding: 18px 0;
+    padding: 28px 0;
     border-top: 1px solid var(--border);
   }
   section#education .edu-item:last-of-type,
@@ -139,51 +107,22 @@ section h2::after {
   .exp-date, .edu-date { font-size: 0.8rem; color: var(--text-sub); }
   .exp-desc { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
 
-  .skill-row {
-    display: flex;
-    padding: 14px 0;
-    border-top: 1px solid var(--border);
-    font-size: 0.9rem;
-    gap: 24px;
-  }
+  .skill-row { display: flex; padding: 14px 0; border-top: 1px solid var(--border); font-size: 0.9rem; gap: 24px; }
   .skill-row:last-child { border-bottom: 1px solid var(--border); }
-  .skill-row .label {
-    width: 100px;
-    flex-shrink: 0;
-    color: var(--text-sub);
-    font-size: 0.8rem;
-    letter-spacing: 0.5px;
-    padding-top: 2px;
-  }
+  .skill-row .label { width: 100px; flex-shrink: 0; color: var(--text-sub); font-size: 0.8rem; letter-spacing: 0.5px; padding-top: 2px; }
   .skill-row .values { flex: 1; }
 
-  .project-item {
-    padding: 28px 0;
-    border-top: 1px solid var(--border);
-  }
+  .project-item { padding: 28px 0; border-top: 1px solid var(--border); }
   .project-item:last-child { border-bottom: 1px solid var(--border); }
-  .project-item .top-row {
-    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
-  }
+  .project-item .top-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
   .project-item h3 { font-size: 1.05rem; }
   .project-item .meta { font-size: 0.8rem; color: var(--text-sub); }
   .project-item .role { font-size: 0.82rem; color: var(--accent); margin: 4px 0 14px; }
   .project-item .desc { font-size: 0.9rem; margin-bottom: 12px; }
-  .project-item .field {
-    font-size: 0.87rem;
-    margin-bottom: 6px;
-    color: var(--text-main);
-  }
-  .project-item .field .k {
-    color: var(--text-sub);
-    display: inline-block;
-    width: 90px;
-  }
+  .project-item .field { font-size: 0.87rem; margin-bottom: 6px; color: var(--text-main); }
+  .project-item .field .k { color: var(--text-sub); display: inline-block; width: 90px; }
 
-  footer {
-    font-size: 0.8rem;
-    color: var(--text-sub);
-  }
+  footer { font-size: 0.8rem; color: var(--text-sub); }
 
   @media (max-width: 900px) {
     .page-wrap { flex-direction: column; }
@@ -193,9 +132,7 @@ section h2::after {
 </style>
 </head>
 <body>
-
 <div class="page-wrap">
-
   <aside class="sidebar">
     <div class="profile-photo"></div>
     <h1>정윤서</h1>
@@ -213,9 +150,7 @@ section h2::after {
       <a href="#education">Education</a>
     </nav>
   </aside>
-
   <main>
-
     <section id="introduce">
       <h2>Introduce</h2>
       <p class="intro-text">막히면, 원인을 찾을 때까지 붙잡습니다.<br>반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다.</p>
@@ -225,7 +160,6 @@ section h2::after {
         <li><b>팀을 이끄는 실행력</b>'먹어도 돼?' 프로젝트에서 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계했습니다.</li>
       </ul>
     </section>
-
     <section id="experience">
       <h2>Experience</h2>
       <div class="exp-item">
@@ -243,30 +177,15 @@ section h2::after {
         <p class="exp-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 개발 과정 수강.</p>
       </div>
     </section>
-
     <section id="skill">
       <h2>Skill</h2>
-      <div class="skill-row">
-        <span class="label">CORE</span>
-        <span class="values">Java</span>
-      </div>
-      <div class="skill-row">
-        <span class="label">웹 프론트엔드</span>
-        <span class="values">HTML5, CSS3, JavaScript, React</span>
-      </div>
-      <div class="skill-row">
-        <span class="label">그 외 다뤄본 것</span>
-        <span class="values">Python, Django, Firebase, Supabase</span>
-      </div>
-      <div class="skill-row">
-        <span class="label">LEARNING</span>
-        <span class="values">Spring Boot</span>
-      </div>
+      <div class="skill-row"><span class="label">CORE</span><span class="values">Java</span></div>
+      <div class="skill-row"><span class="label">웹 프론트엔드</span><span class="values">HTML5, CSS3, JavaScript, React</span></div>
+      <div class="skill-row"><span class="label">그 외 다뤄본 것</span><span class="values">Python, Django, Firebase, Supabase</span></div>
+      <div class="skill-row"><span class="label">LEARNING</span><span class="values">Spring Boot</span></div>
     </section>
-
     <section id="project">
       <h2>Project</h2>
-
       <div class="project-item">
         <div class="top-row">
           <h3>깨비터</h3>
@@ -279,7 +198,6 @@ section h2::after {
         <div class="field"><span class="k">성과</span>2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</div>
         <div class="field"><span class="k">Trouble</span>API 할당량 이슈 → 키 분리 및 재시도 로직으로 해결</div>
       </div>
-
       <div class="project-item">
         <div class="top-row">
           <h3>먹어도 돼?</h3>
@@ -292,7 +210,6 @@ section h2::after {
         <div class="field"><span class="k">성과</span>백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정</div>
         <div class="field"><span class="k">Trouble</span>Gemini 503 오류 및 할당량 소진 → 재시도 로직 + 키 분리</div>
       </div>
-
       <div class="project-item">
         <div class="top-row">
           <h3>레디플레이</h3>
@@ -304,9 +221,7 @@ section h2::after {
         <div class="field"><span class="k">What did I do</span>fetch API 기반 공통 헤더·푸터 구조, Session Storage 로그인/장바구니 유지</div>
         <div class="field"><span class="k">성과</span>3인 팀 팀장, Discord 자동 알림 CS 시스템 구축</div>
       </div>
-
     </section>
-
     <section id="education">
       <h2>Education</h2>
       <div class="edu-item">
@@ -328,17 +243,12 @@ section h2::after {
         </div>
       </div>
     </section>
-
     <footer>© 2026 정윤서</footer>
-
   </main>
-
 </div>
-
 <script>
   const links = document.querySelectorAll('.sidebar nav a');
   const sections = document.querySelectorAll('main section');
-
   window.addEventListener('scroll', () => {
     let currentId = '';
     sections.forEach(section => {
@@ -347,13 +257,10 @@ section h2::after {
         currentId = section.getAttribute('id');
       }
     });
-
-    // 페이지 맨 아래까지 스크롤했으면, 무조건 마지막 섹션(Education)을 활성화
     const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 5;
     if (scrolledToBottom) {
       currentId = sections[sections.length - 1].getAttribute('id');
     }
-
     links.forEach(link => {
       link.classList.remove('active');
       if (link.getAttribute('href') === '#' + currentId) {
@@ -362,6 +269,5 @@ section h2::after {
     });
   });
 </script>
-
 </body>
 </html>
