@@ -7,11 +7,12 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 <style>
   :root {
-    --accent: #0f766e;
-    --text-main: #111827;
-    --text-sub: #6b7280;
-    --border: #e5e7eb;
-  }
+  --accent: #003A35;      
+  --highlight: #A8E6A3;   
+  --text-main: #001F27;
+  --text-sub: #6b7280;
+  --border: #e5e7eb;
+}
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Pretendard', sans-serif;
@@ -153,6 +154,20 @@
   margin-right: 8px;
 }
 
+.hero-statement {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1.4;
+  margin-bottom: 40px;
+}
+.hero-statement .highlight {
+  background: var(--highlight);
+  color: var(--text-main);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 2px 10px;
+}
+
 
 
   .project-item { padding: 28px 0; border-top: 1px solid var(--border); }
@@ -199,14 +214,16 @@
   </aside>
   <main>
     <section id="introduce">
-      <h2>Introduce</h2>
-      <p class="intro-text">막히면, 원인을 찾을 때까지 붙잡습니다.<br>반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다.</p>
-      <ul class="strengths">
-        <li><b>정밀함을 코드로 옮기는 힘</b>반도체 FAB 배관설계 경험에서 다져진 꼼꼼함을 디버깅과 코드 리뷰에 그대로 적용합니다.</li>
-        <li><b>원인을 끝까지 추적하는 문제 해결</b>API 오류(429, 503) 하나도 원인을 구분해 각각 다른 해결책을 설계합니다.</li>
-        <li><b>팀을 이끄는 실행력</b>'먹어도 돼?' 프로젝트에서 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계했습니다.</li>
-      </ul>
-    </section>
+  <p class="hero-statement">
+    <span class="highlight">막히면, 원인을<br>찾을 때까지 붙잡습니다.</span>
+  </p>
+  <p class="intro-text">반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다. 문제를 만나면 원인을 구분해서 끝까지 파고드는 방식으로 일합니다.</p>
+  <ul class="strengths">
+    <li><b>정밀함을 코드로 옮기는 힘</b>반도체 FAB 배관설계 경험에서 다져진 꼼꼼함을 디버깅과 코드 리뷰에 그대로 적용합니다.</li>
+    <li><b>원인을 끝까지 추적하는 문제 해결</b>API 오류(429, 503) 하나도 원인을 구분해 각각 다른 해결책을 설계합니다.</li>
+    <li><b>팀을 이끄는 실행력</b>'먹어도 돼?' 프로젝트에서 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계했습니다.</li>
+  </ul>
+</section>
     <section id="experience">
       <h2>Experience</h2>
       <div class="exp-item">
