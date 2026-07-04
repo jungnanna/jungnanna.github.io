@@ -1,60 +1,267 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>정윤서 이력서</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정윤서 이력서</title>
+<style>
+  :root {
+    --accent: #0f766e;
+    --accent-light: #ecfdf5;
+    --text-main: #1f2937;
+    --text-sub: #6b7280;
+    --border: #e5e7eb;
+    --bg-card: #fafafa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Malgun Gothic', sans-serif;
-    max-width: 700px;
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    color: var(--text-main);
+    line-height: 1.7;
+    max-width: 760px;
     margin: 0 auto;
-    padding: 40px 20px;
-    line-height: 1.6;
+    padding: 60px 24px 100px;
   }
-  h1 {
-    color: #2c3e50;
+
+  /* 헤더 */
+  header {
+    margin-bottom: 56px;
   }
-  h2 {
-    color: #2c3e50;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 8px;
+  header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
   }
-  h3 {
-    background-color: #f4f4f4;
-    padding: 10px;
+  header .intro {
+    font-size: 1.05rem;
+    color: var(--text-sub);
+    margin-bottom: 20px;
+  }
+  .contact-links {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .contact-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid var(--accent);
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .contact-links a:hover {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* 섹션 공통 */
+  section {
+    margin-bottom: 52px;
+  }
+  section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  /* 기술 스택 */
+  .skill-group {
+    margin-bottom: 16px;
+  }
+  .skill-group .label {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag {
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 5px 12px;
     border-radius: 6px;
+    font-size: 0.85rem;
+  }
+
+  /* 프로젝트 카드 */
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .project-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+  .project-card .role {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: bold;
+  }
+  .project-card .desc {
+    font-size: 0.92rem;
+    color: var(--text-main);
+    margin-bottom: 14px;
+  }
+  .project-card .row {
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+  }
+  .project-card .row .key {
+    color: var(--text-sub);
+    display: inline-block;
+    width: 52px;
+  }
+  .project-card .tags {
+    margin-top: 14px;
+  }
+
+  /* 자격증 */
+  .cert-list {
+    list-style: none;
+  }
+  .cert-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+  }
+  .cert-list li:last-child {
+    border-bottom: none;
+  }
+  .cert-list .status {
+    color: var(--text-sub);
+    font-size: 0.85rem;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+    margin-top: 60px;
   }
 </style>
 </head>
 <body>
 
-  <h1>정윤서</h1>
-  <p>반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중인 예비 개발자입니다.</p>
+  <header>
+    <h1>정윤서</h1>
+    <p class="intro">막히면, 원인을 찾을 때까지 붙잡습니다.</p>
+    <div class="contact-links">
+      <a href="https://github.com/jungnanna">GitHub</a>
+      <a href="https://velog.io/@nannamaisons">Velog</a>
+    </div>
+  </header>
 
-  <h2>기술 스택</h2>
-  <ul>
-    <li>Java (학습 중)</li>
-    <li>HTML / CSS (학습 중)</li>
-    <li>Python (학습 예정)</li>
-  </ul>
+  <section>
+    <h2>기술 스택</h2>
+    <div class="skill-group">
+      <span class="label">MAIN</span>
+      <div class="tags">
+        <span class="tag">Java</span>
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <span class="label">EXPERIENCE</span>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">React Native</span>
+        <span class="tag">Django</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">Gemini API</span>
+        <span class="tag">OpenAI API</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <span class="label">LEARNING</span>
+      <div class="tags">
+        <span class="tag">Spring Boot</span>
+      </div>
+    </div>
+  </section>
 
-  <h2>프로젝트</h2>
+  <section>
+    <h2>프로젝트</h2>
 
-  <h3>깨비터 - 빈집 매칭 및 AI 리모델링 시뮬레이션 앱</h3>
-  <p>기술: React Native, Supabase, OpenAI API, Gemini API</p>
-  <p>문제: Gemini API 이미지 분석 시 할당량(quota) 초과 오류 발생</p>
-  <p>해결: API 키를 분리하고 재시도 로직을 설계해 장애를 격리함</p>
+    <div class="project-card">
+      <h3>깨비터</h3>
+      <div class="role">React Native · 팀 프로젝트</div>
+      <p class="desc">
+        빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작으로,
+        OpenAI API를 연동해 건물 이미지 분석 후 리모델링 아이디어를 제안하는 기능을 구현했다.
+      </p>
+      <div class="row"><span class="key">문제</span>이미지 분석 API 연동 중 할당량 및 안정성 이슈 발생</div>
+      <div class="row"><span class="key">해결</span>API 키 분리 및 재시도 로직 설계로 장애 격리</div>
+      <div class="tags">
+        <span class="tag">React Native</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">OpenAI API</span>
+      </div>
+    </div>
 
-  <h3>먹어도 돼? - 식품 안전 정보 서비스</h3>
-  <p>기술: Django, Firebase, Gemini API, Celery, Redis</p>
-  <p>역할: 백엔드 팀장</p>
-  <p>해결: 503 오류 재시도 로직과 24시간 API 캐싱을 구축해 안정성 확보</p>
+    <div class="project-card">
+      <h3>먹어도 돼?</h3>
+      <div class="role">Django · 백엔드 팀장</div>
+      <p class="desc">
+        개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획, 두 곳에
+        AI 기능을 연동해 사용자 알레르기·건강목표 기반 식단을 자동 추천한다.
+      </p>
+      <div class="row"><span class="key">문제</span>Gemini API 503 오류 및 무료 할당량 소진으로 서비스 불안정</div>
+      <div class="row"><span class="key">해결</span>재시도 로직과 용도별 API 키 분리로 안정성 확보</div>
+      <div class="tags">
+        <span class="tag">Django</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">Gemini API</span>
+        <span class="tag">Celery</span>
+      </div>
+    </div>
 
-  <h2>자격증</h2>
-  <ul>
-    <li>정보처리기사 (필기 합격, 실기 준비 중)</li>
-    <li>정보처리산업기사 (필기 합격, 실기 준비 중)</li>
-  </ul>
+    <div class="project-card">
+      <h3>레디플레이</h3>
+      <div class="role">HTML/CSS/JS · 팀 프로젝트</div>
+      <p class="desc">
+        스포츠 입문자를 위한 큐레이션 커머스 웹사이트. 전문가가 엄선한 종목별 스타터 키트를
+        제공해 소비자의 선택 고민을 줄이는 서비스를 목표로 했다.
+      </p>
+      <div class="row"><span class="key">담당</span>fetch API 기반 공통 헤더·푸터 비동기 로드 구조 구축</div>
+      <div class="row"><span class="key">담당</span>Session Storage로 로그인 상태 및 장바구니 흐름 유지</div>
+      <div class="tags">
+        <span class="tag">HTML5</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">Toss Payments API</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>자격증</h2>
+    <ul class="cert-list">
+      <li>정보처리기사 <span class="status">필기 합격 · 실기 준비 중 (2026.07.19)</span></li>
+      <li>정보처리산업기사 <span class="status">필기 합격 · 실기 준비 중 (2026.07.19)</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    © 2026 정윤서
+  </footer>
 
 </body>
 </html>
