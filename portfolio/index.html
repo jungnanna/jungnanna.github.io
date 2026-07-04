@@ -6,17 +6,12 @@
 <title>정윤서 프로젝트 포트폴리오</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 <style>
-  /* ============================================================
-     아래 :root 부터 .repo-pending 까지는 이력서(index.html)에서
-     쓰던 스타일을 그대로 가져온 거예요. 사이드바 디자인을
-     똑같이 유지하기 위해서 색/폰트/구조를 전부 동일하게 맞췄어요.
-     ============================================================ */
   :root {
     --accent: #003A35;
     --accent-2: #2563EB;
     --accent-bright: #34D399;
-    --accent-amber: #F59E0B;   /* 이번 페이지에서 새로 추가한 포인트 색 (레디플레이용) */
-    --pending: #94A3B8;        /* 아직 시작 안 한 프로젝트용 회색 */
+    --accent-teal: #0F766E;   /* 오렌지 대신 쓰는 블루/그린 계열 색 */
+    --pending: #94A3B8;
     --text-main: #001F27;
     --text-sub: #6b7280;
     --border: #e5e7eb;
@@ -24,85 +19,75 @@
   html { overflow-y: scroll; }
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: #f1f1f1; }
-  ::-webkit-scrollbar-thumb { background: var(--accent-2); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--accent-2); border-radius: 0; }
   ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
   ::selection { background: var(--accent-bright); color: var(--text-main); }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Pretendard', sans-serif; color: var(--text-main); line-height: 1.75; }
 
-  .page-wrap { max-width: 1300px; margin: 0 auto; display: flex; }
+  /* display: flex 를 지웠어요. 이게 버튼이 왼쪽에 세로로 퍼져 보이던 원인이었어요. */
+  .page-wrap { max-width: 1020px; margin: 0 auto; }
 
+  main { padding: 80px 40px 120px; }
+
+  /* ------------------------------------------------------------
+     "이력서 보기" 버튼: 흰 박스 + 검은 테두리 + 굵은 글씨
+     ------------------------------------------------------------ */
   .portfolio-btn {
     display: inline-block;
-    background: transparent;
-    color: var(--accent-2);
+    background: white;
+    color: var(--text-main);
     font-size: 0.85rem;
-    font-weight: bold;
+    font-weight: 800;
     padding: 9px 22px;
-    border: 2px solid var(--accent-2);
+    border: 2px solid var(--text-main);
     text-decoration: none;
-    margin-bottom: 18px;
+    margin-bottom: 28px;
     transition: all 0.2s;
   }
-  .portfolio-btn:hover { background: var(--accent-2); color: white; }
-  .sidebar nav a.external-link {
-    margin-top: 12px;
-    border-top: 1px solid var(--border);
-    padding-top: 20px;
-  }
+  .portfolio-btn:hover { background: var(--text-main); color: white; }
 
   .repo-link { color: var(--accent-2); text-decoration: none; font-weight: 600; }
   .repo-link:hover { text-decoration: underline; }
   .repo-pending { color: var(--text-sub); font-style: italic; font-size: 0.85rem; }
 
-  .hero-statement { font-size: 2.2rem; font-weight: 900; line-height: 1.4; margin-bottom: 20px; }
+  /* 제목 문구: 배경 하이라이트 대신 굵은 검은 밑줄로 강조해요 */
+  .hero-statement {
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
   .hero-statement .highlight {
-    background: var(--accent-bright);
-    color: var(--text-main);
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-    padding: 2px 10px;
+    border-bottom: 4px solid var(--text-main);
+    padding-bottom: 4px;
   }
   .intro-text { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 60px; max-width: 640px; }
 
-  main { flex: 1; max-width: 1020px; padding: 80px 60px 120px; }
-
   /* ============================================================
-     여기서부터는 프로젝트 카드 4개를 2x2 로 배치하는 스타일이에요
+     프로젝트 카드 4개, 2x2 배치. 브루탈리즘(두꺼운 테두리, 하드 섀도우) 없이
+     깔끔한 색 블록으로만 구성했어요.
      ============================================================ */
-
-  /* 4개의 패널을 "2칸씩, 2줄"로 놓는 컨테이너.
-     grid-template-columns: repeat(2, 1fr) 가
-     "한 줄에 똑같은 너비로 2칸을 만들어라" 라는 뜻이에요. */
   .panel-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
-  /* 패널 하나 */
   .panel {
     position: relative;
-    border-radius: 24px;
+    border-radius: 0;
     padding: 28px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     min-height: 340px;
   }
 
-  /* 마우스를 올리면 살짝 위로 떠오르면서 그림자가 생겨요.
-     (2x2 배치에서는 옆으로 넓어지는 것보다 이게 자연스러워요) */
-  .panel:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.35);
-  }
-
   .panel-blue   { background: var(--accent-2);     color: white; }
   .panel-green  { background: var(--accent-bright);color: var(--text-main); }
-  .panel-amber  { background: var(--accent-amber); color: var(--text-main); }
+  .panel-teal   { background: var(--accent-teal);  color: white; }
   .panel-pending{
     background: #f4f5f7;
     color: var(--text-main);
@@ -115,7 +100,7 @@
     justify-content: center;
     width: 34px;
     height: 34px;
-    border-radius: 50%;
+    border-radius: 0;
     background: var(--accent);
     color: white;
     font-size: 0.85rem;
@@ -148,12 +133,11 @@
     background: var(--pending);
     color: white;
     padding: 3px 10px;
-    border-radius: 12px;
+    border-radius: 0;
     margin-bottom: 10px;
     width: fit-content;
   }
 
-  /* 펼쳐지는 내용물. 평소엔 투명하게 숨겨뒀다가, hover될 때 보이게 해요 */
   .panel-body {
     opacity: 0;
     transition: opacity 0.25s ease 0.15s;
@@ -165,26 +149,30 @@
     opacity: 1;
   }
 
-  .panel-desc { font-size: 0.9rem; margin-bottom: 14px; }
+  /* 설명(서술) 문단 아래에 검은 밑줄을 넣었어요 */
+  .panel-desc {
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid currentColor;
+  }
 
   .panel-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
   .panel-tags span {
     font-size: 0.72rem;
-    background: rgba(255,255,255,0.35);
-    padding: 4px 10px;
-    border-radius: 12px;
-  }
-  .panel-green .panel-tags span,
-  .panel-amber .panel-tags span,
-  .panel-pending .panel-tags span {
-    background: rgba(0,0,0,0.06);
+    font-weight: 700;
+    background: white;
+    color: var(--text-main);
+    border: 2px solid var(--text-main);
+    padding: 3px 10px;
+    border-radius: 0;
   }
 
   /* 사진 넣을 자리 - 지금은 준비된 이미지가 없으니 점선 박스로 표시해뒀어요.
-     실제 스크린샷이 생기면 이 div를 <img src="images/파일명.png"> 로 바꾸면 돼요. */
+     실제 스크린샷이 생기면 이 div를 <img src="../images/파일명.png"> 로 바꾸면 돼요. */
   .media-placeholder {
     border: 1.5px dashed rgba(255,255,255,0.6);
-    border-radius: 12px;
+    border-radius: 0;
     padding: 20px;
     text-align: center;
     font-size: 0.78rem;
@@ -192,25 +180,22 @@
     opacity: 0.85;
   }
   .panel-green .media-placeholder,
-  .panel-amber .media-placeholder,
   .panel-pending .media-placeholder {
     border-color: rgba(0,0,0,0.25);
   }
 
-  /* 코드 스니펫 넣을 자리 */
   .panel-code {
     background: rgba(0,0,0,0.25);
     color: #f1f5f9;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 0;
     margin-bottom: 14px;
     white-space: pre-wrap;
     line-height: 1.6;
   }
   .panel-green .panel-code,
-  .panel-amber .panel-code,
   .panel-pending .panel-code {
     background: rgba(0,0,0,0.08);
     color: #1f2937;
@@ -228,35 +213,20 @@
 
   footer { font-size: 0.8rem; color: var(--text-sub); margin-top: 60px; }
 
-  /* ============================================================
-     모바일 화면에서는 2칸도 좁으니 1칸씩 세로로 쌓아요.
-     ============================================================ */
   @media (max-width: 900px) {
-    .page-wrap { flex-direction: column; }
-    .sidebar { position: static; width: 100%; height: auto; padding: 30px 24px; }
-    main { padding: 40px 24px 80px; max-width: 100%; }
-
-    .panel-row {
-      grid-template-columns: 1fr;
-    }
-    .panel-body {
-      opacity: 1; /* 모바일에서는 항상 내용이 보이게 */
-    }
+    main { padding: 40px 24px 80px; }
+    .panel-row { grid-template-columns: 1fr; }
+    .panel-body { opacity: 1; }
   }
 </style>
 </head>
 <body>
 <div class="page-wrap">
-
-  <!-- ============================================================
-       사이드바: 이력서(index.html)와 완전히 동일한 구조예요.
-       portfolio-btn 만 "이력서 보기"로 방향을 반대로 바꿨고,
-       nav 링크는 이 페이지의 4개 프로젝트 섹션을 가리키도록 바꿨어요.
-       ============================================================ -->
-
-    <a href="../index.html" class="portfolio-btn">← 이력서 보기</a>
   <main>
     <section class="portfolio-intro">
+      <!-- 버튼을 main 안으로 옮겼어요. 이제 본문의 일부로 자연스럽게 흘러가요 -->
+      <a href="../index.html" class="portfolio-btn">← 이력서 보기</a>
+
       <p class="hero-statement"><span class="highlight">프로젝트로 증명합니다.</span></p>
       <p class="intro-text">
         마우스를 올리면 각 프로젝트가 펼쳐져요. 화면, 코드, 트러블슈팅까지 한 곳에 모아뒀습니다.
@@ -323,7 +293,7 @@
       </article>
 
       <!-- 03. 레디플레이 -->
-      <article class="panel panel-amber" id="readyplay">
+      <article class="panel panel-teal" id="readyplay">
         <div class="panel-head">
           <span class="panel-num">03</span>
           <h3>레디플레이</h3>
@@ -377,32 +347,5 @@
     <footer>© 2026 정윤서</footer>
   </main>
 </div>
-
-<!-- ============================================================
-     사이드바 nav의 active 표시를 위한 스크롤 스파이 스크립트예요.
-     이력서(index.html)에 있던 것과 똑같은 방식이라, 지금 당장
-     이해 안 되셔도 괜찮아요. 나중에 자바스크립트 배우실 때
-     같이 짚어드릴게요.
-     ============================================================ -->
-<script>
-  const links = document.querySelectorAll('.sidebar nav a');
-  const sections = document.querySelectorAll('main section[id], main article[id]');
-  window.addEventListener('scroll', () => {
-    let currentId = '';
-    const triggerLine = window.innerHeight * 0.3;
-    sections.forEach(section => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= triggerLine) {
-        currentId = section.getAttribute('id');
-      }
-    });
-    links.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + currentId) {
-        link.classList.add('active');
-      }
-    });
-  });
-</script>
 </body>
 </html>
