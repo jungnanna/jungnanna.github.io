@@ -48,12 +48,12 @@ q<!DOCTYPE html>
   margin: 0 auto 16px;
   }
   .profile-photo {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: #d1d5db;
-    border: 3px solid white;
-  }
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: url('images/profile.png') center/cover;
+  border: 3px solid white;
+}
   .sidebar h1 { font-size: 1.3rem; margin-bottom: 6px; }
   .sidebar .role { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 18px; }
   .sidebar .links { display: flex; flex-direction: column; gap: 6px; margin-bottom: 34px; }
@@ -138,27 +138,45 @@ q<!DOCTYPE html>
   .exp-date, .edu-date { font-size: 0.8rem; color: var(--text-sub); }
   .exp-desc { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
 
-.skill-bullets {
-  list-style: none;
+.skill-block {
+  display: flex;
+  gap: 30px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  align-items: flex-start;
 }
-.skill-bullets li {
-  position: relative;
-  padding: 10px 0 10px 20px;
-  font-size: 0.95rem;
-  line-height: 1.8;
+.skill-block:last-child {
+  border-bottom: 1px solid var(--border);
 }
-.skill-bullets li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: var(--text-sub);
-}
-.skill-bullets li b {
-  color: var(--accent);
+.skill-label {
+  width: 140px;
+  flex-shrink: 0;
   font-weight: 700;
-  margin-right: 8px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  padding-top: 8px;
 }
-
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
+}
+.tag-pill {
+  display: inline-block;
+  padding: 7px 16px;
+  border: 1.5px solid var(--accent);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--accent);
+  background: white;
+}
+.tag-pill-learning {
+  border-color: var(--text-sub);
+  color: var(--text-sub);
+  border-style: dashed;
+}
+  
 .hero-statement {
   font-size: 2.6rem;
   font-weight: 900;
@@ -213,7 +231,6 @@ q<!DOCTYPE html>
     <a href="#skill">Skill</a>
     <a href="#project">Project</a>
     <a href="#education">Education</a>
-    <a href="detail.html" class="external-link">Detail →</a>
     <a href="https://jungnanna.github.io/portfolio/" target="_blank" rel="noopener" class="external-link">Portfolio →</a>
   </nav>
   </aside>
@@ -247,17 +264,61 @@ q<!DOCTYPE html>
       </div>
     </section>
     <section id="skill">
-    <h2>Skill</h2>
-    <ul class="skill-bullets">
-      <li><b>Language</b> Java, Python, JavaScript, TypeScript, HTML5, CSS3</li>
-      <li><b>Frontend</b> React, React Native</li>
-      <li><b>Backend</b> Django, Node.js</li>
-      <li><b>Database</b> Supabase (PostgreSQL), Firebase, SQLite</li>
-      <li><b>AI / API</b> OpenAI API, Gemini API, Google Maps API, 공공데이터포털 API</li>
-      <li><b>Tools</b> VS Code, Cursor, Android Studio, Figma, Git</li>
-      <li><b>Learning</b> Spring Boot</li>
-    </ul>
-  </section>
+  <h2>Skill</h2>
+  <div class="skill-block">
+    <div class="skill-label">Languages</div>
+    <div class="skill-tags">
+      <span class="tag-pill">Java</span>
+      <span class="tag-pill">Python</span>
+      <span class="tag-pill">JavaScript</span>
+      <span class="tag-pill">TypeScript</span>
+      <span class="tag-pill">HTML5</span>
+      <span class="tag-pill">CSS3</span>
+    </div>
+  </div>
+  <div class="skill-block">
+    <div class="skill-label">Frameworks &amp; Libraries</div>
+    <div class="skill-tags">
+      <span class="tag-pill">React</span>
+      <span class="tag-pill">React Native</span>
+      <span class="tag-pill">Django</span>
+      <span class="tag-pill">Node.js</span>
+    </div>
+  </div>
+  <div class="skill-block">
+    <div class="skill-label">Database &amp; Infra</div>
+    <div class="skill-tags">
+      <span class="tag-pill">Supabase (PostgreSQL)</span>
+      <span class="tag-pill">Firebase</span>
+      <span class="tag-pill">SQLite</span>
+    </div>
+  </div>
+  <div class="skill-block">
+    <div class="skill-label">AI / API</div>
+    <div class="skill-tags">
+      <span class="tag-pill">OpenAI API</span>
+      <span class="tag-pill">Gemini API</span>
+      <span class="tag-pill">Google Maps API</span>
+      <span class="tag-pill">공공데이터포털 API</span>
+    </div>
+  </div>
+  <div class="skill-block">
+    <div class="skill-label">Tools</div>
+    <div class="skill-tags">
+      <span class="tag-pill">VS Code</span>
+      <span class="tag-pill">Cursor</span>
+      <span class="tag-pill">Android Studio</span>
+      <span class="tag-pill">Figma</span>
+      <span class="tag-pill">Git</span>
+    </div>
+  </div>
+  <div class="skill-block">
+    <div class="skill-label">Learning</div>
+    <div class="skill-tags">
+      <span class="tag-pill tag-pill-learning">Spring Boot</span>
+    </div>
+  </div>
+</section>
     <section id="project">
       <h2>Project</h2>
       <div class="project-item">
