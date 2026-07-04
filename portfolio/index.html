@@ -117,32 +117,36 @@
   main { flex: 1; max-width: 1020px; padding: 80px 60px 120px; }
 
   /* ============================================================
-     여기서부터는 이번에 새로 만든, 4개짜리 호버 아코디언 스타일이에요
+     여기서부터는 프로젝트 카드 4개를 2x2 로 배치하는 스타일이에요
      ============================================================ */
 
-  /* 4개의 패널을 가로로 나란히 놓는 컨테이너 */
+  /* 4개의 패널을 "2칸씩, 2줄"로 놓는 컨테이너.
+     grid-template-columns: repeat(2, 1fr) 가
+     "한 줄에 똑같은 너비로 2칸을 만들어라" 라는 뜻이에요. */
   .panel-row {
-    display: flex;
-    gap: 16px;
-    height: 620px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
-  /* 패널 하나. flex: 1 이 "평소 너비는 다 똑같이 나눠 가져라" 라는 뜻이에요 */
+  /* 패널 하나 */
   .panel {
-    flex: 1;
     position: relative;
     border-radius: 24px;
     padding: 28px;
     overflow: hidden;
     cursor: pointer;
-    transition: flex 0.5s ease;      /* 너비가 바뀔 때 부드럽게 움직이도록 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    min-height: 340px;
   }
 
-  /* 마우스를 올리면 flex 값을 키워서 그 패널만 넓어지게 만들어요 */
+  /* 마우스를 올리면 살짝 위로 떠오르면서 그림자가 생겨요.
+     (2x2 배치에서는 옆으로 넓어지는 것보다 이게 자연스러워요) */
   .panel:hover {
-    flex: 2.6;
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.35);
   }
 
   .panel-blue   { background: var(--accent-2);     color: white; }
@@ -178,7 +182,6 @@
   .panel-head h3 {
     font-size: 1.3rem;
     font-weight: 800;
-    white-space: nowrap;
   }
 
   .panel-tagline {
@@ -205,7 +208,6 @@
     transition: opacity 0.25s ease 0.15s;
     overflow-y: auto;
     flex: 1;
-    min-width: 300px; /* 패널이 좁아졌을 때 내용물이 안 찌그러지게 최소 너비 지정 */
   }
 
   .panel:hover .panel-body {
@@ -276,8 +278,7 @@
   footer { font-size: 0.8rem; color: var(--text-sub); margin-top: 60px; }
 
   /* ============================================================
-     모바일 화면에서는 가로로 나란히 + hover 방식이 잘 안 맞기 때문에
-     세로로 쌓고, 항상 펼쳐진 상태로 보여줘요.
+     모바일 화면에서는 2칸도 좁으니 1칸씩 세로로 쌓아요.
      ============================================================ */
   @media (max-width: 900px) {
     .page-wrap { flex-direction: column; }
@@ -285,18 +286,11 @@
     main { padding: 40px 24px 80px; max-width: 100%; }
 
     .panel-row {
-      flex-direction: column;
-      height: auto;
-    }
-    .panel {
-      flex: none !important;
-      padding: 24px;
+      grid-template-columns: 1fr;
     }
     .panel-body {
       opacity: 1; /* 모바일에서는 항상 내용이 보이게 */
-      min-width: 0;
     }
-    .panel-head h3 { white-space: normal; }
   }
 </style>
 </head>
