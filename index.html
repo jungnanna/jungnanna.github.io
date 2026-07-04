@@ -90,16 +90,23 @@
     max-width: 820px;
     padding: 80px 60px 120px;
   }
-  section {
-    margin-bottom: 90px;
-    scroll-margin-top: 60px;
+   section h2 {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+    font-weight: 800;
+    font-size: 0.95rem;
   }
-  section h2 {
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 26px;
+  section h2::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    bottom: -4px;
+    width: calc(100% + 8px);
+    height: 14px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'%3E%3Cpath d='M2,16 C40,4 90,20 130,10 C160,2 180,14 198,8' fill='none' stroke='%23f97316' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
 
   .intro-text {
