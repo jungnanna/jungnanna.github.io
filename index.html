@@ -7,189 +7,192 @@
 <style>
   :root {
     --accent: #0f766e;
-    --accent-light: #ecfdf5;
-    --text-main: #1f2937;
+    --text-main: #111827;
     --text-sub: #6b7280;
     --border: #e5e7eb;
-    --bg-card: #fafafa;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
     color: var(--text-main);
-    line-height: 1.7;
+    line-height: 1.75;
+    display: flex;
   }
 
-  /* 히어로 배너 */
-  .hero {
-    background: var(--accent);
-    color: white;
-    padding: 40px 24px 60px;
-  }
-  .hero .page-title {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 40px;
-  }
-  .hero-content {
-    max-width: 700px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: #d1d5db;
+  /* 왼쪽 고정 메뉴 */
+  .sidebar {
+    width: 220px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 60px 30px;
+    border-right: 1px solid var(--border);
     flex-shrink: 0;
   }
-  .avatar-wrap { text-align: center; }
-  .avatar-wrap .name-under {
-    margin-top: 10px;
+  .sidebar h1 {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+  }
+  .sidebar .role {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    margin-bottom: 30px;
+  }
+  .sidebar nav a {
+    display: block;
     font-size: 0.9rem;
-  }
-  .hero-info h1 {
-    font-size: 1.7rem;
-    line-height: 1.4;
-    margin-bottom: 14px;
-  }
-  .hero-info .meta {
-    font-size: 0.85rem;
-    margin-bottom: 4px;
-    opacity: 0.9;
-  }
-  .hero-info .meta a { color: white; }
-  .hero-links {
-    display: flex;
-    gap: 10px;
-    margin-top: 14px;
-  }
-  .hero-links a {
-    background: rgba(255,255,255,0.15);
-    color: white;
+    color: var(--text-sub);
     text-decoration: none;
-    font-size: 0.85rem;
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.4);
+    padding: 8px 0;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    margin-left: -12px;
+    transition: all 0.15s;
   }
-  .hero-links a:hover { background: rgba(255,255,255,0.3); }
+  .sidebar nav a:hover {
+    color: var(--accent);
+    border-left: 2px solid var(--accent);
+  }
+  .sidebar .links {
+    margin-top: 40px;
+    display: flex;
+    gap: 12px;
+  }
+  .sidebar .links a {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--accent);
+    border: none;
+  }
 
-  /* 본문 */
+  /* 오른쪽 본문 */
   main {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 50px 24px 100px;
+    flex: 1;
+    max-width: 680px;
+    padding: 80px 60px 120px;
   }
-  section { margin-bottom: 56px; }
-  section > h2 {
-    font-size: 1.4rem;
-    margin-bottom: 22px;
+  section {
+    margin-bottom: 90px;
+    scroll-margin-top: 60px;
+  }
+  section h2 {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 26px;
   }
 
+  .intro-text {
+    font-size: 1.15rem;
+    color: var(--text-main);
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
   .strengths { list-style: none; }
   .strengths li {
-    padding: 10px 0 10px 20px;
-    border-left: 3px solid var(--accent);
-    margin-bottom: 10px;
-    background: var(--accent-light);
-    border-radius: 0 6px 6px 0;
-    font-size: 0.92rem;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.93rem;
   }
-  .strengths li b { color: var(--accent); }
-  .intro-text { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 20px; }
+  .strengths li:last-child { border-bottom: 1px solid var(--border); }
+  .strengths li b { display: block; margin-bottom: 4px; }
 
-  .exp-item { margin-bottom: 18px; }
-  .exp-item .exp-top { display: flex; justify-content: space-between; flex-wrap: wrap; }
-  .exp-item .exp-title { font-weight: bold; }
-  .exp-item .exp-date { font-size: 0.82rem; color: var(--text-sub); }
-  .exp-item .exp-desc { font-size: 0.9rem; color: var(--text-main); margin-top: 4px; }
+  .exp-item, .edu-item {
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+  }
+  section#education .edu-item:last-of-type,
+  section#experience .exp-item:last-of-type { border-bottom: 1px solid var(--border); }
 
-  .skill-group { margin-bottom: 16px; }
-  .skill-group .label {
-    font-size: 0.85rem; color: var(--text-sub); font-weight: bold;
-    margin-bottom: 8px; display: block;
-  }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tag { background: var(--accent-light); color: var(--accent); padding: 5px 12px; border-radius: 6px; font-size: 0.85rem; }
+  .exp-top, .edu-top { display: flex; justify-content: space-between; flex-wrap: wrap; }
+  .exp-title, .edu-title { font-weight: bold; font-size: 0.95rem; }
+  .exp-date, .edu-date { font-size: 0.8rem; color: var(--text-sub); }
+  .exp-desc { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
 
-  .project-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 26px;
-    margin-bottom: 24px;
+  .skill-row {
+    display: flex;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+    gap: 24px;
   }
-  .project-card .top-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    flex-wrap: wrap; margin-bottom: 4px;
+  .skill-row:last-child { border-bottom: 1px solid var(--border); }
+  .skill-row .label {
+    width: 100px;
+    flex-shrink: 0;
+    color: var(--text-sub);
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    padding-top: 2px;
   }
-  .project-card h3 { font-size: 1.15rem; }
-  .project-card .meta { font-size: 0.82rem; color: var(--text-sub); }
-  .project-card .role { font-size: 0.85rem; color: var(--accent); font-weight: bold; margin-bottom: 14px; }
-  .project-card h4 {
-    font-size: 0.85rem; color: var(--text-sub); margin: 16px 0 8px;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .project-card .desc { font-size: 0.92rem; }
-  .project-card ul.did-list { padding-left: 18px; font-size: 0.92rem; }
-  .project-card ul.did-list li { margin-bottom: 4px; }
-  .trouble-box {
-    background: white; border: 1px dashed var(--border); border-radius: 8px;
-    padding: 14px 16px; margin-top: 6px;
-  }
-  .trouble-box .t-row { font-size: 0.88rem; margin-bottom: 6px; }
-  .trouble-box .t-key { display: inline-block; width: 44px; color: var(--accent); font-weight: bold; }
+  .skill-row .values { flex: 1; }
 
-  .edu-item { margin-bottom: 16px; }
-  .edu-item .edu-title { font-weight: bold; font-size: 0.95rem; }
-  .edu-item .edu-date { font-size: 0.82rem; color: var(--text-sub); }
-
-  .cert-list { list-style: none; margin-top: 16px; }
-  .cert-list li {
-    padding: 10px 0; border-bottom: 1px solid var(--border);
-    display: flex; justify-content: space-between; font-size: 0.92rem;
+  .project-item {
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
   }
-  .cert-list li:last-child { border-bottom: none; }
-  .cert-list .status { color: var(--text-sub); font-size: 0.85rem; }
+  .project-item:last-child { border-bottom: 1px solid var(--border); }
+  .project-item .top-row {
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
+  }
+  .project-item h3 { font-size: 1.05rem; }
+  .project-item .meta { font-size: 0.8rem; color: var(--text-sub); }
+  .project-item .role { font-size: 0.82rem; color: var(--accent); margin: 4px 0 14px; }
+  .project-item .desc { font-size: 0.9rem; margin-bottom: 12px; }
+  .project-item .field {
+    font-size: 0.87rem;
+    margin-bottom: 6px;
+    color: var(--text-main);
+  }
+  .project-item .field .k {
+    color: var(--text-sub);
+    display: inline-block;
+    width: 90px;
+  }
 
-  footer { text-align: center; color: var(--text-sub); font-size: 0.8rem; padding-bottom: 40px; }
+  footer {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+  }
+
+  @media (max-width: 720px) {
+    body { flex-direction: column; }
+    .sidebar { position: static; width: 100%; height: auto; padding: 30px 24px; }
+    main { padding: 40px 24px 80px; }
+  }
 </style>
 </head>
 <body>
 
-  <div class="hero">
-    <div class="hero-content">
-      <div class="avatar-wrap">
-        <div class="avatar"></div>
-        <div class="name-under">정윤서</div>
-      </div>
-      <div class="hero-info">
-        <h1>막히면, 원인을<br>찾을 때까지 붙잡습니다</h1>
-        <div class="meta">
-  <img src="images/free-icon-email-1782765.png" alt="이메일" style="width:14px; height:14px; vertical-align:middle; margin-right:4px;">
-  <a href="mailto:nannamaisons@gmail.com">nannamaisons@gmail.com</a>
-</div>
-        <div class="hero-links">
-          <a href="https://github.com/jungnanna">Github</a>
-          <a href="https://velog.io/@nannamaisons">Velog</a>
-        </div>
-      </div>
+  <aside class="sidebar">
+    <h1>정윤서</h1>
+    <div class="role">IT 개발자 지망</div>
+    <nav>
+      <a href="#introduce">Introduce</a>
+      <a href="#experience">Experience</a>
+      <a href="#skill">Skill</a>
+      <a href="#project">Project</a>
+      <a href="#education">Education</a>
+    </nav>
+    <div class="links">
+      <a href="mailto:nannamaisons@gmail.com">Email</a>
+      <a href="https://github.com/jungnanna">Github</a>
+      <a href="https://velog.io/@nannamaisons">Velog</a>
     </div>
-  </div>
+  </aside>
 
   <main>
 
     <section id="introduce">
       <h2>Introduce</h2>
-      <p class="intro-text">반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다. 문제를 만나면 원인을 구분해서 끝까지 파고드는 방식으로 일합니다.</p>
+      <p class="intro-text">막히면, 원인을 찾을 때까지 붙잡습니다.<br>반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다.</p>
       <ul class="strengths">
-        <li><b>정밀함을 코드로 옮기는 힘</b> — 반도체 FAB 배관설계 경험에서 다져진 꼼꼼함을 디버깅과 코드 리뷰에 그대로 적용합니다.</li>
-        <li><b>원인을 끝까지 추적하는 문제 해결</b> — API 오류(429, 503) 하나도 "왜 나는지" 원인을 구분해 각각 다른 해결책을 설계합니다.</li>
-        <li><b>팀을 이끄는 실행력</b> — '먹어도 돼?' 프로젝트에서 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계했습니다.</li>
+        <li><b>정밀함을 코드로 옮기는 힘</b>반도체 FAB 배관설계 경험에서 다져진 꼼꼼함을 디버깅과 코드 리뷰에 그대로 적용합니다.</li>
+        <li><b>원인을 끝까지 추적하는 문제 해결</b>API 오류(429, 503) 하나도 원인을 구분해 각각 다른 해결책을 설계합니다.</li>
+        <li><b>팀을 이끄는 실행력</b>'먹어도 돼?' 프로젝트에서 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계했습니다.</li>
       </ul>
     </section>
 
@@ -213,109 +216,63 @@
 
     <section id="skill">
       <h2>Skill</h2>
-      <div class="skill-group">
+      <div class="skill-row">
         <span class="label">CORE</span>
-        <div class="tags"><span class="tag" style="font-weight:bold;">Java</span></div>
+        <span class="values">Java</span>
       </div>
-      <div class="skill-group">
+      <div class="skill-row">
         <span class="label">웹 프론트엔드</span>
-        <div class="tags">
-          <span class="tag">HTML5 / CSS3 / JavaScript</span>
-          <span class="tag">React</span>
-        </div>
+        <span class="values">HTML5, CSS3, JavaScript, React</span>
       </div>
-      <div class="skill-group">
+      <div class="skill-row">
         <span class="label">그 외 다뤄본 것</span>
-        <div class="tags">
-          <span class="tag">Python</span>
-          <span class="tag">Django</span>
-          <span class="tag">Firebase</span>
-          <span class="tag">Supabase</span>
-        </div>
+        <span class="values">Python, Django, Firebase, Supabase</span>
       </div>
-      <div class="skill-group">
+      <div class="skill-row">
         <span class="label">LEARNING</span>
-        <div class="tags"><span class="tag">Spring Boot</span></div>
+        <span class="values">Spring Boot</span>
       </div>
     </section>
 
     <section id="project">
       <h2>Project</h2>
 
-      <div class="project-card">
+      <div class="project-item">
         <div class="top-row">
           <h3>깨비터</h3>
-          <span class="meta">2026.02 ~ 2026.08 · 팀 프로젝트</span>
+          <span class="meta">2026.06 · 팀 프로젝트</span>
         </div>
-        <div class="role">React Native · 프론트엔드 & AI 연동</div>
-        <h4>Description</h4>
+        <div class="role">React Native · 프론트엔드 &amp; AI 연동</div>
         <p class="desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
-        <h4>Skill Set</h4>
-        <div class="tags">
-          <span class="tag">React Native</span><span class="tag">TypeScript</span>
-          <span class="tag">Supabase</span><span class="tag">OpenAI API</span>
-        </div>
-        <h4>What did I do</h4>
-        <ul class="did-list">
-          <li>OpenAI API 연동을 통한 건물 이미지 분석 및 리모델링 제안 기능 구현</li>
-          <li>Naver/Google 로그인 연동 및 사용자 인증 흐름 구성</li>
-        </ul>
-        <h4>성과</h4>
-        <p class="desc">2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</p>
-        <h4>Trouble Shooting</h4>
-        <div class="trouble-box">
-          <div class="t-row"><span class="t-key">문제</span>이미지 분석 API 연동 중 할당량 및 안정성 이슈 발생</div>
-          <div class="t-row"><span class="t-key">해결</span>API 키 분리 및 재시도 로직 설계로 장애 격리</div>
-        </div>
+        <div class="field"><span class="k">Skill Set</span>React Native, TypeScript, Supabase, OpenAI API</div>
+        <div class="field"><span class="k">What did I do</span>OpenAI API 연동 이미지 분석, Naver/Google 로그인 연동</div>
+        <div class="field"><span class="k">성과</span>2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</div>
+        <div class="field"><span class="k">Trouble</span>API 할당량 이슈 → 키 분리 및 재시도 로직으로 해결</div>
       </div>
 
-      <div class="project-card">
+      <div class="project-item">
         <div class="top-row">
           <h3>먹어도 돼?</h3>
           <span class="meta">2026.04 · 팀 프로젝트</span>
         </div>
         <div class="role">Django · 백엔드 팀장</div>
-        <h4>Description</h4>
-        <p class="desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획 두 곳에 AI를 연동.</p>
-        <h4>Skill Set</h4>
-        <div class="tags">
-          <span class="tag">Django</span><span class="tag">Firebase</span>
-          <span class="tag">Gemini API</span><span class="tag">Celery</span>
-        </div>
-        <h4>What did I do</h4>
-        <ul class="did-list">
-          <li>Firebase/SQLite 이중 저장 구조 설계 및 팀 협업 데이터 흐름 관리</li>
-          <li>사용자 건강정보 기반 AI 프롬프트 설계 (알레르기 자동 제외 포함)</li>
-        </ul>
-        <h4>성과</h4>
-        <p class="desc">백엔드 팀장으로서 팀 협업 구조와 API 오류 대응 방향을 직접 결정</p>
-        <h4>Trouble Shooting</h4>
-        <div class="trouble-box">
-          <div class="t-row"><span class="t-key">문제</span>Gemini API 503 오류 및 무료 할당량 소진으로 서비스 불안정</div>
-          <div class="t-row"><span class="t-key">해결</span>재시도 로직과 용도별 API 키 분리로 안정성 확보</div>
-        </div>
+        <p class="desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동.</p>
+        <div class="field"><span class="k">Skill Set</span>Django, Firebase, Gemini API, Celery</div>
+        <div class="field"><span class="k">What did I do</span>Firebase/SQLite 이중 저장 구조 설계, AI 프롬프트 개인화 설계</div>
+        <div class="field"><span class="k">성과</span>백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정</div>
+        <div class="field"><span class="k">Trouble</span>Gemini 503 오류 및 할당량 소진 → 재시도 로직 + 키 분리</div>
       </div>
 
-      <div class="project-card">
+      <div class="project-item">
         <div class="top-row">
           <h3>레디플레이</h3>
           <span class="meta">2026.03 · 팀 프로젝트</span>
         </div>
-        <div class="role">HTML/CSS/JS · 프론트엔드</div>
-        <h4>Description</h4>
+        <div class="role">HTML/CSS/JS · 팀장</div>
         <p class="desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
-        <h4>Skill Set</h4>
-        <div class="tags">
-          <span class="tag">HTML5</span><span class="tag">JavaScript</span>
-          <span class="tag">Supabase</span><span class="tag">Toss Payments API</span>
-        </div>
-        <h4>What did I do</h4>
-        <ul class="did-list">
-          <li>fetch API 기반 공통 헤더·푸터 비동기 로드 구조 구축</li>
-          <li>Session Storage로 로그인 상태 및 장바구니 데이터 흐름 유지</li>
-        </ul>
-        <h4>성과</h4>
-        <p class="desc">기획부터 결제 연동까지 약 10일 만에 완성해 팀 발표 진행</p>
+        <div class="field"><span class="k">Skill Set</span>HTML5, JavaScript, Supabase, Toss Payments API</div>
+        <div class="field"><span class="k">What did I do</span>fetch API 기반 공통 헤더·푸터 구조, Session Storage 로그인/장바구니 유지</div>
+        <div class="field"><span class="k">성과</span>3인 팀 팀장, Discord 자동 알림 CS 시스템 구축</div>
       </div>
 
     </section>
@@ -323,18 +280,28 @@
     <section id="education">
       <h2>Education</h2>
       <div class="edu-item">
-        <div class="edu-title">동화미디어콘텐츠학과</div>
-        <div class="edu-date">학사 졸업</div>
+        <div class="edu-top">
+          <span class="edu-title">건국대학교(글로컬) — 동화미디어콘텐츠학과</span>
+          <span class="edu-date">2012.03 - 2017.02</span>
+        </div>
       </div>
-      <ul class="cert-list">
-        <li>정보처리기사 <span class="status">필기 합격 · 실기 준비 중 (2026.07.19)</span></li>
-        <li>정보처리산업기사 <span class="status">필기 합격 · 실기 준비 중 (2026.07.19)</span></li>
-      </ul>
+      <div class="edu-item">
+        <div class="edu-top">
+          <span class="edu-title">정보처리기사</span>
+          <span class="edu-date">필기 합격 · 실기 준비 중</span>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-top">
+          <span class="edu-title">정보처리산업기사</span>
+          <span class="edu-date">필기 합격 · 실기 준비 중</span>
+        </div>
+      </div>
     </section>
 
-  </main>
+    <footer>© 2026 정윤서</footer>
 
-  <footer>© 2026 정윤서</footer>
+  </main>
 
 </body>
 </html>
