@@ -7,33 +7,19 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 <style>
   :root {
-  --accent: #003A35;
-  --accent-2: #2563EB;
-  --accent-bright: #34D399;
-  --text-main: #001F27;
-  --text-sub: #6b7280;
-  --border: #e5e7eb;
-}
-html {
-  overflow-y: scroll;
-}
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--accent-2);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-  ::selection {
-  background: var(--accent-bright);
-  color: var(--text-main);
-}
+    --accent: #003A35;
+    --accent-2: #2563EB;
+    --accent-bright: #34D399;
+    --text-main: #001F27;
+    --text-sub: #6b7280;
+    --border: #e5e7eb;
+  }
+  html { overflow-y: scroll; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #f1f1f1; }
+  ::-webkit-scrollbar-thumb { background: var(--accent-2); border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  ::selection { background: var(--accent-bright); color: var(--text-main); }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Pretendard', sans-serif;
@@ -55,91 +41,77 @@ html {
     flex-shrink: 0;
     text-align: center;
   }
- .avatar-ring {
-  width: 200px;
-  height: 260px;
-  border-radius: 50%;
-  padding: 6px;
-  background: conic-gradient(from 180deg, var(--accent-bright), var(--accent-2), var(--accent-bright));
-  margin: 0 auto 16px;
-}
-.profile-photo {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center 25%;
-  border: 3px solid white;
-  display: block;
-  filter: contrast(1.1) saturate(1.05);
-}
+  .avatar-ring {
+    width: 200px;
+    height: 260px;
+    border-radius: 50%;
+    padding: 6px;
+    background: conic-gradient(from 180deg, var(--accent-bright), var(--accent-2), var(--accent-bright));
+    margin: 0 auto 16px;
+  }
+  .profile-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 25%;
+    border: 3px solid white;
+    display: block;
+    filter: contrast(1.1) saturate(1.05);
+  }
   .sidebar h1 { font-size: 1.3rem; margin-bottom: 6px; }
   .sidebar .role { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 18px; }
   .sidebar .links { display: flex; flex-direction: column; gap: 6px; margin-bottom: 34px; }
   .sidebar .links a { font-size: 0.8rem; color: var(--accent-2); text-decoration: none; }
   .sidebar nav {
-  text-align: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-.sidebar nav {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.sidebar nav a {
-  display: inline-block;
-  font-size: 0.9rem;
-  color: var(--text-sub);
-  text-decoration: none;
-  padding: 10px 20px;
-  margin-bottom: 4px;
-  transition: all 0.2s;
-}
-.sidebar nav a:hover,
-.sidebar nav a.active {
-  background: var(--accent-2);
-  color: white;
-  font-weight: bold;
-}
- .portfolio-btn {
-  display: inline-block;
-  background: transparent;
-  color: var(--accent-2);
-  font-size: 0.85rem;
-  font-weight: bold;
-  padding: 9px 22px;
-  border-radius: 20px;
-  border: 2px solid var(--accent-2);
-  text-decoration: none;
-  margin-bottom: 18px;
-  transition: all 0.2s;
-}
-.portfolio-btn:hover {
-  background: var(--accent-2);
-  color: white;
-}
-.sidebar nav a:hover,
-.sidebar nav a.active {
-  background: var(--accent-2);
-  color: white;
-  font-weight: bold;
-}
-
-.sidebar nav a.external-link {
-  margin-top: 12px;
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
-}
-
+  .sidebar nav a {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-bottom: 4px;
+    transition: all 0.2s;
+  }
+  .sidebar nav a:hover,
+  .sidebar nav a.active {
+    background: var(--accent-2);
+    color: white;
+    font-weight: bold;
+  }
+  .sidebar nav a.external-link {
+    margin-top: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .portfolio-btn {
+    display: inline-block;
+    background: transparent;
+    color: var(--accent-2);
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 9px 22px;
+    text-decoration: none;
+    margin-bottom: 18px;
+  }
+  .portfolio-btn .arrow {
+    display: inline-block;
+    color: var(--accent-bright);
+    transition: transform 0.2s ease;
+  }
+  .portfolio-btn:hover .arrow {
+    transform: translateX(6px);
+  }
   main { flex: 1; max-width: 820px; padding: 80px 60px 120px; }
-
-  /* 섹션 전체 - 간격과 스크롤 위치 */
   section {
     margin-bottom: 130px;
     scroll-margin-top: 60px;
   }
-
-  /* 섹션 제목 - 폰트 크고 굵게, 밑줄은 글자에 붙게 */
   section h2 {
     font-size: 1.8rem;
     font-weight: 800;
@@ -158,9 +130,7 @@ html {
     width: 100%;
     height: 6px;
     background: var(--accent-2);
-    border-radius: 3px;
   }
-
   .intro-text { font-size: 1.15rem; color: var(--text-main); margin-bottom: 28px; line-height: 1.8; }
   .strengths { list-style: none; }
   .strengths li {
@@ -170,94 +140,80 @@ html {
   }
   .strengths li:last-child { border-bottom: 1px solid var(--border); }
   .strengths li b { display: block; margin-bottom: 4px; }
-
   .exp-item, .edu-item {
     padding: 28px 0;
     border-top: 1px solid var(--border);
   }
   section#education .edu-item:last-of-type,
   section#experience .exp-item:last-of-type { border-bottom: 1px solid var(--border); }
-
   .exp-top, .edu-top { display: flex; justify-content: space-between; flex-wrap: wrap; }
   .exp-title, .edu-title { font-weight: bold; font-size: 0.95rem; }
   .exp-date, .edu-date { font-size: 0.8rem; color: var(--text-sub); }
   .exp-desc { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
-
-.skill-block {
-  display: flex;
-  gap: 30px;
-  padding: 20px 0;
-  border-top: 1px solid var(--border);
-  align-items: flex-start;
-}
-.skill-block:last-child {
-  border-bottom: 1px solid var(--border);
-}
-.skill-label {
-  width: 140px;
-  flex-shrink: 0;
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-main);
-  padding-top: 8px;
-}
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  flex: 1;
-}
-.tag-pill {
-  display: inline-block;
-  padding: 7px 16px;
-  border: 1.5px solid var(--accent);
-  border-radius: 20px;
-  font-size: 0.85rem;
-  color: var(--accent);
-  background: white;
-}
-.tag-pill-learning {
-  border-color: var(--text-sub);
-  color: var(--text-sub);
-  border-style: dashed;
-}
-  
-.hero-statement {
-  font-size: 2.6rem;
-  font-weight: 900;
-  line-height: 1.4;
-  margin-bottom: 40px;
-}
-.hero-statement .highlight {
-  background: var(--highlight);
-  color: var(--text-main);
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  padding: 2px 10px;
-}
-
-.exp-item-prior {
-  opacity: 0.65;
-}
-.exp-item-prior .exp-title {
-  font-weight: 500;
-}
-.repo-link {
-  color: var(--accent-2);
-  text-decoration: none;
-  font-weight: 600;
-}
-.repo-link:hover {
-  text-decoration: underline;
-}
-.repo-pending {
-  color: var(--text-sub);
-  font-style: italic;
-  font-size: 0.85rem;
-}
-
-
-
+  .skill-block {
+    display: flex;
+    gap: 30px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .skill-block:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-label {
+    width: 140px;
+    flex-shrink: 0;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    padding-top: 8px;
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 1;
+  }
+  .tag-pill {
+    display: inline-block;
+    padding: 7px 16px;
+    border: 1.5px solid var(--accent);
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: white;
+  }
+  .tag-pill-learning {
+    border-color: var(--text-sub);
+    color: var(--text-sub);
+  }
+  .hero-statement {
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 40px;
+  }
+  .hero-statement .highlight {
+    color: var(--text-main);
+  }
+  .exp-item-prior {
+    opacity: 0.65;
+  }
+  .exp-item-prior .exp-title {
+    font-weight: 500;
+  }
+  .repo-link {
+    color: var(--accent-2);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .repo-link:hover {
+    text-decoration: underline;
+  }
+  .repo-pending {
+    color: var(--text-sub);
+    font-style: italic;
+    font-size: 0.85rem;
+  }
   .project-item { padding: 28px 0; border-top: 1px solid var(--border); }
   .project-item:last-child { border-bottom: 1px solid var(--border); }
   .project-item .top-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
@@ -267,9 +223,7 @@ html {
   .project-item .desc { font-size: 0.9rem; margin-bottom: 12px; }
   .project-item .field { font-size: 0.87rem; margin-bottom: 6px; color: var(--text-main); }
   .project-item .field .k { color: var(--text-sub); display: inline-block; width: 90px; }
-
   footer { font-size: 0.8rem; color: var(--text-sub); }
-
   @media (max-width: 900px) {
     .page-wrap { flex-direction: column; }
     .sidebar { position: static; width: 100%; height: auto; padding: 30px 24px; }
@@ -281,178 +235,178 @@ html {
 <div class="page-wrap">
   <aside class="sidebar">
     <div class="avatar-ring">
-  <img src="images/profile4.png" class="profile-photo" alt="정윤서">
-</div>
+      <img src="images/profile4.png" class="profile-photo" alt="정윤서">
+    </div>
     <h1>정윤서(난나)</h1>
     <div class="role">백엔드 개발자 지망</div>
-    <a href="https://jungnanna.github.io/portfolio/" class="portfolio-btn">Portfolio →</a>
+    <a href="https://jungnanna.github.io/portfolio/" class="portfolio-btn">Portfolio <span class="arrow">→</span></a>
     <div class="links">
       <a href="mailto:nannamaisons@gmail.com">E-mail</a>
       <a href="https://github.com/jungnanna">Github</a>
       <a href="https://velog.io/@nannamaisons">Velog</a>
     </div>
     <nav>
-    <a href="#introduce">Introduce</a>
-    <a href="#experience">Experience</a>
-    <a href="#skill">Skill</a>
-    <a href="#project">Project</a>
-    <a href="#education">Education</a>
-  </nav>
+      <a href="#introduce">Introduce</a>
+      <a href="#experience">Experience</a>
+      <a href="#skill">Skill</a>
+      <a href="#project">Project</a>
+      <a href="#education">Education</a>
+    </nav>
   </aside>
   <main>
     <section id="introduce">
-  <p class="hero-statement">
-    <span class="highlight">반갑습니다.<br>백엔드 개발자 정윤서입니다.</span>
-  </p>
-  <p class="intro-text">반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다. 문제를 만나면 원인을 구분해서 끝까지 파고드는 방식으로 일합니다.</p>
-  <ul class="strengths">
-    <li><b>정밀함을 코드로 옮기는 힘</b>반도체 FAB 배관설계 경험에서 다져진 꼼꼼함을 디버깅과 코드 리뷰에 그대로 적용합니다.</li>
-    <li><b>원인을 끝까지 추적하는 문제 해결</b>API 오류(429, 503) 하나도 원인을 구분해 각각 다른 해결책을 설계합니다.</li>
-    <li><b>팀을 이끄는 실행력</b>'먹어도 돼?' 프로젝트에서 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계했습니다.</li>
-  </ul>
-</section>
+      <p class="hero-statement">
+        <span class="highlight">반갑습니다.<br>백엔드 개발자 정윤서입니다.</span>
+      </p>
+      <p class="intro-text">반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다. 문제를 만나면 원인을 구분해서 끝까지 파고드는 방식으로 일합니다.</p>
+      <ul class="strengths">
+        <li><b>정밀함을 코드로 옮기는 힘</b>반도체 FAB 배관설계 경험에서 다져진 꼼꼼함을 디버깅과 코드 리뷰에 그대로 적용합니다.</li>
+        <li><b>원인을 끝까지 추적하는 문제 해결</b>API 오류(429, 503) 하나도 원인을 구분해 각각 다른 해결책을 설계합니다.</li>
+        <li><b>팀을 이끄는 실행력</b>'먹어도 돼?' 프로젝트에서 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계했습니다.</li>
+      </ul>
+    </section>
     <section id="experience">
-  <h2>Work Experience</h2>
-  <div class="exp-item">
-    <div class="exp-top">
-      <span class="exp-title">(주)케이씨이앤씨 — 반도체 FAB 배관설계</span>
-      <span class="exp-date">2024.06 - 2025.08</span>
-    </div>
-    <p class="exp-desc">삼성 반도체 P4 FAB 배관 설계 업무 수행. 정밀한 공정 이해와 문서화 역량을 쌓음.</p>
-  </div>
-  <div class="exp-item">
-    <div class="exp-top">
-      <span class="exp-title">하이미디어IT컴퓨터학원 — KDT 부트캠프</span>
-      <span class="exp-date">2026.02 - 2026.08</span>
-    </div>
-    <p class="exp-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 개발 과정 수강.</p>
-  </div>
-  <div class="exp-item exp-item-prior">
-    <div class="exp-top">
-      <span class="exp-title">영월국유림관리소 — 행정 업무</span>
-      <span class="exp-date">2020 - 2022</span>
-    </div>
-    <p class="exp-desc">민원 접수 및 행정 서류 작성 업무 수행.</p>
-  </div>
-  <div class="exp-item exp-item-prior">
-    <div class="exp-top">
-      <span class="exp-title">(주)허밍아이엠씨 — MD</span>
-      <span class="exp-date">2016.12 - 2018.03</span>
-    </div>
-    <p class="exp-desc">쇼핑몰 상품 판매 및 재고 관리 업무 수행.</p>
-  </div>
-</section>
+      <h2>Work Experience</h2>
+      <div class="exp-item">
+        <div class="exp-top">
+          <span class="exp-title">(주)케이씨이앤씨 — 반도체 FAB 배관설계</span>
+          <span class="exp-date">2024.06 - 2025.08</span>
+        </div>
+        <p class="exp-desc">삼성 반도체 P4 FAB 배관 설계 업무 수행. 정밀한 공정 이해와 문서화 역량을 쌓음.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-top">
+          <span class="exp-title">하이미디어IT컴퓨터학원 — KDT 부트캠프</span>
+          <span class="exp-date">2026.02 - 2026.08</span>
+        </div>
+        <p class="exp-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 개발 과정 수강.</p>
+      </div>
+      <div class="exp-item exp-item-prior">
+        <div class="exp-top">
+          <span class="exp-title">영월국유림관리소 — 행정 업무</span>
+          <span class="exp-date">2020 - 2022</span>
+        </div>
+        <p class="exp-desc">민원 접수 및 행정 서류 작성 업무 수행.</p>
+      </div>
+      <div class="exp-item exp-item-prior">
+        <div class="exp-top">
+          <span class="exp-title">(주)허밍아이엠씨 — MD</span>
+          <span class="exp-date">2016.12 - 2018.03</span>
+        </div>
+        <p class="exp-desc">쇼핑몰 상품 판매 및 재고 관리 업무 수행.</p>
+      </div>
+    </section>
     <section id="skill">
-  <h2>Skill</h2>
-  <div class="skill-block">
-    <div class="skill-label">Languages</div>
-    <div class="skill-tags">
-      <span class="tag-pill">Java</span>
-      <span class="tag-pill">Python</span>
-      <span class="tag-pill">JavaScript</span>
-      <span class="tag-pill">TypeScript</span>
-      <span class="tag-pill">HTML5</span>
-      <span class="tag-pill">CSS3</span>
-    </div>
-  </div>
-  <div class="skill-block">
-    <div class="skill-label">Frameworks &amp; Libraries</div>
-    <div class="skill-tags">
-      <span class="tag-pill">React</span>
-      <span class="tag-pill">React Native</span>
-      <span class="tag-pill">Django</span>
-      <span class="tag-pill">Node.js</span>
-    </div>
-  </div>
-  <div class="skill-block">
-    <div class="skill-label">Database &amp; Infra</div>
-    <div class="skill-tags">
-      <span class="tag-pill">Supabase (PostgreSQL)</span>
-      <span class="tag-pill">Firebase</span>
-      <span class="tag-pill">SQLite</span>
-    </div>
-  </div>
-  <div class="skill-block">
-    <div class="skill-label">AI / API</div>
-    <div class="skill-tags">
-      <span class="tag-pill">OpenAI API</span>
-      <span class="tag-pill">Gemini API</span>
-      <span class="tag-pill">Google Maps API</span>
-      <span class="tag-pill">공공데이터포털 API</span>
-    </div>
-  </div>
-  <div class="skill-block">
-    <div class="skill-label">Tools</div>
-    <div class="skill-tags">
-      <span class="tag-pill">VS Code</span>
-      <span class="tag-pill">Cursor</span>
-      <span class="tag-pill">Android Studio</span>
-      <span class="tag-pill">Figma</span>
-      <span class="tag-pill">Git</span>
-    </div>
-  </div>
-  <div class="skill-block">
-    <div class="skill-label">Learning</div>
-    <div class="skill-tags">
-      <span class="tag-pill tag-pill-learning">Spring Boot</span>
-    </div>
-  </div>
-</section>
+      <h2>Skill</h2>
+      <div class="skill-block">
+        <div class="skill-label">Languages</div>
+        <div class="skill-tags">
+          <span class="tag-pill">Java</span>
+          <span class="tag-pill">Python</span>
+          <span class="tag-pill">JavaScript</span>
+          <span class="tag-pill">TypeScript</span>
+          <span class="tag-pill">HTML5</span>
+          <span class="tag-pill">CSS3</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Frameworks &amp; Libraries</div>
+        <div class="skill-tags">
+          <span class="tag-pill">React</span>
+          <span class="tag-pill">React Native</span>
+          <span class="tag-pill">Django</span>
+          <span class="tag-pill">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Database &amp; Infra</div>
+        <div class="skill-tags">
+          <span class="tag-pill">Supabase (PostgreSQL)</span>
+          <span class="tag-pill">Firebase</span>
+          <span class="tag-pill">SQLite</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">AI / API</div>
+        <div class="skill-tags">
+          <span class="tag-pill">OpenAI API</span>
+          <span class="tag-pill">Gemini API</span>
+          <span class="tag-pill">Google Maps API</span>
+          <span class="tag-pill">공공데이터포털 API</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Tools</div>
+        <div class="skill-tags">
+          <span class="tag-pill">VS Code</span>
+          <span class="tag-pill">Cursor</span>
+          <span class="tag-pill">Android Studio</span>
+          <span class="tag-pill">Figma</span>
+          <span class="tag-pill">Git</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Learning</div>
+        <div class="skill-tags">
+          <span class="tag-pill tag-pill-learning">Spring Boot</span>
+        </div>
+      </div>
+    </section>
     <section id="project">
-  <h2>Project</h2>
-  <div class="project-item">
-    <div class="top-row">
-      <h3>깨비터</h3>
-      <span class="meta">2026.06 · 팀 프로젝트</span>
-    </div>
-    <div class="role">React Native · 프론트엔드 &amp; AI 연동</div>
-    <p class="desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
-    <div class="field"><span class="k">Skill Set</span>React Native, TypeScript, Supabase, OpenAI API</div>
-    <div class="field"><span class="k">What did I do</span>OpenAI API 연동 이미지 분석, Naver/Google 로그인 연동</div>
-    <div class="field"><span class="k">성과</span>2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</div>
-    <div class="field"><span class="k">Trouble</span>API 할당량 이슈 → 키 분리 및 재시도 로직으로 해결</div>
-    <div class="field">
-      <span class="k">Repo</span>
-      <a href="https://github.com/jungnanna/ggabiteo" target="_blank" class="repo-link">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-        </svg>GitHub →
-      </a>
-    </div>
-  </div>
-  <div class="project-item">
-    <div class="top-row">
-      <h3>먹어도 돼?</h3>
-      <span class="meta">2026.04 · 팀 프로젝트</span>
-    </div>
-    <div class="role">Django · 백엔드 팀장</div>
-    <p class="desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동.</p>
-    <div class="field"><span class="k">Skill Set</span>Django, Firebase, Gemini API, Celery</div>
-    <div class="field"><span class="k">What did I do</span>Firebase/SQLite 이중 저장 구조 설계, AI 프롬프트 개인화 설계</div>
-    <div class="field"><span class="k">성과</span>백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정</div>
-    <div class="field"><span class="k">Trouble</span>Gemini 503 오류 및 할당량 소진 → 재시도 로직 + 키 분리</div>
-    <div class="field">
-      <span class="k">Repo</span>
-      <a href="https://github.com/jungnanna/CANIEAT" target="_blank" class="repo-link">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-        </svg>GitHub →
-      </a>
-    </div>
-  </div>
-  <div class="project-item">
-    <div class="top-row">
-      <h3>레디플레이</h3>
-      <span class="meta">2026.03 · 팀 프로젝트</span>
-    </div>
-    <div class="role">HTML/CSS/JS · 팀장</div>
-    <p class="desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
-    <div class="field"><span class="k">Skill Set</span>HTML5, JavaScript, Supabase, Toss Payments API</div>
-    <div class="field"><span class="k">What did I do</span>fetch API 기반 공통 헤더·푸터 구조, Session Storage 로그인/장바구니 유지</div>
-    <div class="field"><span class="k">성과</span>3인 팀 팀장, Discord 자동 알림 CS 시스템 구축</div>
-    <div class="field"><span class="k">Repo</span><span class="repo-pending">업로드 예정</span></div>
-  </div>
-</section>
+      <h2>Project</h2>
+      <div class="project-item">
+        <div class="top-row">
+          <h3>깨비터</h3>
+          <span class="meta">2026.06 · 팀 프로젝트</span>
+        </div>
+        <div class="role">React Native · 프론트엔드 &amp; AI 연동</div>
+        <p class="desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
+        <div class="field"><span class="k">Skill Set</span>React Native, TypeScript, Supabase, OpenAI API</div>
+        <div class="field"><span class="k">What did I do</span>OpenAI API 연동 이미지 분석, Naver/Google 로그인 연동</div>
+        <div class="field"><span class="k">성과</span>2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</div>
+        <div class="field"><span class="k">Trouble</span>API 할당량 이슈 → 키 분리 및 재시도 로직으로 해결</div>
+        <div class="field">
+          <span class="k">Repo</span>
+          <a href="https://github.com/jungnanna/ggabiteo" target="_blank" class="repo-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>GitHub →
+          </a>
+        </div>
+      </div>
+      <div class="project-item">
+        <div class="top-row">
+          <h3>먹어도 돼?</h3>
+          <span class="meta">2026.04 · 팀 프로젝트</span>
+        </div>
+        <div class="role">Django · 백엔드 팀장</div>
+        <p class="desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동.</p>
+        <div class="field"><span class="k">Skill Set</span>Django, Firebase, Gemini API, Celery</div>
+        <div class="field"><span class="k">What did I do</span>Firebase/SQLite 이중 저장 구조 설계, AI 프롬프트 개인화 설계</div>
+        <div class="field"><span class="k">성과</span>백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정</div>
+        <div class="field"><span class="k">Trouble</span>Gemini 503 오류 및 할당량 소진 → 재시도 로직 + 키 분리</div>
+        <div class="field">
+          <span class="k">Repo</span>
+          <a href="https://github.com/jungnanna/CANIEAT" target="_blank" class="repo-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>GitHub →
+          </a>
+        </div>
+      </div>
+      <div class="project-item">
+        <div class="top-row">
+          <h3>레디플레이</h3>
+          <span class="meta">2026.03 · 팀 프로젝트</span>
+        </div>
+        <div class="role">HTML/CSS/JS · 팀장</div>
+        <p class="desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
+        <div class="field"><span class="k">Skill Set</span>HTML5, JavaScript, Supabase, Toss Payments API</div>
+        <div class="field"><span class="k">What did I do</span>fetch API 기반 공통 헤더·푸터 구조, Session Storage 로그인/장바구니 유지</div>
+        <div class="field"><span class="k">성과</span>3인 팀 팀장, Discord 자동 알림 CS 시스템 구축</div>
+        <div class="field"><span class="k">Repo</span><span class="repo-pending">업로드 예정</span></div>
+      </div>
+    </section>
     <section id="education">
       <h2>Education</h2>
       <div class="edu-item">
