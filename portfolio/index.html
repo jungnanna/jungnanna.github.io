@@ -8,10 +8,11 @@
 <style>
   :root {
     --accent: #003A35;
-    --accent-2: #2563EB;
-    --accent-bright: #34D399;
-    --accent-teal: #0F766E;   /* 오렌지 대신 쓰는 블루/그린 계열 색 */
+    --accent-2: #2DD4BF;      /* 깨비터 대표색: 민트 */
+    --accent-bright: #F97316; /* 먹어도 돼? 대표색: 밝은 주황 */
+    --accent-teal: #16A34A;   /* 레디플레이 대표색: 초록 */
     --pending: #94A3B8;
+    --pending-bg: #F1F3F5;   /* 옅은 회색: 아직 시작 안 한 프로젝트용 배경 */
     --text-main: #001F27;
     --text-sub: #6b7280;
     --border: #e5e7eb;
@@ -25,14 +26,10 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Pretendard', sans-serif; color: var(--text-main); line-height: 1.75; }
 
-  /* display: flex 를 지웠어요. 이게 버튼이 왼쪽에 세로로 퍼져 보이던 원인이었어요. */
-  .page-wrap { max-width: 1020px; margin: 0 auto; }
+  .page-wrap { max-width: 1100px; margin: 0 auto; }
 
   main { padding: 80px 40px 120px; }
 
-  /* ------------------------------------------------------------
-     "이력서 보기" 버튼: 흰 박스 + 검은 테두리 + 굵은 글씨
-     ------------------------------------------------------------ */
   .portfolio-btn {
     display: inline-block;
     background: white;
@@ -51,7 +48,6 @@
   .repo-link:hover { text-decoration: underline; }
   .repo-pending { color: var(--text-sub); font-style: italic; font-size: 0.85rem; }
 
-  /* 제목 문구: 배경 하이라이트 대신 굵은 검은 밑줄로 강조해요 */
   .hero-statement {
     font-size: 2.2rem;
     font-weight: 900;
@@ -62,36 +58,101 @@
     border-bottom: 4px solid var(--text-main);
     padding-bottom: 4px;
   }
-  .intro-text { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 60px; max-width: 640px; }
+  .intro-text { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 48px; max-width: 640px; }
 
   /* ============================================================
-     프로젝트 카드 4개, 2x2 배치. 브루탈리즘(두꺼운 테두리, 하드 섀도우) 없이
-     깔끔한 색 블록으로만 구성했어요.
+     ★ 새 구조: 왼쪽 사이드바(메뉴) + 오른쪽 전시 공간(stage)
      ============================================================ */
-  .panel-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+  .layout {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  /* ---------- 왼쪽 사이드바 ---------- */
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: sticky;
+    top: 40px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 6px solid var(--pending);
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .sidebar-item:hover { background: #f8f9fa; }
+
+  .sidebar-item.active {
+    background: #F1F5F9;
+    color: var(--text-main);
+    border-left-width: 8px;
+  }
+
+  .sidebar-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+  }
+  .sidebar-badge-pending { background: var(--pending); }
+  .sidebar-badge-blue    { background: var(--accent-2); }
+  .sidebar-badge-green   { background: var(--accent-bright); color: var(--text-main); }
+  .sidebar-badge-teal    { background: var(--accent-teal); }
+
+  .sidebar-item[data-target="mainproject"] { border-left-color: var(--pending); }
+  .sidebar-item[data-target="mainproject"]:not(.active) { background: var(--pending-bg); }
+  .sidebar-item[data-target="ggabiteo"]    { border-left-color: var(--accent-2); }
+  .sidebar-item[data-target="caniEat"]     { border-left-color: var(--accent-bright); }
+  .sidebar-item[data-target="readyplay"]   { border-left-color: var(--accent-teal); }
+
+  /* ---------- 오른쪽 전시 공간 ---------- */
+  .stage {
+    flex: 1;
+    min-width: 0;
+    min-height: 480px;
   }
 
   .panel {
-    position: relative;
+    display: none;
     border-radius: 0;
-    padding: 28px;
-    overflow: hidden;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    min-height: 340px;
+    padding: 36px;
+    background: white;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-top: 6px solid var(--pending);
   }
 
-  .panel-blue   { background: var(--accent-2);     color: white; }
-  .panel-green  { background: var(--accent-bright);color: var(--text-main); }
-  .panel-teal   { background: var(--accent-teal);  color: white; }
+  .panel.active { display: flex; flex-direction: column; }
+
+  .panel-blue   { border-top-color: var(--accent-2); }
+  .panel-green  { border-top-color: var(--accent-bright); }
+  .panel-teal   { border-top-color: var(--accent-teal); }
   .panel-pending{
-    background: #f4f5f7;
-    color: var(--text-main);
-    border: 2px dashed var(--pending);
+    background: var(--pending-bg);
+    border: 2px solid var(--pending);
+    border-top: 2px solid var(--pending);
   }
 
   .panel-num {
@@ -100,13 +161,16 @@
     justify-content: center;
     width: 34px;
     height: 34px;
-    border-radius: 0;
-    background: var(--accent);
     color: white;
     font-size: 0.85rem;
     font-weight: 700;
     flex-shrink: 0;
+    background: var(--pending);
   }
+  .panel-blue .panel-num    { background: var(--accent-2); }
+  .panel-green .panel-num   { background: var(--accent-bright); color: var(--text-main); }
+  .panel-teal .panel-num    { background: var(--accent-teal); }
+  .panel-pending .panel-num { background: var(--pending); }
 
   .panel-head {
     display: flex;
@@ -114,17 +178,9 @@
     gap: 12px;
     margin-bottom: 14px;
   }
+  .panel-head h3 { font-size: 1.5rem; font-weight: 800; }
 
-  .panel-head h3 {
-    font-size: 1.3rem;
-    font-weight: 800;
-  }
-
-  .panel-tagline {
-    font-size: 0.85rem;
-    opacity: 0.85;
-    margin-bottom: 8px;
-  }
+  .panel-tagline { font-size: 0.9rem; color: var(--text-sub); margin-bottom: 8px; }
 
   .panel-status {
     display: inline-block;
@@ -133,90 +189,78 @@
     background: var(--pending);
     color: white;
     padding: 3px 10px;
-    border-radius: 0;
     margin-bottom: 10px;
     width: fit-content;
   }
 
-  .panel-body {
-    opacity: 0;
-    transition: opacity 0.25s ease 0.15s;
-    overflow-y: auto;
-    flex: 1;
-  }
+  .panel-body { flex: 1; }
 
-  .panel:hover .panel-body {
-    opacity: 1;
-  }
-
-  /* 설명(서술) 문단 아래에 검은 밑줄을 넣었어요 */
   .panel-desc {
-    font-size: 0.9rem;
-    margin-bottom: 14px;
-    padding-bottom: 14px;
-    border-bottom: 2px solid currentColor;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+    max-width: 640px;
   }
 
-  .panel-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .panel-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
   .panel-tags span {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
     background: white;
     color: var(--text-main);
     border: 2px solid var(--text-main);
     padding: 3px 10px;
-    border-radius: 0;
   }
+  .panel-blue .panel-tags span  { border-color: var(--accent-2); color: var(--accent-2); }
+  .panel-green .panel-tags span { border-color: var(--accent-bright); color: var(--accent-bright); }
+  .panel-teal .panel-tags span  { border-color: var(--accent-teal); color: var(--accent-teal); }
 
-  /* 사진 넣을 자리 - 지금은 준비된 이미지가 없으니 점선 박스로 표시해뒀어요.
-     실제 스크린샷이 생기면 이 div를 <img src="../images/파일명.png"> 로 바꾸면 돼요. */
   .media-placeholder {
-    border: 1.5px dashed rgba(255,255,255,0.6);
-    border-radius: 0;
-    padding: 20px;
+    border: 1.5px solid var(--border);
+    padding: 24px;
     text-align: center;
-    font-size: 0.78rem;
-    margin-bottom: 14px;
-    opacity: 0.85;
-  }
-  .panel-green .media-placeholder,
-  .panel-pending .media-placeholder {
-    border-color: rgba(0,0,0,0.25);
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    margin-bottom: 16px;
   }
 
   .panel-code {
-    background: rgba(0,0,0,0.25);
-    color: #f1f5f9;
+    background: #f8f9fa;
+    color: var(--text-main);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    padding: 12px;
-    border-radius: 0;
-    margin-bottom: 14px;
+    font-size: 0.78rem;
+    padding: 14px 14px 14px 16px;
+    border-left: 4px solid var(--pending);
+    margin-bottom: 16px;
     white-space: pre-wrap;
     line-height: 1.6;
   }
-  .panel-green .panel-code,
-  .panel-pending .panel-code {
-    background: rgba(0,0,0,0.08);
-    color: #1f2937;
-  }
+  .panel-blue .panel-code  { border-left-color: var(--accent-2); }
+  .panel-green .panel-code { border-left-color: var(--accent-bright); }
+  .panel-teal .panel-code  { border-left-color: var(--accent-teal); }
 
   .panel-link {
     display: inline-block;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 700;
     text-decoration: none;
-    color: inherit;
-    border-bottom: 2px solid currentColor;
+    color: var(--text-main);
+    border-bottom: 2px solid var(--pending);
     padding-bottom: 2px;
   }
+  .panel-blue .panel-link  { border-bottom-color: var(--accent-2); }
+  .panel-green .panel-link { border-bottom-color: var(--accent-bright); }
+  .panel-teal .panel-link  { border-bottom-color: var(--accent-teal); }
 
   footer { font-size: 0.8rem; color: var(--text-sub); margin-top: 60px; }
 
-  @media (max-width: 900px) {
+  @media (max-width: 800px) {
     main { padding: 40px 24px 80px; }
-    .panel-row { grid-template-columns: 1fr; }
-    .panel-body { opacity: 1; }
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; position: static; flex-direction: row; overflow-x: auto; }
+    .sidebar-item { white-space: nowrap; }
   }
 </style>
 </head>
@@ -224,128 +268,162 @@
 <div class="page-wrap">
   <main>
     <section class="portfolio-intro">
-      <!-- 버튼을 main 안으로 옮겼어요. 이제 본문의 일부로 자연스럽게 흘러가요 -->
       <a href="../index.html" class="portfolio-btn">← 이력서 보기</a>
 
       <p class="hero-statement"><span class="highlight">프로젝트로 증명합니다.</span></p>
       <p class="intro-text">
-        마우스를 올리면 각 프로젝트가 펼쳐져요. 화면, 코드, 트러블슈팅까지 한 곳에 모아뒀습니다.
+        왼쪽 메뉴에서 프로젝트를 선택하면, 화면·코드·트러블슈팅까지 오른쪽에 크게 펼쳐집니다.
       </p>
     </section>
 
-    <section class="panel-row" aria-label="프로젝트 목록">
+    <div class="layout">
 
-      <!-- 01. 깨비터 -->
-      <article class="panel panel-blue" id="ggabiteo">
-        <div class="panel-head">
-          <span class="panel-num">01</span>
-          <h3>깨비터</h3>
-        </div>
-        <p class="panel-tagline">React Native · 빈집 매칭 &amp; AI 리모델링</p>
+      <nav class="sidebar" aria-label="프로젝트 메뉴">
+        <button class="sidebar-item active" type="button" data-target="ggabiteo">
+          <span class="sidebar-badge sidebar-badge-blue">01</span> 깨비터
+        </button>
+        <button class="sidebar-item" type="button" data-target="caniEat">
+          <span class="sidebar-badge sidebar-badge-green">02</span> 먹어도 돼?
+        </button>
+        <button class="sidebar-item" type="button" data-target="readyplay">
+          <span class="sidebar-badge sidebar-badge-teal">03</span> 레디플레이
+        </button>
+        <button class="sidebar-item" type="button" data-target="mainproject">
+          <span class="sidebar-badge sidebar-badge-pending">04</span> 메인 프로젝트
+        </button>
+      </nav>
 
-        <div class="panel-body">
-          <p class="panel-desc">
-            빈집 매칭 및 AI 리모델링 시뮬레이션 앱입니다. 2026 충청북도 공공데이터 활용 공모전에 출품했어요.
-            OpenAI API로 이미지를 분석해서 리모델링 시뮬레이션을 보여주고, Naver/Google 로그인을 연동했습니다.
-            API 할당량 이슈가 있었는데, 원인을 나눠서 키 분리와 재시도 로직으로 해결했습니다.
-          </p>
-          <div class="panel-tags">
-            <span>React Native</span><span>TypeScript</span><span>Supabase</span><span>OpenAI API</span>
+      <div class="stage">
+
+        <article class="panel panel-blue active" id="ggabiteo">
+          <div class="panel-head">
+            <span class="panel-num">01</span>
+            <h3>깨비터</h3>
           </div>
+          <p class="panel-tagline">React Native · 빈집 매칭 &amp; AI 리모델링</p>
 
-          <!-- TODO: 스크린샷 준비되면 아래 div를
-               <img src="../images/ggabiteo-1.png" alt="깨비터 스크린샷"> 로 교체하세요 -->
-          <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
-
-          <!-- TODO: 아래 주석 안에 실제로 보여주고 싶은 핵심 코드를 붙여넣으세요 -->
-          <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
+          <div class="panel-body">
+            <p class="panel-desc">
+              빈집 매칭 및 AI 리모델링 시뮬레이션 앱입니다. 2026 충청북도 공공데이터 활용 공모전에 출품했어요.
+              OpenAI API로 이미지를 분석해서 리모델링 시뮬레이션을 보여주고, Naver/Google 로그인을 연동했습니다.
+              API 할당량 이슈가 있었는데, 원인을 나눠서 키 분리와 재시도 로직으로 해결했습니다.
+            </p>
+            <div class="panel-tags">
+              <span>React Native</span><span>TypeScript</span><span>Supabase</span><span>OpenAI API</span>
+            </div>
+            <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+            <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
 // 예: OpenAI API 이미지 분석 호출 부분</pre>
-
-          <a class="panel-link" href="https://github.com/jungnanna/ggabiteo" target="_blank" rel="noopener">GitHub →</a>
-        </div>
-      </article>
-
-      <!-- 02. 먹어도 돼? -->
-      <article class="panel panel-green" id="caniEat">
-        <div class="panel-head">
-          <span class="panel-num">02</span>
-          <h3>먹어도 돼?</h3>
-        </div>
-        <p class="panel-tagline">Django · 백엔드 팀장</p>
-
-        <div class="panel-body">
-          <p class="panel-desc">
-            개인별 맞춤형 식단 추천과 영양 분석 서비스예요. AI 챗봇과 AI 퍼스널 주간 식단 계획을 연동했습니다.
-            백엔드 팀장으로서 Firebase/SQLite 이중 저장 구조를 설계했고, Gemini 503 오류와 할당량 소진 문제를
-            재시도 로직 + 키 분리로 해결했습니다.
-          </p>
-          <div class="panel-tags">
-            <span>Django</span><span>Firebase</span><span>Gemini API</span><span>Celery</span>
+            <a class="panel-link" href="https://github.com/jungnanna/ggabiteo" target="_blank" rel="noopener">GitHub →</a>
           </div>
+        </article>
 
-          <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+        <article class="panel panel-green" id="caniEat">
+          <div class="panel-head">
+            <span class="panel-num">02</span>
+            <h3>먹어도 돼?</h3>
+          </div>
+          <p class="panel-tagline">Django · 백엔드 팀장</p>
 
-          <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
+          <div class="panel-body">
+            <p class="panel-desc">
+              개인별 맞춤형 식단 추천과 영양 분석 서비스예요. AI 챗봇과 AI 퍼스널 주간 식단 계획을 연동했습니다.
+              백엔드 팀장으로서 Firebase/SQLite 이중 저장 구조를 설계했고, Gemini 503 오류와 할당량 소진 문제를
+              재시도 로직 + 키 분리로 해결했습니다.
+            </p>
+            <div class="panel-tags">
+              <span>Django</span><span>Firebase</span><span>Gemini API</span><span>Celery</span>
+            </div>
+            <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+            <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
 // 예: 이중 저장 구조 처리 부분</pre>
-
-          <a class="panel-link" href="https://github.com/jungnanna/CANIEAT" target="_blank" rel="noopener">GitHub →</a>
-        </div>
-      </article>
-
-      <!-- 03. 레디플레이 -->
-      <article class="panel panel-teal" id="readyplay">
-        <div class="panel-head">
-          <span class="panel-num">03</span>
-          <h3>레디플레이</h3>
-        </div>
-        <p class="panel-tagline">HTML/CSS/JS · 팀장</p>
-
-        <div class="panel-body">
-          <p class="panel-desc">
-            스포츠 입문자를 위한 큐레이션 커머스 웹사이트예요. fetch API로 공통 헤더·푸터 구조를 만들고,
-            Session Storage로 로그인/장바구니 상태를 유지했습니다. 3인 팀의 팀장으로서 Discord 자동 알림
-            CS 시스템도 구축했습니다.
-          </p>
-          <div class="panel-tags">
-            <span>HTML5</span><span>JavaScript</span><span>Supabase</span><span>Toss Payments</span>
+            <a class="panel-link" href="https://github.com/jungnanna/CANIEAT" target="_blank" rel="noopener">GitHub →</a>
           </div>
+        </article>
 
-          <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+        <article class="panel panel-teal" id="readyplay">
+          <div class="panel-head">
+            <span class="panel-num">03</span>
+            <h3>레디플레이</h3>
+          </div>
+          <p class="panel-tagline">HTML/CSS/JS · 팀장</p>
 
-          <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
+          <div class="panel-body">
+            <p class="panel-desc">
+              스포츠 입문자를 위한 큐레이션 커머스 웹사이트예요. fetch API로 공통 헤더·푸터 구조를 만들고,
+              Session Storage로 로그인/장바구니 상태를 유지했습니다. 3인 팀의 팀장으로서 Discord 자동 알림
+              CS 시스템도 구축했습니다.
+            </p>
+            <div class="panel-tags">
+              <span>HTML5</span><span>JavaScript</span><span>Supabase</span><span>Toss Payments</span>
+            </div>
+            <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
+            <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
 // 예: 공통 헤더/푸터 fetch 처리 부분</pre>
-
-          <span class="repo-pending">Repo 업로드 예정</span>
-        </div>
-      </article>
-
-      <!-- 04. 메인 프로젝트 (아직 진행 전) -->
-      <article class="panel panel-pending" id="mainproject">
-        <div class="panel-head">
-          <span class="panel-num">04</span>
-          <h3>메인 프로젝트</h3>
-        </div>
-        <span class="panel-status">예정 · 2026.08</span>
-
-        <div class="panel-body">
-          <p class="panel-desc">
-            KDT 부트캠프 메인 프로젝트로, Java와 생성형 AI를 활용한 차세대 CRM 플랫폼을 Spring Boot 기반으로
-            개발할 예정입니다. 진행되면 이 자리에 배경, 기능, 트러블슈팅을 채워 넣을 거예요.
-          </p>
-          <div class="panel-tags">
-            <span>Spring Boot</span><span>Java</span><span>CRM</span>
+            <span class="repo-pending">Repo 업로드 예정</span>
           </div>
+        </article>
 
-          <div class="media-placeholder">🚧 프로젝트 진행 후 스크린샷 추가 예정</div>
+        <article class="panel panel-pending" id="mainproject">
+          <div class="panel-head">
+            <span class="panel-num">04</span>
+            <h3>메인 프로젝트</h3>
+          </div>
+          <span class="panel-status">예정 · 2026.08</span>
 
-          <pre class="panel-code">// 프로젝트 진행 후 대표 코드가 여기에 들어갈 예정입니다</pre>
-        </div>
-      </article>
+          <div class="panel-body">
+            <p class="panel-desc">
+              KDT 부트캠프 메인 프로젝트로, Java와 생성형 AI를 활용한 차세대 CRM 플랫폼을 Spring Boot 기반으로
+              개발할 예정입니다. 진행되면 이 자리에 배경, 기능, 트러블슈팅을 채워 넣을 거예요.
+            </p>
+            <div class="panel-tags">
+              <span>Spring Boot</span><span>Java</span><span>CRM</span>
+            </div>
+            <div class="media-placeholder">🚧 프로젝트 진행 후 스크린샷 추가 예정</div>
+            <pre class="panel-code">// 프로젝트 진행 후 대표 코드가 여기에 들어갈 예정입니다</pre>
+          </div>
+        </article>
 
-    </section>
+      </div>
+    </div>
 
     <footer>© 2026 정윤서</footer>
   </main>
 </div>
+
+<script>
+  // 1) "sidebar-item" 클래스를 가진 버튼들을 전부 찾아서 목록으로 만들어요.
+  const sidebarItems = document.querySelectorAll('.sidebar-item');
+
+  // 2) "panel" 클래스를 가진 카드들을 전부 찾아서 목록으로 만들어요.
+  const panels = document.querySelectorAll('.panel');
+
+  // 3) 버튼 하나하나에 대해 "클릭하면 이 함수를 실행해라"를 등록해요.
+  sidebarItems.forEach(function (item) {
+    item.addEventListener('click', function () {
+
+      // 3-1) 클릭한 버튼의 data-target 값을 읽어와요. (예: "ggabiteo")
+      const targetId = item.getAttribute('data-target');
+
+      // 3-2) 모든 버튼에서 'active' 이름표를 떼고,
+      sidebarItems.forEach(function (el) {
+        el.classList.remove('active');
+      });
+      // 3-3) 방금 클릭한 버튼에만 다시 'active' 이름표를 붙여요.
+      item.classList.add('active');
+
+      // 3-4) 카드들을 하나씩 살펴보면서,
+      panels.forEach(function (panel) {
+        if (panel.id === targetId) {
+          // id가 클릭한 버튼의 target과 같으면 → 보이게(active)
+          panel.classList.add('active');
+        } else {
+          // 다르면 → 숨기기(active 이름표 제거)
+          panel.classList.remove('active');
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
