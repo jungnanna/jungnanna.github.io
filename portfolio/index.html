@@ -6,20 +6,15 @@
 <title>정윤서 프로젝트 포트폴리오</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 <style>
-  /* ============================================================
-     ★ 이력서 페이지(index.html)와 색·모양을 맞췄어요.
-     --accent, --accent-2, --accent-bright 는 이력서와 완전히 같은 값이에요.
-     깨비터의 민트색도 이력서의 --accent-bright(민트)를 그대로 재사용해서
-     "같은 브랜드"라는 느낌이 나도록 했어요.
-     ============================================================ */
+
   :root {
     --accent: #003A35;
-    --accent-2: #2563EB;       /* 이력서와 동일한 브랜드 블루 */
-    --accent-bright: #34D399;  /* 이력서와 동일한 브랜드 민트 → 깨비터 대표색 */
-    --proj-canieat: #D97706;   /* 먹어도 돼? 대표색: 차분한 황토색 주황 */
-    --proj-readyplay: #15803D; /* 레디플레이 대표색: 짙은 포레스트 그린 (민트와 구분되게) */
+    --accent-2: #2563EB;      
+    --accent-bright: #34D399;  
+    --proj-canieat: #D97706;  
+    --proj-readyplay: #15803D; 
     --pending: #94A3B8;
-    --pending-bg: #F1F3F5;     /* 옅은 회색: 아직 시작 안 한 프로젝트용 배경 */
+    --pending-bg: #F1F3F5;     
     --text-main: #001F27;
     --text-sub: #6b7280;
     --border: #e5e7eb;
@@ -37,7 +32,7 @@
 
   main { padding: 80px 40px 120px; }
 
-  /* ★ 이력서의 "Portfolio →" 버튼과 완전히 같은 스타일(알약 모양, 파란 테두리) */
+ 
   .portfolio-btn {
     display: inline-block;
     background: transparent;
@@ -70,16 +65,12 @@
   }
   .intro-text { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 48px; max-width: 640px; }
 
-  /* ============================================================
-     왼쪽 사이드바(메뉴) + 오른쪽 전시 공간(stage)
-     ============================================================ */
   .layout {
     display: flex;
     gap: 28px;
     align-items: flex-start;
   }
 
-  /* ---------- 왼쪽 사이드바 ---------- */
   .sidebar {
     width: 240px;
     flex-shrink: 0;
@@ -110,7 +101,6 @@
   }
   .sidebar-item:hover { background: #f8f9fa; }
 
-  /* ★ 파란색으로 꽉 채우던 걸 없애고, 연한 배경 + 굵은 왼쪽 테두리로 차분하게 표시 */
   .sidebar-item.active {
     background: #F8FAFC;
     color: var(--text-main);
@@ -141,7 +131,6 @@
   .sidebar-item[data-target="caniEat"]     { border-left-color: var(--proj-canieat); }
   .sidebar-item[data-target="readyplay"]   { border-left-color: var(--proj-readyplay); }
 
-  /* ---------- 오른쪽 전시 공간 ---------- */
   .stage {
     flex: 1;
     min-width: 0;
@@ -220,7 +209,6 @@
     max-width: 640px;
   }
 
-  /* ★ 이력서의 tag-pill과 같은 알약 모양 태그 */
   .panel-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .panel-tags span {
     font-size: 0.78rem;
