@@ -6,15 +6,12 @@
 <title>정윤서 프로젝트 포트폴리오</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 <style>
-
   :root {
     --accent: #003A35;
-    --accent-2: #2563EB;      
-    --accent-bright: #34D399;  
-    --proj-canieat: #D97706;  
-    --proj-readyplay: #15803D; 
+    --accent-2: #2563EB;
+    --accent-bright: #34D399;
     --pending: #94A3B8;
-    --pending-bg: #F1F3F5;     
+    --pending-bg: #F1F3F5;
     --text-main: #001F27;
     --text-sub: #6b7280;
     --border: #e5e7eb;
@@ -32,18 +29,17 @@
 
   main { padding: 80px 40px 120px; }
 
- 
   .portfolio-btn {
-    display: inline-block;
+    display: block;
+    width: fit-content;
     background: transparent;
     color: var(--accent-2);
     font-size: 0.85rem;
     font-weight: bold;
     padding: 9px 22px;
-    border-radius: 0;
     border: 2px solid var(--accent-2);
     text-decoration: none;
-    margin-bottom: 28px;
+    margin-bottom: 40px;
     transition: all 0.2s;
   }
   .portfolio-btn:hover { background: var(--accent-2); color: white; }
@@ -52,17 +48,24 @@
   .repo-link:hover { text-decoration: underline; }
   .repo-pending { color: var(--text-sub); font-style: italic; font-size: 0.85rem; }
 
-  .hero-statement {
-    font-size: 2.2rem;
-    font-weight: 900;
-    line-height: 1.4;
-    margin-bottom: 20px;
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-main);
+    position: relative;
+    display: inline-block;
+    margin-bottom: 16px;
   }
-  /* ★ 이력서 h2 제목 밑줄과 같은 파란색 포인트 줄 */
-  .hero-statement .highlight {
-    border-bottom: 6px solid var(--accent-2);
-    padding-bottom: 4px;
+  .section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--accent-2);
   }
+
   .intro-text { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 48px; max-width: 640px; }
 
   .layout {
@@ -76,7 +79,6 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     position: sticky;
     top: 40px;
   }
@@ -86,50 +88,40 @@
     align-items: center;
     gap: 12px;
     width: 100%;
-    background: white;
-    border: 1px solid var(--border);
-    border-left: 6px solid var(--pending);
-    border-radius: 0;
-    padding: 14px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 18px;
     font-family: inherit;
     font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-main);
+    font-weight: 500;
+    color: var(--text-sub);
     text-align: left;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
   }
-  .sidebar-item:hover { background: #f8f9fa; }
+  .sidebar-item:first-child { border-top: 1px solid var(--border); }
 
+  .sidebar-item:hover,
   .sidebar-item.active {
-    background: #F8FAFC;
-    color: var(--text-main);
-    border-left-width: 8px;
-    font-weight: 800;
-  }
-
-  .sidebar-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 0;
-    font-size: 0.72rem;
-    font-weight: 800;
+    background: var(--accent-2);
     color: white;
-    flex-shrink: 0;
+    font-weight: bold;
   }
-  .sidebar-badge-pending { background: var(--pending); }
-  .sidebar-badge-blue    { background: var(--accent-bright); color: var(--text-main); }
-  .sidebar-badge-green   { background: var(--proj-canieat); }
-  .sidebar-badge-teal    { background: var(--proj-readyplay); }
 
-  .sidebar-item[data-target="mainproject"] { border-left-color: var(--pending); }
-  .sidebar-item[data-target="mainproject"]:not(.active) { background: var(--pending-bg); }
-  .sidebar-item[data-target="ggabiteo"]    { border-left-color: var(--accent-bright); }
-  .sidebar-item[data-target="caniEat"]     { border-left-color: var(--proj-canieat); }
-  .sidebar-item[data-target="readyplay"]   { border-left-color: var(--proj-readyplay); }
+  .sidebar-num {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-2);
+    flex-shrink: 0;
+    width: 24px;
+  }
+  .sidebar-item:hover .sidebar-num,
+  .sidebar-item.active .sidebar-num { color: var(--accent-bright); }
+
+  .sidebar-item.is-pending { opacity: 0.65; font-style: italic; }
+  .sidebar-item.is-pending:hover,
+  .sidebar-item.is-pending.active { opacity: 1; font-style: normal; }
 
   .stage {
     flex: 1;
@@ -139,52 +131,29 @@
 
   .panel {
     display: none;
-    border-radius: 0;
-    padding: 36px;
-    background: white;
-    color: var(--text-main);
-    border: 1px solid var(--border);
-    border-top: 6px solid var(--pending);
+    padding: 8px 4px 28px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
-
   .panel.active { display: flex; flex-direction: column; }
 
-  .panel-blue   { border-top-color: var(--accent-bright); }
-  .panel-green  { border-top-color: var(--proj-canieat); }
-  .panel-teal   { border-top-color: var(--proj-readyplay); }
-  .panel-pending{
-    background: var(--pending-bg);
-    border: 2px solid var(--pending);
-    border-top: 2px solid var(--pending);
-  }
-
-  .panel-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 0;
-    color: white;
-    font-size: 0.85rem;
-    font-weight: 700;
-    flex-shrink: 0;
-    background: var(--pending);
-  }
-  .panel-blue .panel-num    { background: var(--accent-bright); color: var(--text-main); }
-  .panel-green .panel-num   { background: var(--proj-canieat); }
-  .panel-teal .panel-num    { background: var(--proj-readyplay); }
-  .panel-pending .panel-num { background: var(--pending); }
+  .panel-pending { background: var(--pending-bg); padding: 28px; }
 
   .panel-head {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 12px;
-    margin-bottom: 14px;
+    margin: 20px 0 4px;
   }
-  .panel-head h3 { font-size: 1.5rem; font-weight: 800; }
+  .panel-head h3 { font-size: 1.4rem; font-weight: 800; }
 
-  .panel-tagline { font-size: 0.9rem; color: var(--text-sub); margin-bottom: 8px; }
+  .panel-num {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--accent-2);
+  }
+
+  .panel-tagline { font-size: 0.85rem; color: var(--accent); margin-bottom: 16px; }
 
   .panel-status {
     display: inline-block;
@@ -193,7 +162,6 @@
     background: var(--pending);
     color: white;
     padding: 3px 12px;
-    border-radius: 0;
     margin-bottom: 10px;
     width: fit-content;
   }
@@ -201,36 +169,29 @@
   .panel-body { flex: 1; }
 
   .panel-desc {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--text-main);
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--border);
+    margin-bottom: 18px;
     max-width: 640px;
   }
 
-  .panel-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .panel-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
   .panel-tags span {
-    font-size: 0.78rem;
-    font-weight: 600;
+    display: inline-block;
+    padding: 7px 16px;
+    border: 1.5px solid var(--accent);
+    font-size: 0.85rem;
+    color: var(--accent);
     background: white;
-    color: var(--text-main);
-    border: 1.5px solid var(--text-main);
-    border-radius: 0;
-    padding: 5px 14px;
   }
-  .panel-blue .panel-tags span  { border-color: var(--accent-bright); color: var(--accent); }
-  .panel-green .panel-tags span { border-color: var(--proj-canieat); color: var(--proj-canieat); }
-  .panel-teal .panel-tags span  { border-color: var(--proj-readyplay); color: var(--proj-readyplay); }
 
   .media-placeholder {
     border: 1.5px solid var(--border);
-    border-radius: 0;
     padding: 24px;
     text-align: center;
     font-size: 0.8rem;
     color: var(--text-sub);
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
 
   .panel-code {
@@ -239,28 +200,19 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.78rem;
     padding: 14px 14px 14px 16px;
-    border-radius: 0;
-    border-left: 4px solid var(--pending);
-    margin-bottom: 16px;
+    border-left: 4px solid var(--accent-2);
+    margin-bottom: 18px;
     white-space: pre-wrap;
     line-height: 1.6;
   }
-  .panel-blue .panel-code  { border-left-color: var(--accent-bright); }
-  .panel-green .panel-code { border-left-color: var(--proj-canieat); }
-  .panel-teal .panel-code  { border-left-color: var(--proj-readyplay); }
 
   .panel-link {
-    display: inline-block;
-    font-size: 0.9rem;
-    font-weight: 700;
+    color: var(--accent-2);
     text-decoration: none;
-    color: var(--text-main);
-    border-bottom: 2px solid var(--pending);
-    padding-bottom: 2px;
+    font-weight: 600;
+    font-size: 0.9rem;
   }
-  .panel-blue .panel-link  { border-bottom-color: var(--accent-bright); }
-  .panel-green .panel-link { border-bottom-color: var(--proj-canieat); }
-  .panel-teal .panel-link  { border-bottom-color: var(--proj-readyplay); }
+  .panel-link:hover { text-decoration: underline; }
 
   footer { font-size: 0.8rem; color: var(--text-sub); margin-top: 60px; }
 
@@ -268,7 +220,8 @@
     main { padding: 40px 24px 80px; }
     .layout { flex-direction: column; }
     .sidebar { width: 100%; position: static; flex-direction: row; overflow-x: auto; }
-    .sidebar-item { white-space: nowrap; }
+    .sidebar-item { white-space: nowrap; border-bottom: none; }
+    .sidebar-item:first-child { border-top: none; }
   }
 </style>
 </head>
@@ -278,7 +231,7 @@
     <section class="portfolio-intro">
       <a href="../index.html" class="portfolio-btn">← 이력서 보기</a>
 
-      <p class="hero-statement"><span class="highlight">프로젝트로 증명합니다.</span></p>
+      <h2 class="section-title">Project</h2>
       <p class="intro-text">
         왼쪽 메뉴에서 프로젝트를 선택하면, 화면·코드·트러블슈팅까지 오른쪽에 크게 펼쳐집니다.
       </p>
@@ -288,22 +241,22 @@
 
       <nav class="sidebar" aria-label="프로젝트 메뉴">
         <button class="sidebar-item active" type="button" data-target="ggabiteo">
-          <span class="sidebar-badge sidebar-badge-blue">01</span> 깨비터
+          <span class="sidebar-num">01</span> 깨비터
         </button>
         <button class="sidebar-item" type="button" data-target="caniEat">
-          <span class="sidebar-badge sidebar-badge-green">02</span> 먹어도 돼?
+          <span class="sidebar-num">02</span> 먹어도 돼?
         </button>
         <button class="sidebar-item" type="button" data-target="readyplay">
-          <span class="sidebar-badge sidebar-badge-teal">03</span> 레디플레이
+          <span class="sidebar-num">03</span> 레디플레이
         </button>
-        <button class="sidebar-item" type="button" data-target="mainproject">
-          <span class="sidebar-badge sidebar-badge-pending">04</span> 메인 프로젝트
+        <button class="sidebar-item is-pending" type="button" data-target="mainproject">
+          <span class="sidebar-num">04</span> 메인 프로젝트
         </button>
       </nav>
 
       <div class="stage">
 
-        <article class="panel panel-blue active" id="ggabiteo">
+        <article class="panel active" id="ggabiteo">
           <div class="panel-head">
             <span class="panel-num">01</span>
             <h3>깨비터</h3>
@@ -319,14 +272,14 @@
             <div class="panel-tags">
               <span>React Native</span><span>TypeScript</span><span>Supabase</span><span>OpenAI API</span>
             </div>
-            <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
-            <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
-// 예: OpenAI API 이미지 분석 호출 부분</pre>
+            <div class="media-placeholder">사진 준비중</div>
+            <pre class="panel-code"> 코드 준비중
+            </pre>
             <a class="panel-link" href="https://github.com/jungnanna/ggabiteo" target="_blank" rel="noopener">GitHub →</a>
           </div>
         </article>
 
-        <article class="panel panel-green" id="caniEat">
+        <article class="panel" id="caniEat">
           <div class="panel-head">
             <span class="panel-num">02</span>
             <h3>먹어도 돼?</h3>
@@ -342,14 +295,13 @@
             <div class="panel-tags">
               <span>Django</span><span>Firebase</span><span>Gemini API</span><span>Celery</span>
             </div>
-            <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
-            <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
-// 예: 이중 저장 구조 처리 부분</pre>
+            <div class="media-placeholder">사진 준비중</div>
+            <pre class="panel-code">코드 준비중</pre>
             <a class="panel-link" href="https://github.com/jungnanna/CANIEAT" target="_blank" rel="noopener">GitHub →</a>
           </div>
         </article>
 
-        <article class="panel panel-teal" id="readyplay">
+        <article class="panel" id="readyplay">
           <div class="panel-head">
             <span class="panel-num">03</span>
             <h3>레디플레이</h3>
@@ -365,10 +317,9 @@
             <div class="panel-tags">
               <span>HTML5</span><span>JavaScript</span><span>Supabase</span><span>Toss Payments</span>
             </div>
-            <div class="media-placeholder">📷 스크린샷 자리 — images/ 폴더에 사진 넣고 여기 교체</div>
-            <pre class="panel-code">// 여기에 대표 코드 스니펫을 붙여넣으세요
-// 예: 공통 헤더/푸터 fetch 처리 부분</pre>
-            <span class="repo-pending">Repo 업로드 예정</span>
+            <div class="media-placeholder">사진 준비중</div>
+            <pre class="panel-code">코드 준비중</pre>
+            <span class="repo-pending">배포 예정</span>
           </div>
         </article>
 
@@ -387,8 +338,8 @@
             <div class="panel-tags">
               <span>Spring Boot</span><span>Java</span><span>CRM</span>
             </div>
-            <div class="media-placeholder">🚧 프로젝트 진행 후 스크린샷 추가 예정</div>
-            <pre class="panel-code">// 프로젝트 진행 후 대표 코드가 여기에 들어갈 예정입니다</pre>
+            <div class="media-placeholder">사진 준비중</div>
+            <pre class="panel-code">코드 준비중</pre>
           </div>
         </article>
 
@@ -400,33 +351,22 @@
 </div>
 
 <script>
-  // 1) "sidebar-item" 클래스를 가진 버튼들을 전부 찾아서 목록으로 만들어요.
   const sidebarItems = document.querySelectorAll('.sidebar-item');
-
-  // 2) "panel" 클래스를 가진 카드들을 전부 찾아서 목록으로 만들어요.
   const panels = document.querySelectorAll('.panel');
 
-  // 3) 버튼 하나하나에 대해 "클릭하면 이 함수를 실행해라"를 등록해요.
   sidebarItems.forEach(function (item) {
     item.addEventListener('click', function () {
-
-      // 3-1) 클릭한 버튼의 data-target 값을 읽어와요. (예: "ggabiteo")
       const targetId = item.getAttribute('data-target');
 
-      // 3-2) 모든 버튼에서 'active' 이름표를 떼고,
       sidebarItems.forEach(function (el) {
         el.classList.remove('active');
       });
-      // 3-3) 방금 클릭한 버튼에만 다시 'active' 이름표를 붙여요.
       item.classList.add('active');
 
-      // 3-4) 카드들을 하나씩 살펴보면서,
       panels.forEach(function (panel) {
         if (panel.id === targetId) {
-          // id가 클릭한 버튼의 target과 같으면 → 보이게(active)
           panel.classList.add('active');
         } else {
-          // 다르면 → 숨기기(active 이름표 제거)
           panel.classList.remove('active');
         }
       });
