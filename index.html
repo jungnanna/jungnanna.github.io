@@ -171,6 +171,7 @@
     border-top: 1px solid var(--border);
   }
   section#education .edu-item:last-of-type,
+  section#certificate .edu-item:last-of-type,
   section#experience .exp-item:last-of-type { border-bottom: 1px solid var(--border); }
   .exp-top, .edu-top { display: flex; justify-content: space-between; flex-wrap: wrap; }
   .exp-title, .edu-title { font-weight: bold; font-size: 0.95rem; }
@@ -274,9 +275,10 @@
     </div>
     <nav>
       <a href="#introduce">Introduce</a>
-      <a href="#experience">Experience</a>
-      <a href="#skill">Skill</a>
       <a href="#project">Project</a>
+      <a href="#skill">Skill</a>
+      <a href="#experience">Experience</a>
+      <a href="#certificate">Certificate</a>
       <a href="#education">Education</a>
     </nav>
   </aside>
@@ -318,35 +320,59 @@
         </li>
       </ul>
     </section>
-    <section id="experience">
-      <h2>Work Experience</h2>
-      <div class="exp-item">
-        <div class="exp-top">
-          <span class="exp-title">(주)케이씨이앤씨 — 반도체 FAB 배관설계</span>
-          <span class="exp-date">2024.06 - 2025.08</span>
+    <section id="project">
+      <h2>Project</h2>
+      <div class="project-item">
+        <div class="top-row">
+          <h3>깨비터</h3>
+          <span class="meta">2026.06 · 팀 프로젝트</span>
         </div>
-        <p class="exp-desc">삼성 반도체 P4 FAB 배관 설계 업무 수행. 정밀한 공정 이해와 문서화 역량을 쌓음.</p>
+        <div class="role">React Native · 프론트엔드 &amp; AI 연동</div>
+        <p class="desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
+        <div class="field"><span class="k">Skill Set</span>React Native, TypeScript, Supabase, OpenAI API</div>
+        <div class="field"><span class="k">What did I do</span>OpenAI API 연동 이미지 분석, Naver/Google 로그인 연동</div>
+        <div class="field"><span class="k">성과</span>2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</div>
+        <div class="field"><span class="k">Trouble</span>API 할당량 이슈 → 키 분리 및 재시도 로직으로 해결</div>
+        <div class="field">
+          <span class="k">Repo</span>
+          <a href="https://github.com/jungnanna/ggabiteo" target="_blank" class="repo-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>GitHub →
+          </a>
+        </div>
       </div>
-      <div class="exp-item">
-        <div class="exp-top">
-          <span class="exp-title">하이미디어IT컴퓨터학원 — KDT 부트캠프</span>
-          <span class="exp-date">2026.02 - 2026.08</span>
+      <div class="project-item">
+        <div class="top-row">
+          <h3>먹어도 돼?</h3>
+          <span class="meta">2026.04 · 팀 프로젝트</span>
         </div>
-        <p class="exp-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 개발 과정 수강.</p>
+        <div class="role">Django · 백엔드 팀장</div>
+        <p class="desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동.</p>
+        <div class="field"><span class="k">Skill Set</span>Django, Firebase, Gemini API, Celery</div>
+        <div class="field"><span class="k">What did I do</span>Firebase/SQLite 이중 저장 구조 설계, AI 프롬프트 개인화 설계</div>
+        <div class="field"><span class="k">성과</span>백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정</div>
+        <div class="field"><span class="k">Trouble</span>Gemini 503 오류 및 할당량 소진 → 재시도 로직 + 키 분리</div>
+        <div class="field">
+          <span class="k">Repo</span>
+          <a href="https://github.com/jungnanna/CANIEAT" target="_blank" class="repo-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>GitHub →
+          </a>
+        </div>
       </div>
-      <div class="exp-item exp-item-prior">
-        <div class="exp-top">
-          <span class="exp-title">영월국유림관리소 — 행정 업무</span>
-          <span class="exp-date">2020 - 2022</span>
+      <div class="project-item">
+        <div class="top-row">
+          <h3>레디플레이</h3>
+          <span class="meta">2026.03 · 팀 프로젝트</span>
         </div>
-        <p class="exp-desc">민원 접수 및 행정 서류 작성 업무 수행.</p>
-      </div>
-      <div class="exp-item exp-item-prior">
-        <div class="exp-top">
-          <span class="exp-title">(주)허밍아이엠씨 — MD</span>
-          <span class="exp-date">2016.12 - 2018.03</span>
-        </div>
-        <p class="exp-desc">쇼핑몰 상품 판매 및 재고 관리 업무 수행.</p>
+        <div class="role">HTML/CSS/JS · 팀장</div>
+        <p class="desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
+        <div class="field"><span class="k">Skill Set</span>HTML5, JavaScript, Supabase, Toss Payments API</div>
+        <div class="field"><span class="k">What did I do</span>fetch API 기반 공통 헤더·푸터 구조, Session Storage 로그인/장바구니 유지</div>
+        <div class="field"><span class="k">성과</span>3인 팀 팀장, Discord 자동 알림 CS 시스템 구축</div>
+        <div class="field"><span class="k">Repo</span><span class="repo-pending">업로드 예정</span></div>
       </div>
     </section>
     <section id="skill">
@@ -405,69 +431,39 @@
         </div>
       </div>
     </section>
-    <section id="project">
-      <h2>Project</h2>
-      <div class="project-item">
-        <div class="top-row">
-          <h3>깨비터</h3>
-          <span class="meta">2026.06 · 팀 프로젝트</span>
+    <section id="experience">
+      <h2>Work Experience</h2>
+      <div class="exp-item">
+        <div class="exp-top">
+          <span class="exp-title">하이미디어IT컴퓨터학원 — KDT 부트캠프</span>
+          <span class="exp-date">2026.02 - 2026.08</span>
         </div>
-        <div class="role">React Native · 프론트엔드 &amp; AI 연동</div>
-        <p class="desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
-        <div class="field"><span class="k">Skill Set</span>React Native, TypeScript, Supabase, OpenAI API</div>
-        <div class="field"><span class="k">What did I do</span>OpenAI API 연동 이미지 분석, Naver/Google 로그인 연동</div>
-        <div class="field"><span class="k">성과</span>2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</div>
-        <div class="field"><span class="k">Trouble</span>API 할당량 이슈 → 키 분리 및 재시도 로직으로 해결</div>
-        <div class="field">
-          <span class="k">Repo</span>
-          <a href="https://github.com/jungnanna/ggabiteo" target="_blank" class="repo-link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-            </svg>GitHub →
-          </a>
-        </div>
+        <p class="exp-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 개발 과정 수강.</p>
       </div>
-      <div class="project-item">
-        <div class="top-row">
-          <h3>먹어도 돼?</h3>
-          <span class="meta">2026.04 · 팀 프로젝트</span>
+      <div class="exp-item">
+        <div class="exp-top">
+          <span class="exp-title">(주)케이씨이앤씨 — 반도체 FAB 배관설계</span>
+          <span class="exp-date">2024.06 - 2025.08</span>
         </div>
-        <div class="role">Django · 백엔드 팀장</div>
-        <p class="desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동.</p>
-        <div class="field"><span class="k">Skill Set</span>Django, Firebase, Gemini API, Celery</div>
-        <div class="field"><span class="k">What did I do</span>Firebase/SQLite 이중 저장 구조 설계, AI 프롬프트 개인화 설계</div>
-        <div class="field"><span class="k">성과</span>백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정</div>
-        <div class="field"><span class="k">Trouble</span>Gemini 503 오류 및 할당량 소진 → 재시도 로직 + 키 분리</div>
-        <div class="field">
-          <span class="k">Repo</span>
-          <a href="https://github.com/jungnanna/CANIEAT" target="_blank" class="repo-link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-            </svg>GitHub →
-          </a>
-        </div>
+        <p class="exp-desc">삼성 반도체 P4 FAB 배관 설계 업무 수행. 정밀한 공정 이해와 문서화 역량을 쌓음.</p>
       </div>
-      <div class="project-item">
-        <div class="top-row">
-          <h3>레디플레이</h3>
-          <span class="meta">2026.03 · 팀 프로젝트</span>
+      <div class="exp-item exp-item-prior">
+        <div class="exp-top">
+          <span class="exp-title">영월국유림관리소 — 행정 업무</span>
+          <span class="exp-date">2020 - 2022</span>
         </div>
-        <div class="role">HTML/CSS/JS · 팀장</div>
-        <p class="desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
-        <div class="field"><span class="k">Skill Set</span>HTML5, JavaScript, Supabase, Toss Payments API</div>
-        <div class="field"><span class="k">What did I do</span>fetch API 기반 공통 헤더·푸터 구조, Session Storage 로그인/장바구니 유지</div>
-        <div class="field"><span class="k">성과</span>3인 팀 팀장, Discord 자동 알림 CS 시스템 구축</div>
-        <div class="field"><span class="k">Repo</span><span class="repo-pending">업로드 예정</span></div>
+        <p class="exp-desc">민원 접수 및 행정 서류 작성 업무 수행.</p>
+      </div>
+      <div class="exp-item exp-item-prior">
+        <div class="exp-top">
+          <span class="exp-title">(주)허밍아이엠씨 — MD</span>
+          <span class="exp-date">2016.12 - 2018.03</span>
+        </div>
+        <p class="exp-desc">쇼핑몰 상품 판매 및 재고 관리 업무 수행.</p>
       </div>
     </section>
-    <section id="education">
-      <h2>Education</h2>
-      <div class="edu-item">
-        <div class="edu-top">
-          <span class="edu-title">건국대학교(글로컬) — 동화미디어콘텐츠학과</span>
-          <span class="edu-date">2012.03 - 2017.02</span>
-        </div>
-      </div>
+    <section id="certificate">
+      <h2>Certificate</h2>
       <div class="edu-item">
         <div class="edu-top">
           <span class="edu-title">정보처리기사</span>
@@ -484,6 +480,15 @@
         <div class="edu-top">
           <span class="edu-title">컴퓨터활용능력 2급</span>
           <span class="edu-date">필기 합격 · 실기 준비 중</span>
+        </div>
+      </div>
+    </section>
+    <section id="education">
+      <h2>Education</h2>
+      <div class="edu-item">
+        <div class="edu-top">
+          <span class="edu-title">건국대학교(글로컬) — 동화미디어콘텐츠학과</span>
+          <span class="edu-date">2012.03 - 2017.02</span>
         </div>
       </div>
     </section>
