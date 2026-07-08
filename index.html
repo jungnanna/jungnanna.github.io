@@ -18,8 +18,8 @@
   html { overflow-y: scroll; }
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: #f1f1f1; }
-  ::-webkit-scrollbar-thumb { background: var(--accent-2); border-radius: 0; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
   ::selection { background: var(--accent-bright); color: var(--text-main); }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -89,16 +89,6 @@
     margin-top: 12px;
     border-top: 1px solid var(--border);
     padding-top: 20px;
-  }
-  .portfolio-btn {
-    display: inline-block;
-    background: transparent;
-    color: var(--accent-2);
-    font-size: 1rem;
-    font-weight: 800;
-    padding: 9px 22px;
-    text-decoration: none;
-    margin-bottom: 18px;
   }
   .portfolio-btn .arrow {
     display: inline-block;
@@ -242,15 +232,284 @@
     font-style: italic;
     font-size: 0.85rem;
   }
-  .project-item { padding: 28px 0; border-top: 1px solid var(--border); }
-  .project-item:last-child { border-bottom: 1px solid var(--border); }
-  .project-item .top-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
-  .project-item h3 { font-size: 1.05rem; }
-  .project-item .meta { font-size: 0.8rem; color: var(--text-sub); }
-  .project-item .role { font-size: 0.82rem; color: var(--accent); margin: 4px 0 14px; }
-  .project-item .desc { font-size: 0.9rem; margin-bottom: 12px; }
-  .project-item .field { font-size: 0.87rem; margin-bottom: 6px; color: var(--text-main); }
-  .project-item .field .k { color: var(--text-sub); display: inline-block; width: 90px; }
+
+  /* ===================== 여기서부터 프로젝트 카드 + 모달 ===================== */
+
+  /* 카드들을 격자(grid)로 배치 */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  /* 카드 하나 */
+  .project-card {
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 31, 39, 0.1);
+  }
+
+  /* 카드 위쪽 색깔 배너 (나중에 실제 사진으로 교체할 자리, 지금은 색상 placeholder) */
+  .card-banner {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+  }
+  .card-banner-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.65;
+  }
+
+  .card-body { padding: 22px 20px; }
+  .card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .card-top-row h3 { font-size: 1.05rem; }
+  .card-badge {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .card-desc {
+    font-size: 0.87rem;
+    color: var(--text-sub);
+    margin-bottom: 16px;
+    line-height: 1.6;
+    min-height: 44px;
+  }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .card-tag {
+    font-size: 0.74rem;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+
+  /* 모달을 감싸는 반투명 배경 (평소엔 숨김) */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 31, 39, 0.6);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  /* JS가 이 클래스를 붙이면 보이게 됨 */
+  .modal-overlay.active { display: flex; }
+
+  /* 실제 흰색 팝업 박스 (기존 560px에서 1.5배 = 840px) */
+  .modal-box {
+    background: white;
+    width: 100%;
+    max-width: 1160px;
+    max-height: 88vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-sub);
+    font-size: 0.9rem;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 2;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .modal-close:hover {
+    color: var(--text-main);
+    background: #f1f1f1;
+  }
+  .modal-content { padding: 48px 56px 40px; }
+
+  /* 번호 + 제목 (예: 01 깨비터) */
+  .modal-num-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .modal-num {
+    color: var(--accent-2);
+    font-size: 0.9rem;
+    font-weight: 800;
+    margin-right: 6px;
+  }
+  .modal-subtitle {
+    font-size: 0.92rem;
+    color: var(--text-sub);
+    margin-bottom: 20px;
+  }
+
+  /* 기간 · 구성 · 역할 한 줄 요약 */
+  .modal-summary-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 26px;
+    font-size: 0.82rem;
+    color: var(--text-sub);
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-summary-row .s-label { color: var(--text-main); font-weight: 700; margin-right: 4px; }
+
+  /* 탭 버튼 영역 */
+  .modal-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .modal-tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 18px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-sub);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .modal-tab-btn.active {
+    color: var(--accent-2);
+    border-bottom-color: var(--accent-2);
+  }
+
+  /* 탭 패널: 평소엔 숨김, active일 때만 보임 */
+  .modal-tab-panel { display: none; }
+  .modal-tab-panel.active { display: block; }
+
+  /* 사진 자리 (사진 준비 전엔 placeholder) */
+  .modal-photo-box {
+    border: 1px solid var(--border);
+    background: #fafafa;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+  }
+  .modal-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+  .modal-desc {
+    font-size: 0.92rem;
+    color: var(--text-main);
+    margin-bottom: 26px;
+    padding-left: 14px;
+    border-left: 3px solid var(--accent-2);
+  }
+
+  /* 주요 기능 / WHAT I DID 리스트 (공통 스타일) */
+  .modal-bullet-list {
+    list-style: none;
+  }
+  .modal-bullet-list li {
+    font-size: 0.88rem;
+    color: var(--text-sub);
+    margin-bottom: 14px;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.7;
+  }
+  .modal-bullet-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent-2);
+  }
+
+  /* TROUBLE SHOOTING 탭 */
+  .trouble-problem {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 8px;
+  }
+  .trouble-explain {
+    font-size: 0.88rem;
+    color: var(--text-sub);
+    margin-bottom: 18px;
+    padding-left: 14px;
+    border-left: 3px solid var(--accent-bright);
+  }
+  .trouble-code {
+    background: #f5f5f5;
+    border-left: 3px solid var(--accent);
+    padding: 18px 20px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: var(--text-main);
+    overflow-x: auto;
+  }
+  .trouble-empty {
+    font-size: 0.88rem;
+    color: var(--text-sub);
+    font-style: italic;
+  }
+
+  .modal-subhead {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: var(--text-sub);
+    letter-spacing: 0.03em;
+  }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .modal-tags span {
+    font-size: 0.8rem;
+    padding: 5px 13px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+  .modal-github a {
+    font-size: 0.88rem;
+    color: var(--accent-2);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .modal-github a:hover { text-decoration: underline; }
+  /* ===================== 프로젝트 카드 + 모달 끝 ===================== */
+
+  .contact-text-block {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    margin-bottom: 40px;
+  }
+  .contact-text-block p {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    margin-bottom: 6px;
+  }
   footer { font-size: 0.8rem; color: var(--text-sub); }
   @media (max-width: 900px) {
     .page-wrap { flex-direction: column; }
@@ -268,7 +527,6 @@
     </div>
     <h1>정윤서(난나)</h1>
     <div class="role">백엔드 개발자 지망</div>
-    <a href="https://jungnanna.github.io/portfolio/" class="portfolio-btn">Portfolio <span class="arrow">→</span></a>
     <div class="links">
       <a href="mailto:nannamaisons@gmail.com">E-mail</a>
       <a href="https://github.com/jungnanna">Github</a>
@@ -321,61 +579,94 @@
         </li>
       </ul>
     </section>
+
     <section id="project">
       <h2>Projects</h2>
-      <div class="project-item">
-        <div class="top-row">
-          <h3>깨비터</h3>
-          <span class="meta">2026.06 · 팀 프로젝트</span>
+      <div class="project-grid">
+
+        <!-- 카드 1: 깨비터 -->
+        <div class="project-card" onclick="openProjectModal(0)">
+          <div class="card-banner" style="background: var(--accent);">
+            <span class="card-banner-text" style="color: white;">사진 준비중</span>
+          </div>
+          <div class="card-body">
+            <div class="card-top-row">
+              <h3>깨비터</h3>
+              <span class="card-badge">Team Project</span>
+            </div>
+            <p class="card-desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
+            <div class="card-tags">
+              <span class="card-tag">React Native</span>
+              <span class="card-tag">TypeScript</span>
+              <span class="card-tag">Supabase</span>
+              <span class="card-tag">OpenAI API</span>
+            </div>
+          </div>
         </div>
-        <div class="role">React Native · 프론트엔드 &amp; AI 연동</div>
-        <p class="desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
-        <div class="field"><span class="k">Skill Set</span>React Native, TypeScript, Supabase, OpenAI API</div>
-        <div class="field"><span class="k">What did I do</span>OpenAI API 연동 이미지 분석, Naver/Google 로그인 연동</div>
-        <div class="field"><span class="k">성과</span>2026 충청북도 공공데이터 AI 활용 창업 경진대회 출품</div>
-        <div class="field"><span class="k">Trouble</span>API 할당량 이슈 → 키 분리 및 재시도 로직으로 해결</div>
-        <div class="field">
-          <span class="k">Repo</span>
-          <a href="https://github.com/jungnanna/ggabiteo" target="_blank" class="repo-link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-            </svg>GitHub →
-          </a>
+
+        <!-- 카드 2: 먹어도 돼? -->
+        <div class="project-card" onclick="openProjectModal(1)">
+          <div class="card-banner" style="background: var(--accent-2);">
+            <span class="card-banner-text" style="color: white;">사진 준비중</span>
+          </div>
+          <div class="card-body">
+            <div class="card-top-row">
+              <h3>먹어도 돼?</h3>
+              <span class="card-badge">Team Project</span>
+            </div>
+            <p class="card-desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획.</p>
+            <div class="card-tags">
+              <span class="card-tag">Django</span>
+              <span class="card-tag">Firebase</span>
+              <span class="card-tag">Gemini API</span>
+              <span class="card-tag">Celery</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="project-item">
-        <div class="top-row">
-          <h3>먹어도 돼?</h3>
-          <span class="meta">2026.04 · 팀 프로젝트</span>
+
+        <!-- 카드 3: 레디플레이 -->
+        <div class="project-card" onclick="openProjectModal(2)">
+          <div class="card-banner" style="background: var(--accent-bright);">
+            <span class="card-banner-text" style="color: var(--text-main);">사진 준비중</span>
+          </div>
+          <div class="card-body">
+            <div class="card-top-row">
+              <h3>레디플레이</h3>
+              <span class="card-badge">Team Project</span>
+            </div>
+            <p class="card-desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
+            <div class="card-tags">
+              <span class="card-tag">HTML5</span>
+              <span class="card-tag">JavaScript</span>
+              <span class="card-tag">Supabase</span>
+              <span class="card-tag">Toss Payments</span>
+            </div>
+          </div>
         </div>
-        <div class="role">Django · 백엔드 팀장</div>
-        <p class="desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동.</p>
-        <div class="field"><span class="k">Skill Set</span>Django, Firebase, Gemini API, Celery</div>
-        <div class="field"><span class="k">What did I do</span>Firebase/SQLite 이중 저장 구조 설계, AI 프롬프트 개인화 설계</div>
-        <div class="field"><span class="k">성과</span>백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정</div>
-        <div class="field"><span class="k">Trouble</span>Gemini 503 오류 및 할당량 소진 → 재시도 로직 + 키 분리</div>
-        <div class="field">
-          <span class="k">Repo</span>
-          <a href="https://github.com/jungnanna/CANIEAT" target="_blank" class="repo-link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px; margin-right:4px;">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-            </svg>GitHub →
-          </a>
+
+        <!-- 카드 4: 메인 프로젝트 준비중 -->
+        <div class="project-card" onclick="openProjectModal(3)">
+          <div class="card-banner" style="background: #94a3b8;">
+            <span class="card-banner-text" style="color: white;">사진 준비중</span>
+          </div>
+          <div class="card-body">
+            <div class="card-top-row">
+              <h3>메인 프로젝트 준비중</h3>
+              <span class="card-badge">Team Project</span>
+            </div>
+            <p class="card-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼. 2026.08 시작 예정.</p>
+            <div class="card-tags">
+              <span class="card-tag">Spring Boot</span>
+              <span class="card-tag">Java</span>
+              <span class="card-tag">MySQL</span>
+              <span class="card-tag">Docker</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="project-item">
-        <div class="top-row">
-          <h3>레디플레이</h3>
-          <span class="meta">2026.03 · 팀 프로젝트</span>
-        </div>
-        <div class="role">HTML/CSS/JS · 팀장</div>
-        <p class="desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
-        <div class="field"><span class="k">Skill Set</span>HTML5, JavaScript, Supabase, Toss Payments API</div>
-        <div class="field"><span class="k">What did I do</span>fetch API 기반 공통 헤더·푸터 구조, Session Storage 로그인/장바구니 유지</div>
-        <div class="field"><span class="k">성과</span>3인 팀 팀장, Discord 자동 알림 CS 시스템 구축</div>
-        <div class="field"><span class="k">Repo</span><span class="repo-pending">업로드 예정</span></div>
+
       </div>
     </section>
+
     <section id="skill">
       <h2>Skills</h2>
       <div class="skill-block">
@@ -432,6 +723,7 @@
         </div>
       </div>
     </section>
+
     <section id="experience">
       <h2>Work Experience</h2>
       <div class="exp-item">
@@ -449,6 +741,7 @@
         <p class="exp-desc">삼성 반도체 P4 FAB 배관 설계 업무 수행. 정밀한 공정 이해와 문서화 역량을 쌓음.</p>
       </div>
     </section>
+
     <section id="certificate">
       <h2>Certificates</h2>
       <div class="edu-item">
@@ -470,6 +763,7 @@
         </div>
       </div>
     </section>
+
     <section id="education">
       <h2>Education</h2>
       <div class="edu-item">
@@ -479,9 +773,64 @@
         </div>
       </div>
     </section>
+
+    <div class="contact-text-block">
+      <p>E-mail&nbsp;&nbsp;nannamaisons@gmail.com</p>
+      <p>GitHub&nbsp;&nbsp;github.com/jungnanna</p>
+      <p>Velog&nbsp;&nbsp;velog.io/@nannamaisons</p>
+    </div>
+
     <footer>© 2026 정윤서 · Last updated 2026.07</footer>
   </main>
 </div>
+
+<!-- ===== 모달(팝업) 틀. 딱 1개만 만들어두고 내용만 JS로 바꿔서 재사용 ===== -->
+<div id="projectModal" class="modal-overlay" onclick="closeProjectModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeProjectModal()">✕</button>
+    <div class="modal-content">
+      <!-- 번호 + 제목 + 부제목 -->
+      <div class="modal-num-title"><span id="modalNum" class="modal-num"></span><span id="modalTitleText"></span></div>
+      <p id="modalSubtitle" class="modal-subtitle"></p>
+
+      <!-- 기간 · 구성 · 역할 요약 줄 -->
+      <div id="modalSummaryRow" class="modal-summary-row"></div>
+
+      <!-- 탭 버튼 4개 -->
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" onclick="switchTab(0)">기본 정보</button>
+        <button class="modal-tab-btn" onclick="switchTab(1)">주요 기능</button>
+        <button class="modal-tab-btn" onclick="switchTab(2)">WHAT I DID</button>
+        <button class="modal-tab-btn" onclick="switchTab(3)">TROUBLE SHOOTING</button>
+      </div>
+
+      <!-- 탭 0: 기본 정보 (사진, 설명, 기술스택, 깃허브) -->
+      <div class="modal-tab-panel active" data-tab="0">
+        <div id="modalPhotoBox" class="modal-photo-box">사진 준비중</div>
+        <p id="modalDesc" class="modal-desc"></p>
+        <div class="modal-subhead">TECH STACK</div>
+        <div id="modalTags" class="modal-tags"></div>
+        <div id="modalGithub" class="modal-github"></div>
+      </div>
+
+      <!-- 탭 1: 주요 기능 -->
+      <div class="modal-tab-panel" data-tab="1">
+        <ul id="modalFeatures" class="modal-bullet-list"></ul>
+      </div>
+
+      <!-- 탭 2: WHAT I DID -->
+      <div class="modal-tab-panel" data-tab="2">
+        <ul id="modalDid" class="modal-bullet-list"></ul>
+      </div>
+
+      <!-- 탭 3: TROUBLE SHOOTING -->
+      <div class="modal-tab-panel" data-tab="3">
+        <div id="modalTrouble"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const links = document.querySelectorAll('.sidebar nav a');
   const sections = document.querySelectorAll('main section');
@@ -505,6 +854,242 @@
       }
     });
   });
+
+  /* ===================== 여기서부터 프로젝트 모달 로직 ===================== */
+
+  // 1) 프로젝트 정보를 배열(리스트)에 미리 저장해둠.
+  //    카드를 클릭하면 이 배열에서 index 번호로 정보를 꺼내서 모달에 채워넣는 방식.
+  //    - features: "주요 기능" 탭에 들어갈 목록
+  //    - did: "WHAT I DID" 탭에 들어갈 목록
+  //    - trouble: "TROUBLE SHOOTING" 탭 내용. code에 실제 코드를 붙여넣으면 됨.
+  const projects = [
+    {
+      // index 0: 깨비터
+      num: '01',
+      title: '깨비터',
+      subtitle: '빈집 매칭 & AI 리모델링 시뮬레이션 앱',
+      color: 'var(--accent)',
+      textColor: 'white',
+      period: '2026.05 - 2026.06',
+      team: '팀 프로젝트',
+      role: '기획 · 백엔드 · AI 기능 구현',
+      desc: '지방 빈집 문제 해결을 위한 빈집 매칭 서비스입니다. 공공데이터 기반으로 빈집 매물을 탐색하고, AI가 리모델링 후 모습을 시뮬레이션해줍니다. 2026 충청북도 공공데이터 활용 창업 경진대회 출품작입니다.',
+      features: [
+        '공공데이터 기반 빈집 매물 탐색 — 흩어져 있던 CSV 데이터를 정제해 915건 규모의 매물 DB 구축',
+        'AI 리모델링 시뮬레이션 — 빈집 사진을 분석하고 리모델링된 모습을 이미지로 생성',
+        'Naver / Google 소셜 로그인'
+      ],
+      did: [
+        'AI 리모델링 기능 구현 — 이미지 분석과 생성형 이미지 API 연동, 결과 이미지 Supabase Storage 저장',
+        '공공데이터 CSV 정제 및 Supabase(PostgreSQL) 매물 테이블 설계·구축',
+        'Naver / Google 소셜 로그인 연동 및 인증 흐름 디버깅'
+      ],
+      trouble: {
+        problem: 'AI API 호출 시 할당량 초과(429) 오류가 반복 발생',
+        explain: '일시적 오류와 할당량 소진 원인을 구분해 대응. 기능별 API 키 분리로 장애를 격리하고, 재시도 로직을 추가해 안정화',
+        code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
+      },
+      stack: ['React Native', 'TypeScript', 'Supabase', 'OpenAI API'],
+      repo: 'https://github.com/jungnanna/ggabiteo'
+    },
+    {
+      // index 1: 먹어도 돼?
+      num: '02',
+      title: '먹어도 돼?',
+      subtitle: '개인 맞춤형 식단 추천 & 영양 분석 서비스',
+      color: 'var(--accent-2)',
+      textColor: 'white',
+      period: '2026.04',
+      team: '팀 프로젝트',
+      role: '백엔드 팀장',
+      desc: '개인별 맞춤형 식단 추천과 영양 분석 서비스입니다. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동했습니다.',
+      features: [
+        'AI 챗봇 기반 식단 상담 및 음식 안전성 확인',
+        'AI 퍼스널 주간 식단 계획 자동 생성',
+        '개인별 영양 분석 리포트 제공'
+      ],
+      did: [
+        'Firebase / SQLite 이중 저장 구조 설계',
+        'AI 프롬프트 개인화 설계',
+        '백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정'
+      ],
+      trouble: {
+        problem: 'Gemini API 503 오류 및 할당량 소진',
+        explain: '재시도 로직과 API 키 분리로 안정화',
+        code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
+      },
+      stack: ['Django', 'Firebase', 'Gemini API', 'Celery'],
+      repo: 'https://github.com/jungnanna/CANIEAT'
+    },
+    {
+      // index 2: 레디플레이
+      num: '03',
+      title: '레디플레이',
+      subtitle: '스포츠 입문자를 위한 큐레이션 커머스 웹사이트',
+      color: 'var(--accent-bright)',
+      textColor: 'var(--text-main)',
+      period: '2026.03',
+      team: '팀 프로젝트',
+      role: '팀장',
+      desc: '스포츠 입문자를 위한 큐레이션 커머스 웹사이트입니다.',
+      features: [
+        '스포츠 종목별 입문 상품 큐레이션',
+        '장바구니 및 결제 연동 (Toss Payments)',
+        'Discord 자동 알림 기반 CS 시스템'
+      ],
+      did: [
+        'fetch API 기반 공통 헤더·푸터 구조 설계',
+        'Session Storage 활용 로그인/장바구니 상태 유지',
+        '3인 팀 팀장으로서 일정 및 역할 분배'
+      ],
+      trouble: null, // 아직 기록된 트러블슈팅이 없으면 null로 두면 됨
+      stack: ['HTML5', 'JavaScript', 'Supabase', 'Toss Payments API'],
+      repo: null // 아직 업로드 전이면 null로 두면 됨
+    },
+    {
+      // index 3: 메인 프로젝트 (KDT 부트캠프 캡스톤, 2026.08 시작 예정)
+      num: '04',
+      title: '메인 프로젝트 준비중',
+      subtitle: 'Java와 생성형 AI를 활용한 차세대 CRM 플랫폼',
+      color: '#94a3b8', // 아직 시작 전인 프로젝트라 다른 3개와 다르게 차분한 회색으로 구분
+      textColor: 'white',
+      period: '2026.08 시작 예정',
+      team: '5인 팀',
+      role: '백엔드',
+      desc: 'KDT 부트캠프 메인 프로젝트로, Java와 생성형 AI를 활용한 차세대 CRM 플랫폼을 Spring Boot 기반으로 개발할 예정입니다.',
+      features: [
+        'Spring Boot 기반 REST API 서버 설계',
+        'MySQL 데이터베이스 설계 및 Docker 환경 구성',
+        '생성형 AI를 활용한 CRM 기능 구현'
+      ],
+      did: [], // 아직 시작 전이라 비워둠 → 모달에서 자동으로 안내 문구가 뜸
+      trouble: {
+        problem: '트러블슈팅 준비중',
+        explain: '프로젝트 진행 후 이곳에 기록할 예정입니다.',
+        code: '코드 준비중'
+      },
+      stack: ['Spring Boot', 'Java', 'MySQL', 'Docker'],
+      repo: null,
+      repoLabel: '배포 예정' // repo가 없을 때 기본 문구("GitHub 업로드 예정") 대신 이 문구가 뜸
+    }
+  ];
+
+  // 2) 모달을 열면서 index에 맞는 내용을 채워넣는 함수
+  function openProjectModal(index) {
+    const p = projects[index];
+
+    // 번호 + 제목 + 부제목
+    document.getElementById('modalNum').textContent = p.num + ' ';
+    document.getElementById('modalTitleText').textContent = p.title;
+    document.getElementById('modalSubtitle').textContent = p.subtitle;
+
+    // 기간 · 구성 · 역할 요약 줄
+    const summaryRow = document.getElementById('modalSummaryRow');
+    summaryRow.innerHTML = `
+      <span><span class="s-label">기간</span>${p.period}</span>
+      <span><span class="s-label">구성</span>${p.team}</span>
+      <span><span class="s-label">역할</span>${p.role}</span>
+    `;
+
+    // ---- 탭 0: 기본 정보 (사진 / 설명 / 기술스택 / 깃허브) ----
+    document.getElementById('modalDesc').textContent = p.desc;
+
+    const tagsWrap = document.getElementById('modalTags');
+    tagsWrap.innerHTML = '';
+    p.stack.forEach(tag => {
+      const span = document.createElement('span');
+      span.textContent = tag;
+      tagsWrap.appendChild(span);
+    });
+
+    const githubWrap = document.getElementById('modalGithub');
+    githubWrap.innerHTML = p.repo
+      ? `<a href="${p.repo}" target="_blank">GitHub →</a>`
+      : `<span class="repo-pending">${p.repoLabel || 'GitHub 업로드 예정'}</span>`;
+
+    // ---- 탭 1: 주요 기능 ----
+    const featuresList = document.getElementById('modalFeatures');
+    featuresList.innerHTML = '';
+    p.features.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      featuresList.appendChild(li);
+    });
+
+    // ---- 탭 2: WHAT I DID ----
+    // 아직 시작 전인 프로젝트는 did 배열이 비어있을 수 있어서, 그럴 땐 안내 문구를 보여줌
+    const didList = document.getElementById('modalDid');
+    didList.innerHTML = '';
+    if (p.did && p.did.length > 0) {
+      p.did.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        didList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement('li');
+      li.textContent = '아직 진행 전이라 기록된 내용이 없어요.';
+      li.style.listStyle = 'none';
+      li.style.paddingLeft = '0';
+      didList.appendChild(li);
+    }
+
+    // ---- 탭 3: TROUBLE SHOOTING ----
+    const troubleWrap = document.getElementById('modalTrouble');
+    if (p.trouble) {
+      troubleWrap.innerHTML = `
+        <div class="trouble-problem">${p.trouble.problem}</div>
+        <div class="trouble-explain">→ ${p.trouble.explain}</div>
+        <pre class="trouble-code"><code>${p.trouble.code}</code></pre>
+      `;
+    } else {
+      troubleWrap.innerHTML = `<div class="trouble-empty">아직 기록된 트러블슈팅이 없어요.</div>`;
+    }
+
+    // 모달을 열 때는 항상 첫 번째 탭("기본 정보")부터 보이게 초기화
+    switchTab(0);
+
+    // 모달 보이기 + 뒤 배경 스크롤 막기
+    document.getElementById('projectModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden'; // html 태그의 스크롤도 같이 막기
+  }
+
+  // 3) 탭 전환 함수: index번째 탭 버튼/패널만 active로 만들고 나머지는 지움
+  function switchTab(index) {
+    const buttons = document.querySelectorAll('.modal-tab-btn');
+    const panels = document.querySelectorAll('.modal-tab-panel');
+
+    buttons.forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+    });
+    panels.forEach(panel => {
+      const panelIndex = Number(panel.dataset.tab);
+      panel.classList.toggle('active', panelIndex === index);
+    });
+  }
+
+  // 4) 닫기 버튼(X) 눌렀을 때
+  function closeProjectModal() {
+    document.getElementById('projectModal').classList.remove('active');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+  }
+
+  // 5) 모달 바깥 어두운 배경을 클릭했을 때도 닫히게
+  function closeProjectModalOutside(event) {
+    if (event.target.id === 'projectModal') {
+      closeProjectModal();
+    }
+  }
+
+  // 6) Esc 키를 눌러도 닫히게
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeProjectModal();
+    }
+  });
+  /* ===================== 프로젝트 모달 로직 끝 ===================== */
 </script>
 </body>
 </html>
