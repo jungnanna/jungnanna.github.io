@@ -365,7 +365,7 @@
     margin-bottom: 20px;
   }
 
-  /* 기간 · 구성 · 역할 한 줄 요약 */
+  /* 구성 · 역할 한 줄 요약 (기간 제거함) */
   .modal-summary-row {
     display: flex;
     flex-wrap: wrap;
@@ -427,7 +427,7 @@
     border-left: 3px solid var(--accent-2);
   }
 
-  /* 주요 기능 / WHAT I DID 리스트 (공통 스타일) */
+  /* 주요 기능 / 기여 역할 리스트 (공통 스타일) */
   .modal-bullet-list {
     list-style: none;
   }
@@ -793,18 +793,18 @@
       <div class="modal-num-title"><span id="modalNum" class="modal-num"></span><span id="modalTitleText"></span></div>
       <p id="modalSubtitle" class="modal-subtitle"></p>
 
-      <!-- 기간 · 구성 · 역할 요약 줄 -->
+      <!-- 구성 · 역할 요약 줄 -->
       <div id="modalSummaryRow" class="modal-summary-row"></div>
 
       <!-- 탭 버튼 4개 -->
       <div class="modal-tabs">
-        <button class="modal-tab-btn active" onclick="switchTab(0)">기본 정보</button>
+        <button class="modal-tab-btn active" onclick="switchTab(0)">개요</button>
         <button class="modal-tab-btn" onclick="switchTab(1)">주요 기능</button>
-        <button class="modal-tab-btn" onclick="switchTab(2)">WHAT I DID</button>
-        <button class="modal-tab-btn" onclick="switchTab(3)">TROUBLE SHOOTING</button>
+        <button class="modal-tab-btn" onclick="switchTab(2)">기여 역할</button>
+        <button class="modal-tab-btn" onclick="switchTab(3)">트러블 슈팅</button>
       </div>
 
-      <!-- 탭 0: 기본 정보 (사진, 설명, 기술스택, 깃허브) -->
+      <!-- 탭 0: 개요 (사진, 설명, 기술스택, 깃허브) -->
       <div class="modal-tab-panel active" data-tab="0">
         <div id="modalPhotoBox" class="modal-photo-box">사진 준비중</div>
         <p id="modalDesc" class="modal-desc"></p>
@@ -818,9 +818,10 @@
         <ul id="modalFeatures" class="modal-bullet-list"></ul>
       </div>
 
-      <!-- 탭 2: WHAT I DID -->
+      <!-- 탭 2: 기여 역할 (한 일 목록 + 직접 작성한 코드 공간) -->
       <div class="modal-tab-panel" data-tab="2">
         <ul id="modalDid" class="modal-bullet-list"></ul>
+        <div id="modalDidCodeWrap"></div>
       </div>
 
       <!-- 탭 3: TROUBLE SHOOTING -->
@@ -860,7 +861,7 @@
   // 1) 프로젝트 정보를 배열(리스트)에 미리 저장해둠.
   //    카드를 클릭하면 이 배열에서 index 번호로 정보를 꺼내서 모달에 채워넣는 방식.
   //    - features: "주요 기능" 탭에 들어갈 목록
-  //    - did: "WHAT I DID" 탭에 들어갈 목록
+  //    - did: "기여 역할" 탭에 들어갈 목록
   //    - trouble: "TROUBLE SHOOTING" 탭 내용. code에 실제 코드를 붙여넣으면 됨.
   const projects = [
     {
@@ -983,15 +984,14 @@
     document.getElementById('modalTitleText').textContent = p.title;
     document.getElementById('modalSubtitle').textContent = p.subtitle;
 
-    // 기간 · 구성 · 역할 요약 줄
+    // 구성 · 역할 요약 줄 (기간 항목은 제거함)
     const summaryRow = document.getElementById('modalSummaryRow');
     summaryRow.innerHTML = `
-      <span><span class="s-label">기간</span>${p.period}</span>
       <span><span class="s-label">구성</span>${p.team}</span>
       <span><span class="s-label">역할</span>${p.role}</span>
     `;
 
-    // ---- 탭 0: 기본 정보 (사진 / 설명 / 기술스택 / 깃허브) ----
+    // ---- 탭 0: 개요 (사진 / 설명 / 기술스택 / 깃허브) ----
     document.getElementById('modalDesc').textContent = p.desc;
 
     const tagsWrap = document.getElementById('modalTags');
@@ -1016,7 +1016,7 @@
       featuresList.appendChild(li);
     });
 
-    // ---- 탭 2: WHAT I DID ----
+    // ---- 탭 2: 기여 역할 (한 일 목록 + 직접 작성한 코드) ----
     // 아직 시작 전인 프로젝트는 did 배열이 비어있을 수 있어서, 그럴 땐 안내 문구를 보여줌
     const didList = document.getElementById('modalDid');
     didList.innerHTML = '';
@@ -1034,6 +1034,13 @@
       didList.appendChild(li);
     }
 
+    // 기여 역할 탭 안에 코드 보여줄 공간. p.didCode에 코드를 넣으면 여기에 그대로 표시됨
+    const didCodeWrap = document.getElementById('modalDidCodeWrap');
+    didCodeWrap.innerHTML = `
+      <div class="modal-subhead" style="margin-top: 22px;">관련 코드</div>
+      <pre class="trouble-code"><code>${p.didCode || '코드 준비중'}</code></pre>
+    `;
+
     // ---- 탭 3: TROUBLE SHOOTING ----
     const troubleWrap = document.getElementById('modalTrouble');
     if (p.trouble) {
@@ -1046,7 +1053,7 @@
       troubleWrap.innerHTML = `<div class="trouble-empty">아직 기록된 트러블슈팅이 없어요.</div>`;
     }
 
-    // 모달을 열 때는 항상 첫 번째 탭("기본 정보")부터 보이게 초기화
+    // 모달을 열 때는 항상 첫 번째 탭("개요")부터 보이게 초기화
     switchTab(0);
 
     // 모달 보이기 + 뒤 배경 스크롤 막기
