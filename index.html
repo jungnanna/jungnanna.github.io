@@ -12,6 +12,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
+<!-- 코드 블록 색상 강조(VS Code atom-one-dark 테마와 유사) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+
 <style>
 /* ============================================================
    0. 디자인 토큰 (색은 딱 3가지 계열만: 종이색 배경 / 잉크색 글자 / 코발트 포인트)
@@ -695,6 +703,15 @@ footer {
   white-space: pre-wrap;
   overflow-x: auto;
 }
+/* highlight.js가 씌우는 코드 색상 강조 — 트러블슈팅 박스 배경(--ink)에 맞춰 배경만 투명 처리 */
+.trouble-code code.hljs {
+  background: transparent;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
 .trouble-empty { font-size: 0.88rem; color: var(--ink-soft); font-style: italic; }
 @media (max-width: 760px) { .modal-content { padding: 30px 22px 40px; } }
 
@@ -785,7 +802,7 @@ footer {
         <span class="no">STRENGTH — 03</span>
         <span class="kw">DRIVE</span>
         <span class="kw-kr">실행</span>
-        <p>고민을 실행으로 옮깁니다. '먹어도 돼?' 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계하고 팀을 움직였습니다.</p>
+        <p>고민을 실행으로 옮깁니다. '먹어도 돼?' 백엔드 팀장, '연연' 팀장으로서 협업 구조와 문서화를 직접 설계하고 팀을 움직였습니다.</p>
       </div>
     </div>
   </section>
@@ -802,11 +819,25 @@ footer {
       <!-- 행 하나 = 프로젝트 하나. data-hover="view"는 커스텀 커서가 VIEW 모드로 바뀌는 표시 -->
       <div class="project-row reveal" data-hover="view" onclick="openProjectModal(0)">
         <span class="p-num">01</span>
-        <!-- 썸네일: images 폴더에 project-ggabiteo.jpg를 넣으면 사진이 표시됨.
-             파일이 없으면 onerror가 img를 숨겨서 IMAGE 글자만 보임 -->
         <div class="p-thumb">
           <span class="thumb-fallback">IMAGE</span>
-          <img src="images/project-ggabiteo.jpg" alt="깨비터 앱 화면" onerror="this.style.display='none'">
+          <img src="images/yeonyeon.png" alt="연연 서비스 화면" onerror="this.style.display='none'">
+        </div>
+        <div class="p-main">
+          <h3>연연</h3>
+          <p class="p-desc">연애상담과 사주궁합을 결합한 AI CRM 플랫폼 · KDT 부트캠프 메인 프로젝트</p>
+          <div class="p-tags"><span>Spring Boot</span><span>React</span><span>PostgreSQL</span><span>AWS</span><span>OpenAI API</span></div>
+        </div>
+        <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
+      </div>
+
+      <!-- 썸네일: images 폴더에 ggabiteo.jpg가 있으면 사진이 표시됨.
+           파일이 없으면 onerror가 img를 숨겨서 IMAGE 글자만 보임 -->
+      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(1)">
+        <span class="p-num">02</span>
+        <div class="p-thumb">
+          <span class="thumb-fallback">IMAGE</span>
+          <img src="images/ggabiteo.jpg" alt="깨비터 앱 화면" onerror="this.style.display='none'">
         </div>
         <div class="p-main">
           <h3>깨비터</h3>
@@ -816,8 +847,8 @@ footer {
         <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
       </div>
 
-      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(1)">
-        <span class="p-num">02</span>
+      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(2)">
+        <span class="p-num">03</span>
         <div class="p-thumb">
           <span class="thumb-fallback">IMAGE</span>
           <img src="images/project-canieat.jpg" alt="먹어도 돼? 서비스 화면" onerror="this.style.display='none'">
@@ -830,8 +861,8 @@ footer {
         <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
       </div>
 
-      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(2)">
-        <span class="p-num">03</span>
+      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(3)">
+        <span class="p-num">04</span>
         <div class="p-thumb">
           <span class="thumb-fallback">IMAGE</span>
           <img src="images/project-readyplay.jpg" alt="레디플레이 웹사이트 화면" onerror="this.style.display='none'">
@@ -840,20 +871,6 @@ footer {
           <h3>레디플레이</h3>
           <p class="p-desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트</p>
           <div class="p-tags"><span>HTML5</span><span>JavaScript</span><span>Supabase</span><span>Toss Payments</span></div>
-        </div>
-        <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
-      </div>
-
-      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(3)">
-        <span class="p-num">04</span>
-        <div class="p-thumb">
-          <span class="thumb-fallback">COMING SOON</span>
-          <img src="images/project-crm.jpg" alt="차세대 CRM 플랫폼" onerror="this.style.display='none'">
-        </div>
-        <div class="p-main">
-          <h3>메인 프로젝트 준비중</h3>
-          <p class="p-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 · 2026.08 시작 예정</p>
-          <div class="p-tags"><span>Spring Boot</span><span>Java</span><span>MySQL</span><span>Docker</span></div>
         </div>
         <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
       </div>
@@ -877,13 +894,13 @@ footer {
     <div class="skill-block reveal">
       <div class="skill-label">FRAMEWORKS &amp; LIBRARIES</div>
       <div class="skill-tags">
-        <span class="tag-pill">React</span><span class="tag-pill">React Native</span><span class="tag-pill">Django</span><span class="tag-pill">Node.js</span>
+        <span class="tag-pill">Spring Boot</span><span class="tag-pill">React</span><span class="tag-pill">React Native</span><span class="tag-pill">Django</span><span class="tag-pill">Node.js</span><span class="tag-pill">Vite</span>
       </div>
     </div>
     <div class="skill-block reveal">
       <div class="skill-label">DATABASE &amp; INFRA</div>
       <div class="skill-tags">
-        <span class="tag-pill">Supabase (PostgreSQL)</span><span class="tag-pill">Firebase</span><span class="tag-pill">SQLite</span>
+        <span class="tag-pill">Supabase (PostgreSQL)</span><span class="tag-pill">PostgreSQL (pgvector)</span><span class="tag-pill">Firebase</span><span class="tag-pill">SQLite</span><span class="tag-pill">AWS (EC2 / RDS / S3 / CloudFront)</span>
       </div>
     </div>
     <div class="skill-block reveal">
@@ -895,13 +912,7 @@ footer {
     <div class="skill-block reveal">
       <div class="skill-label">TOOLS</div>
       <div class="skill-tags">
-        <span class="tag-pill">VS Code</span><span class="tag-pill">Cursor</span><span class="tag-pill">Android Studio</span><span class="tag-pill">Figma</span><span class="tag-pill">Git</span>
-      </div>
-    </div>
-    <div class="skill-block reveal">
-      <div class="skill-label">LEARNING</div>
-      <div class="skill-tags">
-        <span class="tag-pill tag-pill-learning">Spring Boot</span>
+        <span class="tag-pill">VS Code</span><span class="tag-pill">Cursor</span><span class="tag-pill">Android Studio</span><span class="tag-pill">Figma</span><span class="tag-pill">Git</span><span class="tag-pill">Gradle</span><span class="tag-pill">pgAdmin</span>
       </div>
     </div>
   </section>
@@ -935,16 +946,16 @@ footer {
       <span class="kr">자격증</span>
     </div>
     <div class="tl-item reveal">
+      <div class="tl-date">합격 · 2026.07.28</div>
+      <div class="tl-body"><h3>컴퓨터활용능력 2급</h3></div>
+    </div>
+    <div class="tl-item reveal">
       <div class="tl-date">필기 합격 · 실기 준비 중</div>
       <div class="tl-body"><h3>정보처리기사</h3></div>
     </div>
     <div class="tl-item reveal">
       <div class="tl-date">필기 합격 · 실기 준비 중</div>
       <div class="tl-body"><h3>정보처리산업기사</h3></div>
-    </div>
-    <div class="tl-item reveal">
-      <div class="tl-date">필기 합격 · 실기 준비 중</div>
-      <div class="tl-body"><h3>컴퓨터활용능력 2급</h3></div>
     </div>
 
     <div class="sec-head reveal" style="margin-top: 100px;">
@@ -1168,8 +1179,126 @@ window.addEventListener('scroll', () => {
    ============================================================ */
 const projects = [
   {
-    // index 0: 깨비터
+    // index 0: 연연 (KDT 부트캠프 메인 프로젝트)
     num: 'PROJECT 01',
+    title: '연연',
+    subtitle: '연애상담 + 사주궁합 AI CRM 플랫폼',
+    period: '2026.07 - 2026.08',
+    team: '4인 팀',
+    role: '팀장 · AI/RAG · 인프라(AWS)',
+    desc: '연애상담과 사주궁합 매칭을 결합한 AI CRM 플랫폼입니다. KDT 부트캠프 메인 프로젝트로, 사주 지식 데이터를 기반으로 한 LLM 해석 기능과 관리자용 상담·회원·통계 관리 기능을 갖추고 있습니다.',
+    features: [
+      'AI 사주 분석 — 사주 계산 결과를 쿼리로 pgvector 지식베이스를 검색한 뒤 LLM으로 해석 생성 (RAG 파이프라인)',
+      '사주궁합(2인) 분석 — 레이더차트, 오행궁합, 성격궁합, 주의사항, 좋은 시기까지 실제 AI 데이터로 렌더링',
+      '연애상담 신청/게시판/마이페이지 등 일반 사용자 기능',
+      '관리자 페이지 — 상담·회원 관리, 통계, 시스템 설정'
+    ],
+    did: [
+      '팀장으로서 도메인 기획 및 팀원 업무 분배 주도',
+      'LLM/RAG 파이프라인 설계·구현 — PDF 지식베이스 청크화 → OpenAI 임베딩 → pgvector 저장 → 검색 → LLM 해석까지 전 과정 구축',
+      '사주궁합(2인용) 백엔드 API 구축 및 프론트엔드 연동',
+      'AWS 인프라 구축 및 배포 — EC2, RDS(PostgreSQL), S3, CloudFront'
+    ],
+    didCode: [
+      {
+        label: 'pgvector 유사도 검색으로 질문과 관련된 사주 지식 청크를 찾아 LLM에 컨텍스트로 전달하는 RAG 검색 로직',
+        lang: 'java',
+        code: `// SajuRetrievalService.java
+public List<KnowledgeChunk> retrieveRelevantChunks(String query, int topK) {
+    float[] queryEmbedding = embeddingService.embed(query);
+
+    String sql = """
+        SELECT content, 1 - (embedding <=> ?::vector) AS similarity
+        FROM saju_knowledge_chunks
+        ORDER BY embedding <=> ?::vector
+        LIMIT ?
+        """;
+
+    return jdbcTemplate.query(sql, chunkMapper, queryEmbedding, queryEmbedding, topK);
+}`
+      }
+    ],
+    trouble: [
+      {
+        problem: '배포 후 HTTPS 프론트엔드에서 백엔드 API 호출 시 CORS 에러 발생',
+        explain: 'WebConfig.java에 전역 CORS 설정을 해뒀는데도 에러가 계속됨. 원인을 추적한 결과 SecurityConfig.java의 .cors(cors -> {}) 설정 때문에 Spring Security가 WebConfig 대신 별도의 CorsConfig.java에 있는 corsConfigurationSource Bean을 쓰고 있었고, 그 파일에 CloudFront 프론트엔드 주소가 빠져있던 게 근본 원인이었음. CorsConfig.java의 allowedOrigins에 주소를 추가해서 해결.',
+        lang: 'java',
+        code: `@Configuration
+public class CorsConfig {
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "https://d21n7erdw1oomr.cloudfront.net" // 누락되어 있던 프론트 주소 추가
+        ));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+}`
+      },
+      {
+        problem: 'HTTPS 프론트엔드에서 HTTP로만 열려있는 EC2 백엔드로 직접 API 호출이 브라우저 Mixed Content 정책에 막힘',
+        explain: '프론트는 CloudFront(HTTPS)로 배포했지만 백엔드는 EC2에서 HTTP로만 열려있어 브라우저가 요청 자체를 차단함. 백엔드 앞에도 별도의 CloudFront 배포를 두어 HTTPS로 감싸고, 오리진만 EC2 퍼블릭 DNS(HTTP)로 연결하는 방식으로 해결.',
+        lang: 'plaintext',
+        code: `[ 프론트 CloudFront (HTTPS) ]  ──▶  https://d21n7erdw1oomr.cloudfront.net
+
+[ 백엔드용 CloudFront (HTTPS) ]  ──▶  https://d2isw9ihgjfosa.cloudfront.net
+        │  origin (HTTP only)
+        ▼
+  ec2-18-208-129-88.compute-1.amazonaws.com:8080
+
+// 프론트는 항상 HTTPS인 백엔드 CloudFront 주소로만 요청
+// → Mixed Content 정책에 걸리지 않음`
+      },
+      {
+        problem: '450건 샘플 데이터에 담당 상담사를 무작위 배정하는 SQL을 돌렸더니 특정 상담사에게 몰림',
+        explain: "PostgreSQL에서 random()이 서브쿼리 안에서 쿼리당 한 번만 평가되는 함정에 걸림. 서브쿼리를 outer row와 상관시켜 행마다 다시 계산되도록 고쳐서 해결.",
+        lang: 'sql',
+        code: `-- 문제: random()이 쿼리 전체에서 한 번만 평가되어 상담사가 몰림
+UPDATE compatibility_results
+SET counselor_id = (
+  SELECT id FROM counselors ORDER BY random() LIMIT 1
+);
+
+-- 해결: outer row(cr.id)와 상관시켜 행마다 random()이 재계산되게 함
+UPDATE compatibility_results cr
+SET counselor_id = sub.id
+FROM (
+  SELECT id FROM counselors
+  ORDER BY random()
+  LIMIT 1
+) sub
+WHERE cr.id = cr.id; -- 상관 서브쿼리로 매 행마다 재평가되도록 구성`
+      },
+      {
+        problem: 'PowerShell에서 API 테스트 시 한글 요청/응답이 깨짐',
+        explain: 'Invoke-RestMethod의 기본 인코딩 문제로 한글이 깨져서, curl.exe의 --data-binary/--output 옵션으로 우회해 인코딩 깨짐 없이 테스트함.',
+        lang: 'plaintext',
+        code: `# 문제: 한글이 깨짐
+Invoke-RestMethod -Uri "http://localhost:8080/api/saju/interpret" \`
+  -Method POST -Body $jsonBody -ContentType "application/json"
+
+# 해결: curl.exe로 우회 (바이너리 그대로 전송/저장)
+curl.exe -X POST "http://localhost:8080/api/saju/interpret" \`
+  -H "Content-Type: application/json; charset=utf-8" \`
+  --data-binary "@request.json" \`
+  --output response.json`
+      }
+    ],
+    stack: ['Spring Boot', 'Java', 'React', 'TypeScript', 'PostgreSQL (pgvector)', 'AWS', 'OpenAI API'],
+    repo: null,
+    repoLabel: 'Git 비공개 (팀 내부 공유)'
+  },
+  {
+    // index 1: 깨비터
+    num: 'PROJECT 02',
     title: '깨비터',
     subtitle: '빈집 매칭 & AI 리모델링 시뮬레이션 앱',
     period: '2026.05 - 2026.06',
@@ -1186,17 +1315,104 @@ const projects = [
       '공공데이터 CSV 정제 및 Supabase(PostgreSQL) 매물 테이블 설계·구축',
       'Naver / Google 소셜 로그인 연동 및 인증 흐름 디버깅'
     ],
-    trouble: {
-      problem: 'AI API 호출 시 할당량 초과(429) 오류가 반복 발생',
-      explain: '일시적 오류와 할당량 소진 원인을 구분해 대응. 기능별 API 키 분리로 장애를 격리하고, 재시도 로직을 추가해 안정화',
-      code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
-    },
+    didCode: [
+      {
+        label: 'AI로 생성한 리모델링 이미지를 Supabase Storage에 업로드하고 공개 URL을 반환',
+        lang: 'typescript',
+        code: `// api/aiRemodeling.ts
+async function saveGeneratedImage(base64Image: string, propertyId: string, category: string) {
+  const buffer = Buffer.from(base64Image, 'base64');
+  const path = \`remodeling/\${propertyId}/\${category}.png\`;
+
+  const { error } = await supabase.storage
+    .from('remodeling-results')
+    .upload(path, buffer, { contentType: 'image/png', upsert: true });
+
+  if (error) throw error;
+
+  const { data } = supabase.storage.from('remodeling-results').getPublicUrl(path);
+  return data.publicUrl;
+}`
+      }
+    ],
+    trouble: [
+      {
+        problem: 'AI 리모델링 이미지 생성 API 호출 시 할당량 초과(429) 오류가 반복 발생',
+        explain: '실시간 생성 방식은 할당량 소진에 취약해서, 사전 준비된 이미지로 우선 폴백하도록 안정화함.',
+        lang: 'typescript',
+        code: `// api/aiRemodeling.ts
+async function generateRemodelingImage(photoBase64: string, category: string) {
+  try {
+    const response = await openai.images.edit({
+      model: 'gpt-image-1',
+      image: photoBase64,
+      prompt: categoryPrompts[category],
+    });
+    return response.data[0].b64_json;
+  } catch (error) {
+    if (error.status === 429) {
+      // 할당량 초과 시 Supabase Storage에 미리 준비해 둔 이미지로 폴백
+      return await getFallbackImage(category);
+    }
+    throw error;
+  }
+}`
+      },
+      {
+        problem: '생성된 리모델링 이미지가 원본 구조를 무시하고 찰흙 같은 질감으로 나오는 퀄리티 문제',
+        explain: 'gpt-image-1의 images/edits 엔드포인트를 quality/input_fidelity 파라미터 없이 쓰고 있었던 게 원인. gpt-image-2로 교체하고 quality: high, 실제 크기(1536x1024), 사실감·구조유지를 강조하는 프롬프트 프리픽스를 추가해 개선.',
+        lang: 'typescript',
+        code: `// api/aiRemodeling.ts
+const REALISM_PREFIX =
+  '기존 건물의 구조(창문, 벽, 층고)는 그대로 유지하고, 사실적인 사진처럼 리모델링 결과만 반영해줘. ';
+
+async function generateRemodelingImage(photoBase64: string, category: string) {
+  const response = await openai.images.edit({
+    model: 'gpt-image-2',            // gpt-image-1 → gpt-image-2로 교체
+    image: photoBase64,
+    prompt: REALISM_PREFIX + categoryPrompts[category],
+    quality: 'high',                 // 품질 파라미터 명시
+    size: '1536x1024',
+  });
+  return response.data[0].b64_json;
+}`
+      },
+      {
+        problem: '소셜 로그인(Naver/Kakao/Google) 연동 시 Android 빌드가 계속 실패함',
+        explain: '각 SDK가 요구하는 AndroidManifest.xml 인텐트 필터와 build.gradle 의존성이 서로 충돌하고 있었음. 매니페스트에 각 SDK용 리다이렉트 스킴을 분리해서 등록하고 build.gradle의 SDK 버전을 맞춰서 해결.',
+        lang: 'plaintext',
+        code: `<!-- AndroidManifest.xml -->
+<activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+  <intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="kakao{NATIVE_APP_KEY}" android:host="oauth" />
+  </intent-filter>
+</activity>
+
+<!-- Naver, Google도 각각 별도 scheme으로 분리 등록 -->
+<!-- 하나의 scheme으로 묶으려다 충돌 → SDK별로 분리하고서야 해결 -->`
+      },
+      {
+        problem: '팀원과 React Native 기능 브랜치를 나눠 작업하다 병합 시 충돌이 잦음',
+        explain: '네비게이션 구조와 화면 컴포넌트를 각자 건드리면서 같은 파일이 계속 충돌함. 화면 단위로 담당을 명확히 나누고, 공통 컴포넌트(네비게이션 등)는 PR로 먼저 병합한 뒤 각자 브랜치를 리베이스하는 순서로 정리해 충돌을 줄임.',
+        lang: 'plaintext',
+        code: `# 충돌이 잦았던 방식
+main → feature/login, feature/map, feature/remodel 각자 분기 후 개별 병합
+
+# 정리한 방식
+1. 공통 네비게이션/컴포넌트 먼저 PR → main에 병합
+2. 각자 브랜치에서 git rebase main으로 최신 상태 반영
+3. 화면 단위(로그인/지도/리모델링)로 담당을 고정해 같은 파일을 동시에 안 건드리게 함`
+      }
+    ],
     stack: ['React Native', 'TypeScript', 'Supabase', 'OpenAI API'],
     repo: 'https://github.com/jungnanna/ggabiteo'
   },
   {
-    // index 1: 먹어도 돼?
-    num: 'PROJECT 02',
+    // index 2: 먹어도 돼?
+    num: 'PROJECT 03',
     title: '먹어도 돼?',
     subtitle: '개인 맞춤형 식단 추천 & 영양 분석 서비스',
     period: '2026.04',
@@ -1213,17 +1429,99 @@ const projects = [
       'AI 프롬프트 개인화 설계',
       '백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정'
     ],
-    trouble: {
-      problem: 'Gemini API 503 오류 및 할당량 소진',
-      explain: '재시도 로직과 API 키 분리로 안정화',
-      code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
-    },
+    didCode: [
+      {
+        label: 'Firestore(실시간 동기화)와 SQLite(로컬 캐시) 이중 저장 구조',
+        lang: 'python',
+        code: `# services/meal_plan_service.py
+def save_meal_plan(user_id: str, plan: dict):
+    firestore_db.collection('meal_plans').document(user_id).set(plan)
+
+    with sqlite3.connect('local_cache.db') as conn:
+        conn.execute(
+            'INSERT OR REPLACE INTO meal_plans (user_id, plan_json, updated_at) VALUES (?, ?, ?)',
+            (user_id, json.dumps(plan), datetime.utcnow().isoformat())
+        )`
+      }
+    ],
+    trouble: [
+      {
+        problem: 'Gemini API 503 오류 및 할당량 소진',
+        explain: '기능(챗봇/주간 식단 계획)별로 API 키를 분리해서 한 기능의 할당량 소진이 다른 기능까지 막지 않도록 격리하고, 503 응답에는 지수 백오프로 재시도하도록 안정화',
+        lang: 'python',
+        code: `# services/gemini_service.py
+API_KEYS = {
+    'chatbot': settings.GEMINI_API_KEY_CHATBOT,
+    'meal_plan': settings.GEMINI_API_KEY_MEALPLAN,
+}
+
+def call_gemini(feature: str, prompt: str, retries: int = 3):
+    api_key = API_KEYS[feature]  # 기능별 키 분리로 할당량 소진 격리
+    for attempt in range(retries):
+        try:
+            return genai.generate_content(prompt, api_key=api_key)
+        except ServiceUnavailableError:  # 503
+            time.sleep(2 ** attempt)  # 지수 백오프
+    raise Exception('Gemini API 재시도 실패')`
+      },
+      {
+        problem: '사용자가 입력한 알레르기 명칭이 공공데이터 표기와 달라 안전성 검증에서 누락되는 경우 발생',
+        explain: '"새우"/"갑각류" 같은 동의어 표기 차이로 매칭이 실패하는 문제. 동의어 사전을 만들고, 공공 식품 API로 이중 검증하도록 구성.',
+        lang: 'python',
+        code: `# services/allergen_service.py
+ALLERGEN_SYNONYMS = {
+    '새우': ['갑각류', '새우류', 'shrimp'],
+    '땅콩': ['견과류', '낙화생', 'peanut'],
+    # ...
+}
+
+def check_food_safety(user_allergens: list[str], food_name: str) -> bool:
+    expanded = {syn for a in user_allergens for syn in ALLERGEN_SYNONYMS.get(a, [a])}
+
+    # 1차: 로컬 동의어 사전으로 우선 매칭
+    if any(term in food_name for term in expanded):
+        return False
+
+    # 2차: 공공 식품안전 API로 성분 이중 검증
+    ingredients = public_food_api.get_ingredients(food_name)
+    return not any(term in ingredients for term in expanded)`
+      },
+      {
+        problem: 'AI 챗봇 응답 생성이 여러 요청을 순차 처리하면서 사용자 대기 시간이 길어짐',
+        explain: 'ThreadPoolExecutor로 요청을 병렬 처리하도록 바꿔 대기 시간을 줄임.',
+        lang: 'python',
+        code: `# services/chatbot_service.py
+from concurrent.futures import ThreadPoolExecutor
+
+executor = ThreadPoolExecutor(max_workers=4)
+
+def handle_batch_questions(questions: list[str]) -> list[str]:
+    futures = [executor.submit(call_gemini, 'chatbot', q) for q in questions]
+    return [f.result() for f in futures]`
+      },
+      {
+        problem: '같은 질문이 반복되는데도 매번 AI API를 새로 호출해 비용과 응답 시간이 낭비됨',
+        explain: '자주 반복되는 질문 유형(음식 안전성 확인 등)에 24시간 캐싱을 도입해 API 호출 횟수를 줄임.',
+        lang: 'python',
+        code: `# services/cache_service.py
+CACHE_TTL = 60 * 60 * 24  # 24시간
+
+def get_or_generate(cache_key: str, generate_fn):
+    cached = redis_client.get(cache_key)
+    if cached:
+        return json.loads(cached)
+
+    result = generate_fn()
+    redis_client.setex(cache_key, CACHE_TTL, json.dumps(result))
+    return result`
+      }
+    ],
     stack: ['Django', 'Firebase', 'Gemini API', 'Celery'],
     repo: 'https://github.com/jungnanna/CANIEAT'
   },
   {
-    // index 2: 레디플레이
-    num: 'PROJECT 03',
+    // index 3: 레디플레이
+    num: 'PROJECT 04',
     title: '레디플레이',
     subtitle: '스포츠 입문자를 위한 큐레이션 커머스 웹사이트',
     period: '2026.03',
@@ -1240,37 +1538,60 @@ const projects = [
       'Session Storage 활용 로그인/장바구니 상태 유지',
       '3인 팀 팀장으로서 일정 및 역할 분배'
     ],
-    trouble: null, // 아직 기록된 트러블슈팅이 없으면 null
+    didCode: [
+      {
+        label: 'fetch로 공통 헤더/푸터 HTML을 불러와 페이지마다 삽입하는 구조',
+        lang: 'javascript',
+        code: `// common/loadLayout.js
+async function loadLayout() {
+  const [headerHtml, footerHtml] = await Promise.all([
+    fetch('/components/header.html').then(res => res.text()),
+    fetch('/components/footer.html').then(res => res.text()),
+  ]);
+  document.getElementById('header-placeholder').innerHTML = headerHtml;
+  document.getElementById('footer-placeholder').innerHTML = footerHtml;
+}`
+      }
+    ],
+    // ⚠️ 아래 2개는 자세한 내용이 기록돼 있지 않아 'did' 목록만 보고 임시로 작성한 초안입니다.
+    // 실제 겪었던 문제/해결 방식과 다르면 내용을 꼭 확인 후 고쳐주세요.
+    trouble: [
+      {
+        problem: '(초안) 새로고침하면 로그인 상태와 장바구니 내용이 사라짐',
+        explain: '(초안) Session Storage에 로그인 토큰과 장바구니 목록을 저장해두고, 페이지 로드 시 다시 불러와 상태를 복원하도록 처리했다고 가정하고 작성함 — 실제 구현과 다르면 수정 필요',
+        lang: 'javascript',
+        code: `// (초안) common/session.js
+function saveCartToSession(cart) {
+  sessionStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function restoreCartFromSession() {
+  const saved = sessionStorage.getItem('cart');
+  return saved ? JSON.parse(saved) : [];
+}`
+      },
+      {
+        problem: '(초안) 페이지마다 헤더/푸터를 복붙하다 보니 수정할 때마다 모든 페이지를 일일이 고쳐야 함',
+        explain: '(초안) fetch로 공통 헤더/푸터 HTML을 한 곳에서 관리하고 각 페이지에서 불러와 삽입하는 구조로 정리했다고 가정하고 작성함 — 실제 구현과 다르면 수정 필요',
+        lang: 'plaintext',
+        code: `기존: 각 page.html마다 <header>...</header> 코드가 그대로 중복
+개선: header.html / footer.html로 분리 후 loadLayout()에서 fetch로 불러와 삽입
+      → 헤더/푸터 수정 시 파일 하나만 고치면 모든 페이지에 반영됨`
+      }
+    ],
     stack: ['HTML5', 'JavaScript', 'Supabase', 'Toss Payments API'],
     repo: null // 아직 업로드 전이면 null
-  },
-  {
-    // index 3: 메인 프로젝트 (KDT 부트캠프 캡스톤, 2026.08 시작 예정)
-    num: 'PROJECT 04',
-    title: '메인 프로젝트 준비중',
-    subtitle: 'Java와 생성형 AI를 활용한 차세대 CRM 플랫폼',
-    period: '2026.08 시작 예정',
-    team: '5인 팀',
-    role: '백엔드',
-    desc: 'KDT 부트캠프 메인 프로젝트로, Java와 생성형 AI를 활용한 차세대 CRM 플랫폼을 Spring Boot 기반으로 개발할 예정입니다.',
-    features: [
-      'Spring Boot 기반 REST API 서버 설계',
-      'MySQL 데이터베이스 설계 및 Docker 환경 구성',
-      '생성형 AI를 활용한 CRM 기능 구현'
-    ],
-    did: [], // 아직 시작 전이라 비워둠 → 모달에서 자동 안내 문구 표시
-    trouble: {
-      problem: '트러블슈팅 준비중',
-      explain: '프로젝트 진행 후 이곳에 기록할 예정입니다.',
-      code: '코드 준비중'
-    },
-    stack: ['Spring Boot', 'Java', 'MySQL', 'Docker'],
-    repo: null,
-    repoLabel: '배포 예정'
   }
 ];
 
 // 모달을 열면서 index에 맞는 내용을 채워넣음
+// 코드를 HTML에 안전하게 넣기 위한 이스케이프 함수 (<, >, & 등이 깨지지 않도록)
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function openProjectModal(index) {
   const p = projects[index];
 
@@ -1327,21 +1648,38 @@ function openProjectModal(index) {
   }
 
   const didCodeWrap = document.getElementById('modalDidCodeWrap');
-  didCodeWrap.innerHTML = `
-    <div class="modal-subhead" style="margin-top: 26px;">관련 코드</div>
-    <pre class="trouble-code"><code>${p.didCode || '코드 준비중'}</code></pre>
-  `;
+  if (p.didCode && p.didCode.length > 0) {
+    didCodeWrap.innerHTML = `
+      <div class="modal-subhead" style="margin-top: 26px;">관련 코드</div>
+      ${p.didCode.map(item => `
+        ${item.label ? `<div class="trouble-explain" style="border-left:none; padding-left:0; margin-bottom:10px;">${item.label}</div>` : ''}
+        <pre class="trouble-code" style="margin-bottom: 18px;"><code class="language-${item.lang || 'plaintext'}">${escapeHtml(item.code)}</code></pre>
+      `).join('')}
+    `;
+  } else {
+    didCodeWrap.innerHTML = '';
+  }
 
   // ---- 탭 3: TROUBLE SHOOTING ----
   const troubleWrap = document.getElementById('modalTrouble');
-  if (p.trouble) {
-    troubleWrap.innerHTML = `
-      <div class="trouble-problem">${p.trouble.problem}</div>
-      <div class="trouble-explain">→ ${p.trouble.explain}</div>
-      <pre class="trouble-code"><code>${p.trouble.code}</code></pre>
-    `;
+  if (p.trouble && p.trouble.length > 0) {
+    troubleWrap.innerHTML = p.trouble.map((t, i) => `
+      <div class="trouble-item" style="${i > 0 ? 'margin-top: 34px; padding-top: 30px; border-top: 1px solid var(--line);' : ''}">
+        ${p.trouble.length > 1 ? `<div class="modal-subhead">ISSUE ${String(i + 1).padStart(2, '0')}</div>` : ''}
+        <div class="trouble-problem">${t.problem}</div>
+        <div class="trouble-explain">→ ${t.explain}</div>
+        <pre class="trouble-code"><code class="language-${t.lang || 'plaintext'}">${escapeHtml(t.code)}</code></pre>
+      </div>
+    `).join('');
   } else {
     troubleWrap.innerHTML = `<div class="trouble-empty">아직 기록된 트러블슈팅이 없어요.</div>`;
+  }
+
+  // 방금 넣은 코드 블록들에 VS Code 스타일 색상 강조 적용
+  if (window.hljs) {
+    document.querySelectorAll('#projectModal pre.trouble-code code').forEach(block => {
+      hljs.highlightElement(block);
+    });
   }
 
   switchTab(0); // 항상 "개요" 탭부터
