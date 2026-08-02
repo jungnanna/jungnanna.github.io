@@ -3,808 +3,999 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>정윤서 이력서</title>
+<title>정윤서 — Portfolio</title>
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+<!-- 폰트 3종: Pretendard(본문 한글) / Archivo(영문 대형 타이틀) / IBM Plex Mono(라벨·숫자) -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --accent: #003A35;
-    --accent-2: #2563EB;
-    --accent-bright: #34D399;
-    --text-main: #001F27;
-    --text-sub: #6b7280;
-    --border: #e5e7eb;
-  }
-  html { overflow-y: scroll; }
-  ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: #f1f1f1; }
-  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 0; }
-  ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
-  ::selection { background: var(--accent-bright); color: var(--text-main); }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Pretendard', sans-serif;
-    color: var(--text-main);
-    line-height: 1.75;
-  }
-  .page-wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-  }
-  .sidebar {
-    width: 280px;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    padding: 60px 30px;
-    border-right: 1px solid var(--border);
-    flex-shrink: 0;
-    text-align: center;
-  }
-  .avatar-ring {
-    width: 200px;
-    height: 260px;
-    border-radius: 50%;
-    padding: 6px;
-    background: conic-gradient(from 180deg, var(--accent-bright), var(--accent-2), var(--accent-bright));
-    margin: 0 auto 16px;
-  }
-  .profile-photo {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center 25%;
-    border: 3px solid white;
-    display: block;
-    filter: contrast(1.1) saturate(1.05);
-  }
-  .sidebar h1 { font-size: 1.3rem; margin-bottom: 6px; }
-  .sidebar .role { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 18px; }
-  .sidebar .links { display: flex; flex-direction: column; gap: 6px; margin-bottom: 34px; }
-  .sidebar .links a { font-size: 0.8rem; color: var(--accent-2); text-decoration: none; }
-  .sidebar nav {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .sidebar nav a {
-    display: inline-block;
-    font-size: 0.9rem;
-    color: var(--text-sub);
-    text-decoration: none;
-    padding: 10px 20px;
-    margin-bottom: 4px;
-    transition: all 0.2s;
-  }
-  .sidebar nav a:hover,
-  .sidebar nav a.active {
-    background: var(--accent-2);
-    color: white;
-    font-weight: bold;
-  }
-  .sidebar nav a.external-link {
-    margin-top: 12px;
-    border-top: 1px solid var(--border);
-    padding-top: 20px;
-  }
-  .portfolio-btn .arrow {
-    display: inline-block;
-    color: var(--accent-bright);
-    transition: transform 0.2s ease;
-  }
-  .portfolio-btn:hover .arrow {
-    transform: translateX(6px);
-  }
-  main { flex: 1; max-width: 820px; padding: 80px 60px 120px; }
-  section {
-    margin-bottom: 130px;
-    scroll-margin-top: 60px;
-  }
-  section h2 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--text-main);
-    letter-spacing: 0;
-    text-transform: none;
-    position: relative;
-    display: inline-block;
-    margin-bottom: 50px;
-  }
-  section h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 6px;
-    background: var(--accent-2);
-  }
-  .intro-text { font-size: 1.15rem; color: var(--text-main); margin-bottom: 28px; line-height: 1.8; }
-  .strengths {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  .strengths li {
-    border: 1px solid var(--border);
-    padding: 28px 24px;
-  }
-  .strengths .shape {
-    display: block;
-    margin-bottom: 18px;
-  }
-  .strengths .keyword {
-    display: block;
-    font-size: 1.3rem;
-    font-weight: 900;
-    margin-bottom: 2px;
-  }
-  .strengths .keyword-en {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--text-sub);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .strengths .keyword-desc {
-    font-size: 0.88rem;
-    color: var(--text-sub);
-    line-height: 1.7;
-  }
-  .exp-item, .edu-item {
-    padding: 28px 0;
-    border-top: 1px solid var(--border);
-  }
-  section#education .edu-item:last-of-type,
-  section#certificate .edu-item:last-of-type,
-  section#experience .exp-item:last-of-type { border-bottom: 1px solid var(--border); }
-  .exp-top, .edu-top { display: flex; justify-content: space-between; flex-wrap: wrap; }
-  .exp-title, .edu-title { font-weight: bold; font-size: 0.95rem; }
-  .exp-date, .edu-date { font-size: 0.8rem; color: var(--text-sub); }
-  .exp-desc { font-size: 0.88rem; color: var(--text-sub); margin-top: 6px; }
-  .skill-block {
-    display: flex;
-    gap: 30px;
-    padding: 20px 0;
-    border-top: 1px solid var(--border);
-    align-items: flex-start;
-  }
-  .skill-block:last-child {
-    border-bottom: 1px solid var(--border);
-  }
-  .skill-label {
-    width: 140px;
-    flex-shrink: 0;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--text-main);
-    padding-top: 8px;
-  }
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    flex: 1;
-  }
-  .tag-pill {
-    display: inline-block;
-    padding: 7px 16px;
-    border: 1.5px solid var(--accent);
-    font-size: 0.85rem;
-    color: var(--accent);
-    background: white;
-  }
-  .tag-pill-learning {
-    border-color: var(--text-sub);
-    color: var(--text-sub);
-  }
-  .hero-statement {
-    font-size: 2.6rem;
-    font-weight: 900;
-    line-height: 1.4;
-    margin-bottom: 40px;
-  }
-  .hero-statement .highlight {
-    color: var(--text-main);
-  }
-  .exp-item-prior {
-    opacity: 0.65;
-  }
-  .exp-item-prior .exp-title {
-    font-weight: 500;
-  }
-  .repo-link {
-    color: var(--accent-2);
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .repo-link:hover {
-    text-decoration: underline;
-  }
-  .repo-pending {
-    color: var(--text-sub);
-    font-style: italic;
-    font-size: 0.85rem;
-  }
+/* ============================================================
+   0. 디자인 토큰 (색은 딱 3가지 계열만: 종이색 배경 / 잉크색 글자 / 코발트 포인트)
+   ============================================================ */
+:root {
+  --bg: #F5F6F2;          /* 살짝 서늘한 종이색 배경 */
+  --ink: #14151A;          /* 거의 검정에 가까운 잉크색 */
+  --ink-soft: #5A5D66;     /* 보조 텍스트용 회색 */
+  --accent: #2438E8;       /* 코발트 블루 — 포인트는 이 색 하나만 씀 */
+  --accent-ink: #FFFFFF;   /* 포인트 색 위에 올라가는 글자색 */
+  --line: rgba(20, 21, 26, 0.14); /* 얇은 구분선 */
+  --display: 'Archivo', 'Pretendard', sans-serif;
+  --body: 'Pretendard', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
 
-  /* ===================== 여기서부터 프로젝트 카드 + 모달 ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-  /* 카드들을 격자(grid)로 배치 */
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  line-height: 1.7;
+  /* 데스크톱에서는 기본 커서를 숨기고 커스텀 커서(아래 JS)를 씀 */
+  overflow-x: hidden;
+}
 
-  /* 카드 하나 */
-  .project-card {
-    border: 1px solid var(--border);
-    background: white;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0, 31, 39, 0.1);
-  }
+::selection { background: var(--accent); color: var(--accent-ink); }
 
-  /* 카드 위쪽 색깔 배너 (나중에 실제 사진으로 교체할 자리, 지금은 색상 placeholder) */
-  .card-banner {
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    text-align: center;
-  }
-  .card-banner-text {
-    font-size: 0.8rem;
-    font-weight: 600;
-    opacity: 0.65;
-  }
+/* 마우스가 있는 기기(데스크톱)에서만 기본 커서 숨김 → 모바일은 그대로 */
+@media (pointer: fine) {
+  body, a, button, .project-row, .str-card { cursor: none; }
+}
 
-  .card-body { padding: 22px 20px; }
-  .card-top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 8px;
-  }
-  .card-top-row h3 { font-size: 1.05rem; }
-  .card-badge {
-    font-size: 0.7rem;
-    color: var(--text-sub);
-    border: 1px solid var(--border);
-    padding: 3px 9px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .card-desc {
-    font-size: 0.87rem;
-    color: var(--text-sub);
-    margin-bottom: 16px;
-    line-height: 1.6;
-    min-height: 44px;
-  }
-  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .card-tag {
-    font-size: 0.74rem;
-    padding: 4px 10px;
-    border: 1px solid var(--border);
-    color: var(--text-main);
-  }
+/* ============================================================
+   1. 커스텀 커서 — 실제 마우스 포인터 모양의 화살표
+   - 위치는 마우스를 즉시 따라가서 "진짜 커서"처럼 느껴지게 함
+   - 대신 색·크기·옆에 붙는 라벨로 커스텀 느낌을 살림
+   ============================================================ */
+.cursor-arrow {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;   /* 커서가 클릭을 방해하지 않게 */
+  z-index: 9999;
+  width: 26px; height: 26px;
+  /* 화살표 "끝(tip)"이 실제 클릭 지점과 일치하도록 좌상단 기준으로 둠 */
+}
+.cursor-arrow svg {
+  display: block;
+  width: 100%; height: 100%;
+  transition: transform 0.15s ease;
+}
+/* 화살표 몸통: 기본은 잉크색 채움 + 배경색 테두리(어두운 영역 위에서도 보이게) */
+.cursor-arrow svg path {
+  fill: var(--ink);
+  stroke: var(--bg);
+  stroke-width: 1.5;
+  transition: fill 0.15s ease;
+}
+/* 링크·버튼 위: 화살표가 코발트로 변하고 살짝 커짐 */
+.cursor-arrow.hovering svg { transform: scale(1.25); }
+.cursor-arrow.hovering svg path { fill: var(--accent); }
+/* 프로젝트 행 위: 화살표 옆에 "VIEW ↗" 사각 라벨이 붙음 */
+.cursor-chip {
+  position: absolute;
+  left: 24px; top: 22px;   /* 화살표 끝의 오른쪽 아래에 붙는 위치 */
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 5px 10px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.cursor-arrow.view-mode .cursor-chip { opacity: 1; transform: translateY(0); }
+.cursor-arrow.view-mode svg path { fill: var(--accent); }
+@media (pointer: coarse) { .cursor-arrow { display: none; } }
 
-  /* 모달을 감싸는 반투명 배경 (평소엔 숨김) */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 31, 39, 0.6);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-  /* JS가 이 클래스를 붙이면 보이게 됨 */
-  .modal-overlay.active { display: flex; }
+/* ============================================================
+   2. 상단 고정 내비게이션 + 스크롤 진행 바
+   ============================================================ */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: rgba(245, 246, 242, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .logo {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--ink);
+}
+.topbar .logo span { color: var(--accent); }
+.topbar nav { display: flex; gap: 26px; }
+.topbar nav a {
+  font-family: var(--mono);
+  font-size: 0.68rem;   /* 기존 0.72rem에서 소폭 축소 */
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--ink-soft);
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+/* 밑줄이 왼쪽에서 오른쪽으로 차오르는 호버 효과 */
+.topbar nav a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0%; height: 2px;
+  background: var(--accent);
+  transition: width 0.3s cubic-bezier(.16,.84,.44,1);
+}
+.topbar nav a:hover, .topbar nav a.active { color: var(--ink); }
+.topbar nav a:hover::after, .topbar nav a.active::after { width: 100%; }
 
-  /* 실제 흰색 팝업 박스 (기존 560px에서 1.5배 = 840px) */
-  .modal-box {
-    background: white;
-    width: 100%;
-    max-width: 1160px;
-    max-height: 88vh;
-    overflow-y: auto;
-    position: relative;
-  }
-  .modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 50%;
-    background: transparent;
-    color: var(--text-sub);
-    font-size: 0.9rem;
-    cursor: pointer;
-    line-height: 1;
-    z-index: 2;
-    transition: color 0.2s ease, background 0.2s ease;
-  }
-  .modal-close:hover {
-    color: var(--text-main);
-    background: #f1f1f1;
-  }
-  .modal-content { padding: 48px 56px 40px; }
+/* 페이지를 얼마나 읽었는지 보여주는 진행 바 (topbar 바로 아래 얇은 선) */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 950;
+}
+@media (max-width: 760px) {
+  .topbar { padding: 14px 20px; }
+  .topbar nav { display: none; } /* 모바일에선 원페이지 스크롤이라 메뉴 생략 */
+}
 
-  /* 번호 + 제목 (예: 01 깨비터) */
-  .modal-num-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 6px;
-  }
-  .modal-num {
-    color: var(--accent-2);
-    font-size: 0.9rem;
-    font-weight: 800;
-    margin-right: 6px;
-  }
-  .modal-subtitle {
-    font-size: 0.92rem;
-    color: var(--text-sub);
-    margin-bottom: 20px;
-  }
+/* ============================================================
+   3. HERO — 화면 가득 큰 타이포 + 글자 하나씩 등장 + 아웃라인 마퀴
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 40px 0;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  margin-bottom: 22px;
+}
+.hero-name {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(3.3rem, 12vw, 10rem); /* 기존 13vw/10.5rem에서 한 단계 축소 */
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+/* 이름 글자를 span으로 쪼개서 하나씩 아래에서 튀어오르게 함 (JS에서 딜레이 부여) */
+.hero-name .ch {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em) rotate(4deg);
+  transition: transform 0.7s cubic-bezier(.16,.84,.44,1), opacity 0.7s ease;
+}
+.hero-name .ch.in { opacity: 1; transform: translateY(0) rotate(0); }
+/* 마우스를 올리면 글자가 살짝 점프 */
+@media (pointer: fine) {
+  .hero-name .ch:hover { transform: translateY(-0.08em); color: var(--accent); transition-duration: 0.25s; }
+}
 
-  /* 구성 · 역할 한 줄 요약 (기간 제거함) */
-  .modal-summary-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 26px;
-    font-size: 0.82rem;
-    color: var(--text-sub);
-    padding-bottom: 20px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-  }
-  .modal-summary-row .s-label { color: var(--text-main); font-weight: 700; margin-right: 4px; }
+.hero-sub {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.hero-role-line {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+.hero-role-line strong { color: var(--ink); }
+.typewriter-box {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  padding: 6px 14px;
+  min-height: 2.1em;
+  display: inline-flex;
+  align-items: center;
+}
+.type-cursor { display: inline-block; margin-left: 2px; animation: blink 0.9s step-end infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
-  /* 탭 버튼 영역 */
-  .modal-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 28px;
-  }
-  .modal-tab-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px 18px 12px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-sub);
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-  }
-  .modal-tab-btn.active {
-    color: var(--accent-2);
-    border-bottom-color: var(--accent-2);
-  }
+/* 정적 키워드 바: 흐르는 마퀴 대신 아웃라인 글자를 가지런히 배치.
+   움직임 없이, 호버한 단어만 조용히 코발트로 채워짐 */
+.keywords {
+  margin-top: 60px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+}
+.keywords span {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.8vw, 2rem);
+  letter-spacing: 0.02em;
+  /* 글자 속은 비우고 테두리만 */
+  -webkit-text-stroke: 1.2px var(--ink);
+  color: transparent;
+  transition: color 0.3s ease, -webkit-text-stroke-color 0.3s ease;
+}
+.keywords span:hover { color: var(--accent); -webkit-text-stroke-color: var(--accent); }
+.keywords .kw-dot {
+  -webkit-text-stroke: 0;
+  color: var(--accent);
+  font-size: 0.8rem;
+}
 
-  /* 탭 패널: 평소엔 숨김, active일 때만 보임 */
-  .modal-tab-panel { display: none; }
-  .modal-tab-panel.active { display: block; }
+.scroll-hint {
+  position: absolute;
+  right: 40px;
+  bottom: 26px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  writing-mode: vertical-rl;
+}
+.scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px; height: 46px;
+  background: var(--ink-soft);
+  margin: 10px auto 0;
+  animation: hint-drop 1.6s ease-in-out infinite;
+}
+@keyframes hint-drop { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+@media (max-width: 760px) { .scroll-hint { display: none; } .hero { padding: 110px 20px 0; } }
 
-  /* 사진 자리 (사진 준비 전엔 placeholder) */
-  .modal-photo-box {
-    border: 1px solid var(--border);
-    background: #fafafa;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-sub);
-    font-size: 0.85rem;
-    margin-bottom: 24px;
-  }
-  .modal-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+/* ============================================================
+   4. 공통 섹션 레이아웃 + 스크롤 리빌
+   ============================================================ */
+main { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+@media (max-width: 760px) { main { padding: 0 20px; } }
 
-  .modal-desc {
-    font-size: 0.92rem;
-    color: var(--text-main);
-    margin-bottom: 26px;
-    padding-left: 14px;
-    border-left: 3px solid var(--accent-2);
-  }
+section { padding: 120px 0 40px; scroll-margin-top: 70px; }
 
-  /* 주요 기능 / 기여 역할 리스트 (공통 스타일) */
-  .modal-bullet-list {
-    list-style: none;
-  }
-  .modal-bullet-list li {
-    font-size: 0.88rem;
-    color: var(--text-sub);
-    margin-bottom: 14px;
-    padding-left: 16px;
-    position: relative;
-    line-height: 1.7;
-  }
-  .modal-bullet-list li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: var(--accent-2);
-  }
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 18px;
+  margin-bottom: 54px;
+}
+.sec-head .idx {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+.sec-head h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 2.7rem); /* 기존 4.5vw/3rem에서 축소 */
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.sec-head .kr {
+  font-family: var(--body);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-left: auto;
+}
 
-  /* TROUBLE SHOOTING 탭 */
-  .trouble-problem {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-bottom: 8px;
-  }
-  .trouble-explain {
-    font-size: 0.88rem;
-    color: var(--text-sub);
-    margin-bottom: 18px;
-    padding-left: 14px;
-    border-left: 3px solid var(--accent-bright);
-  }
-  .trouble-code {
-    background: #f5f5f5;
-    border-left: 3px solid var(--accent);
-    padding: 18px 20px;
-    font-family: 'SFMono-Regular', Consolas, monospace;
-    font-size: 0.82rem;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    color: var(--text-main);
-    overflow-x: auto;
-  }
-  .trouble-empty {
-    font-size: 0.88rem;
-    color: var(--text-sub);
-    font-style: italic;
-  }
+/* 스크롤하면 아래에서 떠오르는 공통 효과 */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(.16,.84,.44,1), transform 0.7s cubic-bezier(.16,.84,.44,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .modal-subhead {
-    font-size: 0.9rem;
-    margin-bottom: 12px;
-    font-weight: 700;
-    color: var(--text-sub);
-    letter-spacing: 0.03em;
-  }
-  .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-  .modal-tags span {
-    font-size: 0.8rem;
-    padding: 5px 13px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-  }
-  .modal-github a {
-    font-size: 0.88rem;
-    color: var(--accent-2);
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .modal-github a:hover { text-decoration: underline; }
-  /* ===================== 프로젝트 카드 + 모달 끝 ===================== */
+/* ============================================================
+   5. ABOUT — 소개문 + 강점 카드 3개 (마우스 따라 살짝 기울어짐)
+   ============================================================ */
+.about-lead {
+  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.6;
+  max-width: 760px;
+  margin-bottom: 18px;
+}
+.about-lead em { font-style: normal; color: var(--accent); }
+.about-sub { color: var(--ink-soft); max-width: 640px; margin-bottom: 56px; }
 
-  .contact-text-block {
-    border-top: 1px solid var(--border);
-    padding-top: 24px;
-    margin-bottom: 40px;
-  }
-  .contact-text-block p {
-    font-size: 0.85rem;
-    color: var(--text-sub);
-    margin-bottom: 6px;
-  }
-  footer { font-size: 0.8rem; color: var(--text-sub); }
-  @media (max-width: 900px) {
-    .page-wrap { flex-direction: column; }
-    .sidebar { position: static; width: 100%; height: auto; padding: 30px 24px; }
-    main { padding: 40px 24px 80px; max-width: 100%; }
-    .strengths { grid-template-columns: 1fr; }
-  }
+.str-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.str-card {
+  border: 1.5px solid var(--ink);
+  background: var(--bg);
+  padding: 30px 26px 34px;
+  position: relative;
+  transition: background 0.35s ease;
+}
+/* 호버: 움직임·그림자 없이, 카드 상단에 코발트 라인이
+   왼쪽에서 오른쪽으로 조용히 차오르고 배경만 살짝 밝아짐 */
+.str-card::after {
+  content: '';
+  position: absolute;
+  top: -1.5px; left: -1.5px; right: -1.5px;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(.16,.84,.44,1);
+}
+.str-card:hover { background: #fff; }
+.str-card:hover::after { transform: scaleX(1); }
+.str-card .no {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 20px;
+}
+.str-card .kw {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 1.7rem;
+  display: block;
+  line-height: 1.2;
+}
+.str-card .kw-kr {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 14px;
+}
+.str-card p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.75; }
+@media (max-width: 860px) { .str-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   6. PROJECTS — 큰 리스트 행. 호버하면 코발트로 차오르고 제목이 밀림
+   ============================================================ */
+.project-list { border-top: 1.5px solid var(--ink); }
+.project-row {
+  display: grid;
+  grid-template-columns: 70px 180px 1fr auto; /* 번호 | 썸네일 | 내용 | 메타 */
+  align-items: center;
+  gap: 24px;
+  padding: 34px 18px;
+  border-bottom: 1.5px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  transition: color 0.35s ease;
+}
+
+/* 썸네일: 3:2 비율의 사진 자리.
+   images/ 폴더에 해당 파일을 넣으면 사진이 뜨고, 없으면 IMAGE 글자가 보임 */
+.p-thumb {
+  aspect-ratio: 3 / 2;
+  border: 1.5px solid var(--ink);
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.p-thumb .thumb-fallback {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+}
+.p-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* 비율 유지하며 꽉 채움 */
+  transition: transform 0.5s cubic-bezier(.16,.84,.44,1);
+}
+/* 행 호버 시 사진이 아주 살짝만 확대 (차분하게) */
+.project-row:hover .p-thumb img { transform: scale(1.04); }
+.project-row:hover .p-thumb { border-color: var(--accent-ink); }
+/* 행 뒤에서 코발트 배경이 아래→위로 차오르는 레이어 */
+.project-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(.16,.84,.44,1);
+  z-index: 0;
+}
+.project-row:hover::before { transform: scaleY(1); }
+.project-row > * { position: relative; z-index: 1; }
+.project-row:hover { color: var(--accent-ink); }
+
+.p-num {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--accent);
+  transition: color 0.35s ease;
+}
+.project-row:hover .p-num { color: var(--accent-ink); }
+
+.p-main h3 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  transition: transform 0.35s cubic-bezier(.16,.84,.44,1);
+}
+.project-row:hover .p-main h3 { transform: translateX(14px); }
+.p-main .p-desc {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  transition: color 0.35s ease;
+}
+.project-row:hover .p-desc { color: rgba(255,255,255,0.8); }
+.p-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.p-tags span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 3px 10px;
+  border: 1px solid currentColor;
+  opacity: 0.85;
+}
+.p-meta {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  transition: color 0.35s ease;
+  white-space: nowrap;
+}
+.project-row:hover .p-meta { color: rgba(255,255,255,0.85); }
+.p-meta .arrow {
+  display: block;
+  font-size: 1.5rem;
+  margin-top: 6px;
+  transition: transform 0.35s ease;
+}
+.project-row:hover .arrow { transform: translate(6px, -6px) rotate(45deg); }
+@media (max-width: 760px) {
+  .project-row { grid-template-columns: 1fr; gap: 12px; padding: 28px 6px; }
+  .p-thumb { max-width: 260px; }   /* 모바일: 썸네일이 너무 커지지 않게 */
+  .p-meta { text-align: left; }
+  .p-meta .arrow { display: inline; margin-left: 8px; }
+}
+
+/* ============================================================
+   7. SKILLS — 카테고리별 큰 태그. 호버하면 잉크→코발트 반전
+   ============================================================ */
+.skill-block { display: grid; grid-template-columns: 220px 1fr; gap: 20px; padding: 26px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.skill-label { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--ink-soft); padding-top: 8px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.tag-pill {
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.tag-pill:hover { background: var(--ink); color: var(--bg); transform: translateY(-3px); }
+.tag-pill-learning { border-style: dashed; border-color: var(--accent); color: var(--accent); }
+.tag-pill-learning:hover { background: var(--accent); color: var(--accent-ink); }
+@media (max-width: 760px) { .skill-block { grid-template-columns: 1fr; gap: 10px; } }
+
+/* ============================================================
+   8. EXPERIENCE / CERTIFICATE / EDUCATION — 타임라인 스타일
+   ============================================================ */
+.tl-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 26px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tl-date { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); padding-top: 5px; }
+.tl-body h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+.tl-body p { font-size: 0.88rem; color: var(--ink-soft); }
+@media (max-width: 760px) { .tl-item { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ============================================================
+   9. CONTACT — 마그네틱 버튼이 있는 큰 마무리 영역
+   ============================================================ */
+.contact {
+  text-align: center;
+  padding: 150px 0 60px;
+}
+.contact .big {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 8vw, 6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.contact .big .stroke { -webkit-text-stroke: 1.5px var(--ink); color: transparent; }
+.contact p { color: var(--ink-soft); margin-bottom: 44px; }
+.magnet-btn {
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--accent-ink);
+  background: var(--accent);
+  padding: 20px 46px;
+  transition: background 0.3s ease;
+  will-change: transform;
+}
+/* 호버: 그림자 없이 코발트 → 잉크색으로 차분하게 전환 */
+.magnet-btn:hover { background: var(--ink); }
+.contact-links { margin-top: 40px; display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; }
+.contact-links a {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 3px;
+}
+.contact-links a::after { content: ''; position: absolute; left: 0; bottom: 0; width: 0%; height: 1.5px; background: var(--accent); transition: width 0.3s ease; }
+.contact-links a:hover { color: var(--ink); }
+.contact-links a:hover::after { width: 100%; }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 22px 40px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+@media (max-width: 760px) { footer { padding: 18px 20px; flex-direction: column; gap: 4px; } }
+
+/* ============================================================
+   10. 프로젝트 모달 — 아래에서 슬라이드 업. 탭 4개 구조는 원본 유지
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 21, 26, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;          /* 화면 세로 중앙에 배치 */
+  justify-content: center;
+  padding: 40px 20px;           /* 화면 가장자리와 여백 확보 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-box {
+  width: min(880px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1.5px solid var(--ink);   /* 네 변 모두 테두리 (하단 포함) */
+  box-shadow: 0 24px 60px rgba(20, 21, 26, 0.28); /* 부드럽게 퍼지는 그림자 */
+  /* 등장할 때: 살짝 아래에서 + 살짝 작게 시작했다가 제자리로 */
+  transform: translateY(30px) scale(0.98);
+  transition: transform 0.4s cubic-bezier(.16,.84,.44,1);
+  position: relative;
+}
+.modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
+.modal-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  margin: 16px 16px 0 0;
+  width: 42px; height: 42px;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  font-size: 1.1rem;
+  z-index: 2;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.modal-close:hover { background: var(--accent); transform: rotate(90deg); }
+.modal-content { padding: 40px 48px 48px; }
+.modal-eyebrow { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.14em; margin-bottom: 10px; }
+.modal-title { font-family: var(--display); font-weight: 900; font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.1; margin-bottom: 8px; }
+.modal-subtitle { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 22px; }
+.modal-summary-row {
+  display: flex; flex-wrap: wrap; gap: 6px 28px;
+  font-size: 0.82rem; color: var(--ink-soft);
+  padding-bottom: 20px; margin-bottom: 26px;
+  border-bottom: 1.5px solid var(--ink);
+}
+.modal-summary-row .s-label { color: var(--ink); font-weight: 700; margin-right: 6px; font-family: var(--mono); font-size: 0.72rem; }
+
+.modal-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+.modal-tab-btn {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  background: none;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  padding: 8px 16px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.modal-tab-btn.active, .modal-tab-btn:hover { background: var(--ink); color: var(--bg); }
+.modal-tab-btn.active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.modal-tab-panel { display: none; }
+.modal-tab-panel.active { display: block; animation: panel-in 0.35s ease both; }
+@keyframes panel-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.modal-photo-box {
+  border: 1.5px dashed var(--line);
+  background: #fff;
+  height: 190px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  margin-bottom: 26px;
+}
+.modal-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+.modal-desc { font-size: 0.94rem; margin-bottom: 28px; padding-left: 16px; border-left: 3px solid var(--accent); }
+.modal-subhead { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--ink-soft); margin-bottom: 12px; }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.modal-tags span { font-size: 0.78rem; font-weight: 600; padding: 5px 14px; border: 1.5px solid var(--ink); }
+.modal-github a { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
+.repo-pending { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
+
+.modal-bullet-list { list-style: none; }
+.modal-bullet-list li { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 14px; padding-left: 18px; position: relative; line-height: 1.75; }
+.modal-bullet-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-size: 0.8rem; }
+
+.trouble-problem { font-size: 0.98rem; font-weight: 800; margin-bottom: 10px; }
+.trouble-explain { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 18px; padding-left: 16px; border-left: 3px solid var(--accent); }
+.trouble-code {
+  background: var(--ink);
+  color: #E8E9EE;
+  padding: 20px 22px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+.trouble-empty { font-size: 0.88rem; color: var(--ink-soft); font-style: italic; }
+@media (max-width: 760px) { .modal-content { padding: 30px 22px 40px; } }
+
+/* ============================================================
+   11. 접근성: 움직임 최소화를 선호하는 사용자는 애니메이션 끔
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  .hero-name .ch { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
-<div class="page-wrap">
-  <aside class="sidebar">
-    <div class="avatar-ring">
-      <img src="images/profile4.png" class="profile-photo" alt="정윤서">
-    </div>
-    <h1>정윤서(난나)</h1>
-    <div class="role">백엔드 개발자 지망</div>
-    <div class="links">
-      <a href="mailto:nannamaisons@gmail.com">E-mail</a>
-      <a href="https://github.com/jungnanna">Github</a>
-      <a href="https://velog.io/@nannamaisons">Velog</a>
-    </div>
-    <nav>
-      <a href="#introduce">Introduce</a>
-      <a href="#project">Projects</a>
-      <a href="#skill">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#certificate">Certificates</a>
-      <a href="#education">Education</a>
-    </nav>
-  </aside>
-  <main>
-    <section id="introduce">
-      <p class="hero-statement">
-        <span class="highlight">반갑습니다.<br>백엔드 개발자 정윤서입니다.</span>
-      </p>
-      <p class="intro-text">반도체 FAB 배관설계를 거쳐 IT 개발자로 전향 중입니다. 문제를 만나면 원인을 구분해서 끝까지 파고드는 방식으로 일합니다.</p>
-      <ul class="strengths">
-        <li>
-          <svg class="shape" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
-            <rect x="2" y="2" width="15" height="15" fill="none" stroke="var(--accent-2)" stroke-width="2.5"/>
-            <rect x="23" y="2" width="15" height="15" fill="none" stroke="var(--accent-2)" stroke-width="2.5"/>
-            <rect x="2" y="23" width="15" height="15" fill="none" stroke="var(--accent-2)" stroke-width="2.5"/>
-            <rect x="23" y="23" width="15" height="15" fill="var(--accent-2)"/>
-          </svg>
-          <span class="keyword">정밀</span>
-          <span class="keyword-en">Precision</span>
-          <p class="keyword-desc">도면을 그리던 꼼꼼함으로 코드를 봅니다. 반도체 FAB 배관설계에서 다져진 정밀함을 디버깅과 코드 리뷰에 그대로 적용합니다.</p>
-        </li>
-        <li>
-          <svg class="shape" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
-            <rect x="2" y="2" width="36" height="36" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
-            <rect x="11" y="11" width="18" height="18" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
-            <rect x="17" y="17" width="6" height="6" fill="var(--accent)"/>
-          </svg>
-          <span class="keyword">추적</span>
-          <span class="keyword-en">Root Cause</span>
-          <p class="keyword-desc">'왜'가 풀릴 때까지 파고듭니다. 같은 API 오류라도 429와 503의 원인을 구분해 각각 다른 해결책을 설계합니다.</p>
-        </li>
-        <li>
-          <svg class="shape" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
-            <polygon points="6,4 36,20 6,36" fill="var(--accent-bright)"/>
-          </svg>
-          <span class="keyword">실행</span>
-          <span class="keyword-en">Drive</span>
-          <p class="keyword-desc">고민을 실행으로 옮깁니다. '먹어도 돼?' 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계하고 팀을 움직였습니다.</p>
-        </li>
-      </ul>
-    </section>
 
-    <section id="project">
-      <h2>Projects</h2>
-      <div class="project-grid">
-
-        <!-- 카드 1: 깨비터 -->
-        <div class="project-card" onclick="openProjectModal(0)">
-          <div class="card-banner" style="background: var(--accent);">
-            <span class="card-banner-text" style="color: white;">사진 준비중</span>
-          </div>
-          <div class="card-body">
-            <div class="card-top-row">
-              <h3>깨비터</h3>
-              <span class="card-badge">Team Project</span>
-            </div>
-            <p class="card-desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱. 충청북도 공공데이터 활용 공모전 출품작.</p>
-            <div class="card-tags">
-              <span class="card-tag">React Native</span>
-              <span class="card-tag">TypeScript</span>
-              <span class="card-tag">Supabase</span>
-              <span class="card-tag">OpenAI API</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 카드 2: 먹어도 돼? -->
-        <div class="project-card" onclick="openProjectModal(1)">
-          <div class="card-banner" style="background: var(--accent-2);">
-            <span class="card-banner-text" style="color: white;">사진 준비중</span>
-          </div>
-          <div class="card-body">
-            <div class="card-top-row">
-              <h3>먹어도 돼?</h3>
-              <span class="card-badge">Team Project</span>
-            </div>
-            <p class="card-desc">개인별 맞춤형 식단 추천과 영양 분석 서비스. AI 챗봇과 AI 퍼스널 주간 식단 계획.</p>
-            <div class="card-tags">
-              <span class="card-tag">Django</span>
-              <span class="card-tag">Firebase</span>
-              <span class="card-tag">Gemini API</span>
-              <span class="card-tag">Celery</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 카드 3: 레디플레이 -->
-        <div class="project-card" onclick="openProjectModal(2)">
-          <div class="card-banner" style="background: var(--accent-bright);">
-            <span class="card-banner-text" style="color: var(--text-main);">사진 준비중</span>
-          </div>
-          <div class="card-body">
-            <div class="card-top-row">
-              <h3>레디플레이</h3>
-              <span class="card-badge">Team Project</span>
-            </div>
-            <p class="card-desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트.</p>
-            <div class="card-tags">
-              <span class="card-tag">HTML5</span>
-              <span class="card-tag">JavaScript</span>
-              <span class="card-tag">Supabase</span>
-              <span class="card-tag">Toss Payments</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 카드 4: 메인 프로젝트 준비중 -->
-        <div class="project-card" onclick="openProjectModal(3)">
-          <div class="card-banner" style="background: #94a3b8;">
-            <span class="card-banner-text" style="color: white;">사진 준비중</span>
-          </div>
-          <div class="card-body">
-            <div class="card-top-row">
-              <h3>메인 프로젝트 준비중</h3>
-              <span class="card-badge">Team Project</span>
-            </div>
-            <p class="card-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼. 2026.08 시작 예정.</p>
-            <div class="card-tags">
-              <span class="card-tag">Spring Boot</span>
-              <span class="card-tag">Java</span>
-              <span class="card-tag">MySQL</span>
-              <span class="card-tag">Docker</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="skill">
-      <h2>Skills</h2>
-      <div class="skill-block">
-        <div class="skill-label">Languages</div>
-        <div class="skill-tags">
-          <span class="tag-pill">Java</span>
-          <span class="tag-pill">Python</span>
-          <span class="tag-pill">JavaScript</span>
-          <span class="tag-pill">TypeScript</span>
-          <span class="tag-pill">HTML5</span>
-          <span class="tag-pill">CSS3</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-label">Frameworks &amp; Libraries</div>
-        <div class="skill-tags">
-          <span class="tag-pill">React</span>
-          <span class="tag-pill">React Native</span>
-          <span class="tag-pill">Django</span>
-          <span class="tag-pill">Node.js</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-label">Database &amp; Infra</div>
-        <div class="skill-tags">
-          <span class="tag-pill">Supabase (PostgreSQL)</span>
-          <span class="tag-pill">Firebase</span>
-          <span class="tag-pill">SQLite</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-label">AI / API</div>
-        <div class="skill-tags">
-          <span class="tag-pill">OpenAI API</span>
-          <span class="tag-pill">Gemini API</span>
-          <span class="tag-pill">Google Maps API</span>
-          <span class="tag-pill">공공데이터포털 API</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-label">Tools</div>
-        <div class="skill-tags">
-          <span class="tag-pill">VS Code</span>
-          <span class="tag-pill">Cursor</span>
-          <span class="tag-pill">Android Studio</span>
-          <span class="tag-pill">Figma</span>
-          <span class="tag-pill">Git</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-label">Learning</div>
-        <div class="skill-tags">
-          <span class="tag-pill tag-pill-learning">Spring Boot</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience">
-      <h2>Work Experience</h2>
-      <div class="exp-item">
-        <div class="exp-top">
-          <span class="exp-title">하이미디어IT컴퓨터학원 — KDT 부트캠프</span>
-          <span class="exp-date">2026.02 - 2026.08</span>
-        </div>
-        <p class="exp-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 개발 과정 수강.</p>
-      </div>
-      <div class="exp-item">
-        <div class="exp-top">
-          <span class="exp-title">(주)케이씨이앤씨 — 반도체 FAB 배관설계</span>
-          <span class="exp-date">2024.06 - 2025.08</span>
-        </div>
-        <p class="exp-desc">삼성 반도체 P4 FAB 배관 설계 업무 수행. 정밀한 공정 이해와 문서화 역량을 쌓음.</p>
-      </div>
-    </section>
-
-    <section id="certificate">
-      <h2>Certificates</h2>
-      <div class="edu-item">
-        <div class="edu-top">
-          <span class="edu-title">정보처리기사</span>
-          <span class="edu-date">필기 합격 · 실기 준비 중</span>
-        </div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-top">
-          <span class="edu-title">정보처리산업기사</span>
-          <span class="edu-date">필기 합격 · 실기 준비 중</span>
-        </div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-top">
-          <span class="edu-title">컴퓨터활용능력 2급</span>
-          <span class="edu-date">필기 합격 · 실기 준비 중</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="education">
-      <h2>Education</h2>
-      <div class="edu-item">
-        <div class="edu-top">
-          <span class="edu-title">건국대학교</span>
-          <span class="edu-date">2012.03 - 2017.02</span>
-        </div>
-      </div>
-    </section>
-
-    <div class="contact-text-block">
-      <p>E-mail&nbsp;&nbsp;nannamaisons@gmail.com</p>
-      <p>GitHub&nbsp;&nbsp;github.com/jungnanna</p>
-      <p>Velog&nbsp;&nbsp;velog.io/@nannamaisons</p>
-    </div>
-
-    <footer>© 2026 정윤서 · Last updated 2026.07</footer>
-  </main>
+<!-- 커스텀 커서: 실제 포인터 모양의 화살표 (JS가 마우스를 즉시 따라 움직임) -->
+<div class="cursor-arrow" aria-hidden="true">
+  <!-- 클래식한 마우스 포인터 실루엣을 SVG path로 그린 것 -->
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 2 L4 19 L8.6 14.9 L11.4 21.3 L14.4 20 L11.6 13.7 L17.6 13.2 Z"/>
+  </svg>
+  <span class="cursor-chip">VIEW ↗</span>
 </div>
 
-<!-- ===== 모달(팝업) 틀. 딱 1개만 만들어두고 내용만 JS로 바꿔서 재사용 ===== -->
+<!-- 스크롤 진행 바 -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- 상단 내비게이션 -->
+<header class="topbar">
+  <a href="#top" class="logo">JUNG YOONSEO<span>.</span></a>
+  <nav>
+    <a href="#about">01 ABOUT</a>
+    <a href="#project">02 PROJECTS</a>
+    <a href="#skill">03 SKILLS</a>
+    <a href="#experience">04 EXPERIENCE</a>
+    <a href="#contact">05 CONTACT</a>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <p class="hero-eyebrow">PORTFOLIO — 2026 · BACKEND DEVELOPER</p>
+  <!-- JS가 이 h1의 글자를 span으로 쪼개서 하나씩 등장시킴 -->
+  <h1 class="hero-name" id="heroName">정윤서</h1>
+  <div class="hero-sub">
+    <span class="typewriter-box"><span id="typewriter"></span><span class="type-cursor">|</span></span>
+    <p class="hero-role-line">반도체 FAB 배관설계를 거쳐 <strong>IT 개발자</strong>로 전향 중입니다.</p>
+  </div>
+
+  <!-- 정적 키워드 바: 다섯 개 키워드가 가지런히 놓임 (호버하면 해당 단어만 채색) -->
+  <div class="keywords" aria-hidden="true">
+    <span>BACKEND</span><span class="kw-dot">✦</span>
+    <span>DATABASE</span><span class="kw-dot">✦</span>
+    <span>PRECISION</span><span class="kw-dot">✦</span>
+    <span>ROOT CAUSE</span><span class="kw-dot">✦</span>
+    <span>DRIVE</span>
+  </div>
+
+  <span class="scroll-hint">SCROLL</span>
+</section>
+
+<main>
+
+  <!-- ===================== 01 ABOUT ===================== -->
+  <section id="about">
+    <div class="sec-head reveal">
+      <span class="idx">01</span>
+      <h2>ABOUT</h2>
+      <span class="kr">소개</span>
+    </div>
+    <p class="about-lead reveal">문제를 만나면 원인을 구분해서 <em>끝까지 파고드는</em> 방식으로 일합니다.</p>
+    <p class="about-sub reveal">반갑습니다. 백엔드 개발자 정윤서입니다. 도면을 그리던 정밀함을 그대로 코드에 옮기고 있습니다.</p>
+
+    <div class="str-grid">
+      <div class="str-card reveal">
+        <span class="no">STRENGTH — 01</span>
+        <span class="kw">PRECISION</span>
+        <span class="kw-kr">정밀</span>
+        <p>도면을 그리던 꼼꼼함으로 코드를 봅니다. 반도체 FAB 배관설계에서 다져진 정밀함을 디버깅과 코드 리뷰에 그대로 적용합니다.</p>
+      </div>
+      <div class="str-card reveal">
+        <span class="no">STRENGTH — 02</span>
+        <span class="kw">ROOT CAUSE</span>
+        <span class="kw-kr">추적</span>
+        <p>'왜'가 풀릴 때까지 파고듭니다. 같은 API 오류라도 429와 503의 원인을 구분해 각각 다른 해결책을 설계합니다.</p>
+      </div>
+      <div class="str-card reveal">
+        <span class="no">STRENGTH — 03</span>
+        <span class="kw">DRIVE</span>
+        <span class="kw-kr">실행</span>
+        <p>고민을 실행으로 옮깁니다. '먹어도 돼?' 백엔드 팀장으로서 협업 구조와 문서화를 직접 설계하고 팀을 움직였습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 02 PROJECTS ===================== -->
+  <section id="project">
+    <div class="sec-head reveal">
+      <span class="idx">02</span>
+      <h2>PROJECTS</h2>
+      <span class="kr">프로젝트 · 클릭해서 상세 보기</span>
+    </div>
+
+    <div class="project-list">
+      <!-- 행 하나 = 프로젝트 하나. data-hover="view"는 커스텀 커서가 VIEW 모드로 바뀌는 표시 -->
+      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(0)">
+        <span class="p-num">01</span>
+        <!-- 썸네일: images 폴더에 project-ggabiteo.jpg를 넣으면 사진이 표시됨.
+             파일이 없으면 onerror가 img를 숨겨서 IMAGE 글자만 보임 -->
+        <div class="p-thumb">
+          <span class="thumb-fallback">IMAGE</span>
+          <img src="images/project-ggabiteo.jpg" alt="깨비터 앱 화면" onerror="this.style.display='none'">
+        </div>
+        <div class="p-main">
+          <h3>깨비터</h3>
+          <p class="p-desc">빈집 매칭 및 AI 리모델링 시뮬레이션 앱 · 충청북도 공공데이터 활용 공모전 출품작</p>
+          <div class="p-tags"><span>React Native</span><span>TypeScript</span><span>Supabase</span><span>OpenAI API</span></div>
+        </div>
+        <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
+      </div>
+
+      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(1)">
+        <span class="p-num">02</span>
+        <div class="p-thumb">
+          <span class="thumb-fallback">IMAGE</span>
+          <img src="images/project-canieat.jpg" alt="먹어도 돼? 서비스 화면" onerror="this.style.display='none'">
+        </div>
+        <div class="p-main">
+          <h3>먹어도 돼?</h3>
+          <p class="p-desc">개인별 맞춤형 식단 추천과 영양 분석 서비스 · AI 챗봇과 AI 퍼스널 주간 식단 계획</p>
+          <div class="p-tags"><span>Django</span><span>Firebase</span><span>Gemini API</span><span>Celery</span></div>
+        </div>
+        <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
+      </div>
+
+      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(2)">
+        <span class="p-num">03</span>
+        <div class="p-thumb">
+          <span class="thumb-fallback">IMAGE</span>
+          <img src="images/project-readyplay.jpg" alt="레디플레이 웹사이트 화면" onerror="this.style.display='none'">
+        </div>
+        <div class="p-main">
+          <h3>레디플레이</h3>
+          <p class="p-desc">스포츠 입문자를 위한 큐레이션 커머스 웹사이트</p>
+          <div class="p-tags"><span>HTML5</span><span>JavaScript</span><span>Supabase</span><span>Toss Payments</span></div>
+        </div>
+        <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
+      </div>
+
+      <div class="project-row reveal" data-hover="view" onclick="openProjectModal(3)">
+        <span class="p-num">04</span>
+        <div class="p-thumb">
+          <span class="thumb-fallback">COMING SOON</span>
+          <img src="images/project-crm.jpg" alt="차세대 CRM 플랫폼" onerror="this.style.display='none'">
+        </div>
+        <div class="p-main">
+          <h3>메인 프로젝트 준비중</h3>
+          <p class="p-desc">Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 · 2026.08 시작 예정</p>
+          <div class="p-tags"><span>Spring Boot</span><span>Java</span><span>MySQL</span><span>Docker</span></div>
+        </div>
+        <div class="p-meta">TEAM PROJECT<span class="arrow">→</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 03 SKILLS ===================== -->
+  <section id="skill">
+    <div class="sec-head reveal">
+      <span class="idx">03</span>
+      <h2>SKILLS</h2>
+      <span class="kr">기술 스택</span>
+    </div>
+
+    <div class="skill-block reveal">
+      <div class="skill-label">LANGUAGES</div>
+      <div class="skill-tags">
+        <span class="tag-pill">Java</span><span class="tag-pill">Python</span><span class="tag-pill">JavaScript</span><span class="tag-pill">TypeScript</span><span class="tag-pill">HTML5</span><span class="tag-pill">CSS3</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-label">FRAMEWORKS &amp; LIBRARIES</div>
+      <div class="skill-tags">
+        <span class="tag-pill">React</span><span class="tag-pill">React Native</span><span class="tag-pill">Django</span><span class="tag-pill">Node.js</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-label">DATABASE &amp; INFRA</div>
+      <div class="skill-tags">
+        <span class="tag-pill">Supabase (PostgreSQL)</span><span class="tag-pill">Firebase</span><span class="tag-pill">SQLite</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-label">AI / API</div>
+      <div class="skill-tags">
+        <span class="tag-pill">OpenAI API</span><span class="tag-pill">Gemini API</span><span class="tag-pill">Google Maps API</span><span class="tag-pill">공공데이터포털 API</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-label">TOOLS</div>
+      <div class="skill-tags">
+        <span class="tag-pill">VS Code</span><span class="tag-pill">Cursor</span><span class="tag-pill">Android Studio</span><span class="tag-pill">Figma</span><span class="tag-pill">Git</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-label">LEARNING</div>
+      <div class="skill-tags">
+        <span class="tag-pill tag-pill-learning">Spring Boot</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 EXPERIENCE ===================== -->
+  <section id="experience">
+    <div class="sec-head reveal">
+      <span class="idx">04</span>
+      <h2>EXPERIENCE</h2>
+      <span class="kr">경험</span>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">2026.02 — 2026.08</div>
+      <div class="tl-body">
+        <h3>하이미디어IT컴퓨터학원 — KDT 부트캠프</h3>
+        <p>Java와 생성형 AI를 활용한 차세대 CRM 플랫폼 개발 과정 수강.</p>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">2024.06 — 2025.08</div>
+      <div class="tl-body">
+        <h3>(주)케이씨이앤씨 — 반도체 FAB 배관설계</h3>
+        <p>삼성 반도체 P4 FAB 배관 설계 업무 수행. 정밀한 공정 이해와 문서화 역량을 쌓음.</p>
+      </div>
+    </div>
+
+    <!-- 자격증: 별도 섹션 대신 같은 리듬으로 이어붙여 페이지 흐름을 단순하게 유지 -->
+    <div class="sec-head reveal" style="margin-top: 100px;">
+      <span class="idx">04-1</span>
+      <h2>CERTIFICATES</h2>
+      <span class="kr">자격증</span>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">필기 합격 · 실기 준비 중</div>
+      <div class="tl-body"><h3>정보처리기사</h3></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">필기 합격 · 실기 준비 중</div>
+      <div class="tl-body"><h3>정보처리산업기사</h3></div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">필기 합격 · 실기 준비 중</div>
+      <div class="tl-body"><h3>컴퓨터활용능력 2급</h3></div>
+    </div>
+
+    <div class="sec-head reveal" style="margin-top: 100px;">
+      <span class="idx">04-2</span>
+      <h2>EDUCATION</h2>
+      <span class="kr">학력</span>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">2012.03 — 2017.02</div>
+      <div class="tl-body"><h3>건국대학교(글로컬) — 동화미디어콘텐츠학과</h3></div>
+    </div>
+  </section>
+
+  <!-- ===================== 05 CONTACT ===================== -->
+  <section class="contact reveal" id="contact">
+    <p class="big">NEXT PROBLEM,<br><span class="stroke">PLEASE.</span></p>
+    <p>원인이 풀릴 때까지 파고드는 개발자입니다. 다음 문제를 기다리고 있어요.</p>
+    <!-- 마그네틱 버튼: 마우스를 따라 살짝 끌려오는 인터랙션 -->
+    <a href="mailto:nannamaisons@gmail.com" class="magnet-btn" id="magnetBtn">SEND E-MAIL →</a>
+    <div class="contact-links">
+      <a href="https://github.com/jungnanna" target="_blank">GITHUB</a>
+      <a href="https://velog.io/@nannamaisons" target="_blank">VELOG</a>
+      <a href="#" target="_blank">NOTION</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© 2026 JUNG YOONSEO (NANNA)</span>
+  <span>LAST UPDATED 2026.07</span>
+</footer>
+
+<!-- ===== 프로젝트 모달: 틀 1개를 만들어두고 내용만 JS로 갈아끼움 (원본 구조 유지) ===== -->
 <div id="projectModal" class="modal-overlay" onclick="closeProjectModalOutside(event)">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeProjectModal()">✕</button>
+    <button class="modal-close" onclick="closeProjectModal()" aria-label="닫기">✕</button>
     <div class="modal-content">
-      <!-- 번호 + 제목 + 부제목 -->
-      <div class="modal-num-title"><span id="modalNum" class="modal-num"></span><span id="modalTitleText"></span></div>
+      <p class="modal-eyebrow" id="modalNum"></p>
+      <div class="modal-title" id="modalTitleText"></div>
       <p id="modalSubtitle" class="modal-subtitle"></p>
 
-      <!-- 구성 · 역할 요약 줄 -->
       <div id="modalSummaryRow" class="modal-summary-row"></div>
 
-      <!-- 탭 버튼 4개 -->
       <div class="modal-tabs">
         <button class="modal-tab-btn active" onclick="switchTab(0)">개요</button>
         <button class="modal-tab-btn" onclick="switchTab(1)">주요 기능</button>
         <button class="modal-tab-btn" onclick="switchTab(2)">기여 역할</button>
-        <button class="modal-tab-btn" onclick="switchTab(3)">트러블 슈팅</button>
+        <button class="modal-tab-btn" onclick="switchTab(3)">TROUBLE SHOOTING</button>
       </div>
 
-      <!-- 탭 0: 개요 (사진, 설명, 기술스택, 깃허브) -->
       <div class="modal-tab-panel active" data-tab="0">
         <div id="modalPhotoBox" class="modal-photo-box">사진 준비중</div>
         <p id="modalDesc" class="modal-desc"></p>
@@ -813,18 +1004,15 @@
         <div id="modalGithub" class="modal-github"></div>
       </div>
 
-      <!-- 탭 1: 주요 기능 -->
       <div class="modal-tab-panel" data-tab="1">
         <ul id="modalFeatures" class="modal-bullet-list"></ul>
       </div>
 
-      <!-- 탭 2: 기여 역할 (한 일 목록 + 직접 작성한 코드 공간) -->
       <div class="modal-tab-panel" data-tab="2">
         <ul id="modalDid" class="modal-bullet-list"></ul>
         <div id="modalDidCodeWrap"></div>
       </div>
 
-      <!-- 탭 3: TROUBLE SHOOTING -->
       <div class="modal-tab-panel" data-tab="3">
         <div id="modalTrouble"></div>
       </div>
@@ -833,270 +1021,358 @@
 </div>
 
 <script>
-  const links = document.querySelectorAll('.sidebar nav a');
-  const sections = document.querySelectorAll('main section');
-  window.addEventListener('scroll', () => {
-    let currentId = '';
-    const triggerLine = window.innerHeight * 0.3;
-    sections.forEach(section => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= triggerLine) {
-        currentId = section.getAttribute('id');
+/* ============================================================
+   A. 커스텀 커서 (화살표 포인터)
+   - 실제 커서처럼 느껴지려면 "지연 없이" 마우스를 즉시 따라가야 함
+   - 그래서 lerp(지연 보간) 없이 mousemove에서 바로 위치를 갱신함
+   ============================================================ */
+const arrow = document.querySelector('.cursor-arrow');
+
+window.addEventListener('mousemove', (e) => {
+  // 화살표 끝(tip)이 클릭 지점과 일치하도록 좌표를 그대로 사용
+  arrow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+});
+
+// 링크/버튼 위에서는 화살표가 코발트색으로 변하며 살짝 커지고,
+// 프로젝트 행 위에서는 옆에 "VIEW ↗" 라벨이 붙음
+document.querySelectorAll('a, button, .tag-pill, .str-card').forEach(el => {
+  el.addEventListener('mouseenter', () => arrow.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => arrow.classList.remove('hovering'));
+});
+document.querySelectorAll('[data-hover="view"]').forEach(el => {
+  el.addEventListener('mouseenter', () => arrow.classList.add('view-mode'));
+  el.addEventListener('mouseleave', () => arrow.classList.remove('view-mode'));
+});
+
+/* ============================================================
+   B. 스크롤 진행 바 — 전체 문서 중 몇 %를 내려왔는지 계산해서 너비로 표시
+   ============================================================ */
+const progressBar = document.querySelector('.scroll-progress');
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = total > 0 ? (window.scrollY / total) * 100 : 0;
+  progressBar.style.width = ratio + '%';
+});
+
+/* ============================================================
+   C. HERO 이름 글자 쪼개기 — h1의 글자를 span으로 나눠 하나씩 등장
+   ============================================================ */
+const heroName = document.getElementById('heroName');
+const nameText = heroName.textContent;
+heroName.textContent = ''; // 원래 글자를 비우고
+[...nameText].forEach((char, i) => {
+  const span = document.createElement('span');
+  span.className = 'ch';
+  span.textContent = char;
+  span.style.transitionDelay = (0.15 + i * 0.09) + 's'; // 한 글자씩 0.09초 간격
+  heroName.appendChild(span);
+});
+// 페이지가 뜨자마자 .in을 붙여 CSS 트랜지션 실행
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.hero-name .ch').forEach(ch => ch.classList.add('in'));
+  });
+});
+
+/* ============================================================
+   D. 타이핑 애니메이션 (원본 로직 그대로)
+   ============================================================ */
+const typewriterEl = document.getElementById('typewriter');
+const typewriterPhrases = [
+  '백엔드 개발자 지망',
+  '반도체 FAB 배관설계 출신',
+  '정밀함이 강점인 개발자',
+  '문제의 \'왜\'를 끝까지 파는 사람'
+];
+if (typewriterEl) {
+  let phraseIndex = 0, charIndex = 0, isDeleting = false;
+  function typeLoop() {
+    const currentPhrase = typewriterPhrases[phraseIndex];
+    if (!isDeleting) {
+      charIndex++;
+      typewriterEl.textContent = currentPhrase.slice(0, charIndex);
+      if (charIndex === currentPhrase.length) { isDeleting = true; setTimeout(typeLoop, 1600); return; }
+      setTimeout(typeLoop, 65);
+    } else {
+      charIndex--;
+      typewriterEl.textContent = currentPhrase.slice(0, charIndex);
+      if (charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % typewriterPhrases.length;
+        setTimeout(typeLoop, 300);
+        return;
       }
-    });
-    const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 5;
-    if (scrolledToBottom) {
-      currentId = sections[sections.length - 1].getAttribute('id');
+      setTimeout(typeLoop, 35);
     }
-    links.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + currentId) {
-        link.classList.add('active');
-      }
-    });
+  }
+  typeLoop();
+}
+
+/* ============================================================
+   E. 스크롤 리빌 — 화면에 들어오는 순간 .visible을 붙여 떠오르게 함
+   ============================================================ */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target); // 한 번 보인 뒤엔 감시 종료
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// 같은 그룹(강점 카드) 안에서는 순서대로 살짝씩 늦게 나타나도록
+document.querySelectorAll('.str-grid').forEach(grid => {
+  [...grid.children].forEach((card, i) => { card.style.transitionDelay = (i * 0.1) + 's'; });
+});
+
+/* ============================================================
+   F. (제거됨) 강점 카드 틸트 — 점잖은 톤에 맞춰 마우스 기울기 효과를 뺐음.
+      카드 호버는 이제 CSS만으로 처리 (상단 라인 + 배경 전환)
+   ============================================================ */
+
+/* ============================================================
+   G. 마그네틱 버튼 — 버튼 근처에서 마우스를 따라 살짝 끌려옴
+   ============================================================ */
+const magnetBtn = document.getElementById('magnetBtn');
+if (magnetBtn && window.matchMedia('(pointer: fine)').matches) {
+  magnetBtn.addEventListener('mousemove', (e) => {
+    const rect = magnetBtn.getBoundingClientRect();
+    const dx = e.clientX - (rect.left + rect.width / 2);
+    const dy = e.clientY - (rect.top + rect.height / 2);
+    // 마우스 방향으로 25%만 이동 → 자석에 끌리는 느낌
+    magnetBtn.style.transform = `translate(${dx * 0.25}px, ${dy * 0.25}px)`;
+  });
+  magnetBtn.addEventListener('mouseleave', () => { magnetBtn.style.transform = ''; });
+}
+
+/* ============================================================
+   H. 내비게이션 활성 표시 — 지금 보고 있는 섹션의 메뉴에 밑줄 유지
+   ============================================================ */
+const navLinks = document.querySelectorAll('.topbar nav a');
+const sections = document.querySelectorAll('main section, .hero');
+window.addEventListener('scroll', () => {
+  let currentId = '';
+  const triggerLine = window.innerHeight * 0.3;
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= triggerLine) currentId = section.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+  });
+});
+
+/* ============================================================
+   I. 프로젝트 데이터 + 모달 로직 (원본 데이터 그대로 유지)
+   ============================================================ */
+const projects = [
+  {
+    // index 0: 깨비터
+    num: 'PROJECT 01',
+    title: '깨비터',
+    subtitle: '빈집 매칭 & AI 리모델링 시뮬레이션 앱',
+    period: '2026.05 - 2026.06',
+    team: '팀 프로젝트',
+    role: '기획 · 백엔드 · AI 기능 구현',
+    desc: '지방 빈집 문제 해결을 위한 빈집 매칭 서비스입니다. 공공데이터 기반으로 빈집 매물을 탐색하고, AI가 리모델링 후 모습을 시뮬레이션해줍니다. 2026 충청북도 공공데이터 활용 창업 경진대회 출품작입니다.',
+    features: [
+      '공공데이터 기반 빈집 매물 탐색 — 흩어져 있던 CSV 데이터를 정제해 915건 규모의 매물 DB 구축',
+      'AI 리모델링 시뮬레이션 — 빈집 사진을 분석하고 리모델링된 모습을 이미지로 생성',
+      'Naver / Google 소셜 로그인'
+    ],
+    did: [
+      'AI 리모델링 기능 구현 — 이미지 분석과 생성형 이미지 API 연동, 결과 이미지 Supabase Storage 저장',
+      '공공데이터 CSV 정제 및 Supabase(PostgreSQL) 매물 테이블 설계·구축',
+      'Naver / Google 소셜 로그인 연동 및 인증 흐름 디버깅'
+    ],
+    trouble: {
+      problem: 'AI API 호출 시 할당량 초과(429) 오류가 반복 발생',
+      explain: '일시적 오류와 할당량 소진 원인을 구분해 대응. 기능별 API 키 분리로 장애를 격리하고, 재시도 로직을 추가해 안정화',
+      code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
+    },
+    stack: ['React Native', 'TypeScript', 'Supabase', 'OpenAI API'],
+    repo: 'https://github.com/jungnanna/ggabiteo'
+  },
+  {
+    // index 1: 먹어도 돼?
+    num: 'PROJECT 02',
+    title: '먹어도 돼?',
+    subtitle: '개인 맞춤형 식단 추천 & 영양 분석 서비스',
+    period: '2026.04',
+    team: '팀 프로젝트',
+    role: '백엔드 팀장',
+    desc: '개인별 맞춤형 식단 추천과 영양 분석 서비스입니다. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동했습니다.',
+    features: [
+      'AI 챗봇 기반 식단 상담 및 음식 안전성 확인',
+      'AI 퍼스널 주간 식단 계획 자동 생성',
+      '개인별 영양 분석 리포트 제공'
+    ],
+    did: [
+      'Firebase / SQLite 이중 저장 구조 설계',
+      'AI 프롬프트 개인화 설계',
+      '백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정'
+    ],
+    trouble: {
+      problem: 'Gemini API 503 오류 및 할당량 소진',
+      explain: '재시도 로직과 API 키 분리로 안정화',
+      code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
+    },
+    stack: ['Django', 'Firebase', 'Gemini API', 'Celery'],
+    repo: 'https://github.com/jungnanna/CANIEAT'
+  },
+  {
+    // index 2: 레디플레이
+    num: 'PROJECT 03',
+    title: '레디플레이',
+    subtitle: '스포츠 입문자를 위한 큐레이션 커머스 웹사이트',
+    period: '2026.03',
+    team: '팀 프로젝트',
+    role: '팀장',
+    desc: '스포츠 입문자를 위한 큐레이션 커머스 웹사이트입니다.',
+    features: [
+      '스포츠 종목별 입문 상품 큐레이션',
+      '장바구니 및 결제 연동 (Toss Payments)',
+      'Discord 자동 알림 기반 CS 시스템'
+    ],
+    did: [
+      'fetch API 기반 공통 헤더·푸터 구조 설계',
+      'Session Storage 활용 로그인/장바구니 상태 유지',
+      '3인 팀 팀장으로서 일정 및 역할 분배'
+    ],
+    trouble: null, // 아직 기록된 트러블슈팅이 없으면 null
+    stack: ['HTML5', 'JavaScript', 'Supabase', 'Toss Payments API'],
+    repo: null // 아직 업로드 전이면 null
+  },
+  {
+    // index 3: 메인 프로젝트 (KDT 부트캠프 캡스톤, 2026.08 시작 예정)
+    num: 'PROJECT 04',
+    title: '메인 프로젝트 준비중',
+    subtitle: 'Java와 생성형 AI를 활용한 차세대 CRM 플랫폼',
+    period: '2026.08 시작 예정',
+    team: '5인 팀',
+    role: '백엔드',
+    desc: 'KDT 부트캠프 메인 프로젝트로, Java와 생성형 AI를 활용한 차세대 CRM 플랫폼을 Spring Boot 기반으로 개발할 예정입니다.',
+    features: [
+      'Spring Boot 기반 REST API 서버 설계',
+      'MySQL 데이터베이스 설계 및 Docker 환경 구성',
+      '생성형 AI를 활용한 CRM 기능 구현'
+    ],
+    did: [], // 아직 시작 전이라 비워둠 → 모달에서 자동 안내 문구 표시
+    trouble: {
+      problem: '트러블슈팅 준비중',
+      explain: '프로젝트 진행 후 이곳에 기록할 예정입니다.',
+      code: '코드 준비중'
+    },
+    stack: ['Spring Boot', 'Java', 'MySQL', 'Docker'],
+    repo: null,
+    repoLabel: '배포 예정'
+  }
+];
+
+// 모달을 열면서 index에 맞는 내용을 채워넣음
+function openProjectModal(index) {
+  const p = projects[index];
+
+  document.getElementById('modalNum').textContent = p.num;
+  document.getElementById('modalTitleText').textContent = p.title;
+  document.getElementById('modalSubtitle').textContent = p.subtitle;
+
+  const summaryRow = document.getElementById('modalSummaryRow');
+  summaryRow.innerHTML = `
+    <span><span class="s-label">구성</span>${p.team}</span>
+    <span><span class="s-label">역할</span>${p.role}</span>
+  `;
+
+  // ---- 탭 0: 개요 ----
+  document.getElementById('modalDesc').textContent = p.desc;
+
+  const tagsWrap = document.getElementById('modalTags');
+  tagsWrap.innerHTML = '';
+  p.stack.forEach(tag => {
+    const span = document.createElement('span');
+    span.textContent = tag;
+    tagsWrap.appendChild(span);
   });
 
-  /* ===================== 여기서부터 프로젝트 모달 로직 ===================== */
+  const githubWrap = document.getElementById('modalGithub');
+  githubWrap.innerHTML = p.repo
+    ? `<a href="${p.repo}" target="_blank">GitHub →</a>`
+    : `<span class="repo-pending">${p.repoLabel || 'GitHub 업로드 예정'}</span>`;
 
-  // 1) 프로젝트 정보를 배열(리스트)에 미리 저장해둠.
-  //    카드를 클릭하면 이 배열에서 index 번호로 정보를 꺼내서 모달에 채워넣는 방식.
-  //    - features: "주요 기능" 탭에 들어갈 목록
-  //    - did: "기여 역할" 탭에 들어갈 목록
-  //    - trouble: "TROUBLE SHOOTING" 탭 내용. code에 실제 코드를 붙여넣으면 됨.
-  const projects = [
-    {
-      // index 0: 깨비터
-      num: '01',
-      title: '깨비터',
-      subtitle: '빈집 매칭 & AI 리모델링 시뮬레이션 앱',
-      color: 'var(--accent)',
-      textColor: 'white',
-      period: '2026.05 - 2026.06',
-      team: '팀 프로젝트',
-      role: '기획 · 백엔드 · AI 기능 구현',
-      desc: '지방 빈집 문제 해결을 위한 빈집 매칭 서비스입니다. 공공데이터 기반으로 빈집 매물을 탐색하고, AI가 리모델링 후 모습을 시뮬레이션해줍니다. 2026 충청북도 공공데이터 활용 창업 경진대회 출품작입니다.',
-      features: [
-        '공공데이터 기반 빈집 매물 탐색 — 흩어져 있던 CSV 데이터를 정제해 915건 규모의 매물 DB 구축',
-        'AI 리모델링 시뮬레이션 — 빈집 사진을 분석하고 리모델링된 모습을 이미지로 생성',
-        'Naver / Google 소셜 로그인'
-      ],
-      did: [
-        'AI 리모델링 기능 구현 — 이미지 분석과 생성형 이미지 API 연동, 결과 이미지 Supabase Storage 저장',
-        '공공데이터 CSV 정제 및 Supabase(PostgreSQL) 매물 테이블 설계·구축',
-        'Naver / Google 소셜 로그인 연동 및 인증 흐름 디버깅'
-      ],
-      trouble: {
-        problem: 'AI API 호출 시 할당량 초과(429) 오류가 반복 발생',
-        explain: '일시적 오류와 할당량 소진 원인을 구분해 대응. 기능별 API 키 분리로 장애를 격리하고, 재시도 로직을 추가해 안정화',
-        code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
-      },
-      stack: ['React Native', 'TypeScript', 'Supabase', 'OpenAI API'],
-      repo: 'https://github.com/jungnanna/ggabiteo'
-    },
-    {
-      // index 1: 먹어도 돼?
-      num: '02',
-      title: '먹어도 돼?',
-      subtitle: '개인 맞춤형 식단 추천 & 영양 분석 서비스',
-      color: 'var(--accent-2)',
-      textColor: 'white',
-      period: '2026.04',
-      team: '팀 프로젝트',
-      role: '백엔드 팀장',
-      desc: '개인별 맞춤형 식단 추천과 영양 분석 서비스입니다. AI 챗봇과 AI 퍼스널 주간 식단 계획에 AI를 연동했습니다.',
-      features: [
-        'AI 챗봇 기반 식단 상담 및 음식 안전성 확인',
-        'AI 퍼스널 주간 식단 계획 자동 생성',
-        '개인별 영양 분석 리포트 제공'
-      ],
-      did: [
-        'Firebase / SQLite 이중 저장 구조 설계',
-        'AI 프롬프트 개인화 설계',
-        '백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정'
-      ],
-      trouble: {
-        problem: 'Gemini API 503 오류 및 할당량 소진',
-        explain: '재시도 로직과 API 키 분리로 안정화',
-        code: '// 여기에 트러블슈팅 관련 코드를 붙여넣으세요'
-      },
-      stack: ['Django', 'Firebase', 'Gemini API', 'Celery'],
-      repo: 'https://github.com/jungnanna/CANIEAT'
-    },
-    {
-      // index 2: 레디플레이
-      num: '03',
-      title: '레디플레이',
-      subtitle: '스포츠 입문자를 위한 큐레이션 커머스 웹사이트',
-      color: 'var(--accent-bright)',
-      textColor: 'var(--text-main)',
-      period: '2026.03',
-      team: '팀 프로젝트',
-      role: '팀장',
-      desc: '스포츠 입문자를 위한 큐레이션 커머스 웹사이트입니다.',
-      features: [
-        '스포츠 종목별 입문 상품 큐레이션',
-        '장바구니 및 결제 연동 (Toss Payments)',
-        'Discord 자동 알림 기반 CS 시스템'
-      ],
-      did: [
-        'fetch API 기반 공통 헤더·푸터 구조 설계',
-        'Session Storage 활용 로그인/장바구니 상태 유지',
-        '3인 팀 팀장으로서 일정 및 역할 분배'
-      ],
-      trouble: null, // 아직 기록된 트러블슈팅이 없으면 null로 두면 됨
-      stack: ['HTML5', 'JavaScript', 'Supabase', 'Toss Payments API'],
-      repo: null // 아직 업로드 전이면 null로 두면 됨
-    },
-    {
-      // index 3: 메인 프로젝트 (KDT 부트캠프 캡스톤, 2026.08 시작 예정)
-      num: '04',
-      title: '메인 프로젝트 준비중',
-      subtitle: 'Java와 생성형 AI를 활용한 차세대 CRM 플랫폼',
-      color: '#94a3b8', // 아직 시작 전인 프로젝트라 다른 3개와 다르게 차분한 회색으로 구분
-      textColor: 'white',
-      period: '2026.08 시작 예정',
-      team: '5인 팀',
-      role: '백엔드',
-      desc: 'KDT 부트캠프 메인 프로젝트로, Java와 생성형 AI를 활용한 차세대 CRM 플랫폼을 Spring Boot 기반으로 개발할 예정입니다.',
-      features: [
-        'Spring Boot 기반 REST API 서버 설계',
-        'MySQL 데이터베이스 설계 및 Docker 환경 구성',
-        '생성형 AI를 활용한 CRM 기능 구현'
-      ],
-      did: [], // 아직 시작 전이라 비워둠 → 모달에서 자동으로 안내 문구가 뜸
-      trouble: {
-        problem: '트러블슈팅 준비중',
-        explain: '프로젝트 진행 후 이곳에 기록할 예정입니다.',
-        code: '코드 준비중'
-      },
-      stack: ['Spring Boot', 'Java', 'MySQL', 'Docker'],
-      repo: null,
-      repoLabel: '배포 예정' // repo가 없을 때 기본 문구("GitHub 업로드 예정") 대신 이 문구가 뜸
-    }
-  ];
+  // ---- 탭 1: 주요 기능 ----
+  const featuresList = document.getElementById('modalFeatures');
+  featuresList.innerHTML = '';
+  p.features.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    featuresList.appendChild(li);
+  });
 
-  // 2) 모달을 열면서 index에 맞는 내용을 채워넣는 함수
-  function openProjectModal(index) {
-    const p = projects[index];
-
-    // 번호 + 제목 + 부제목
-    document.getElementById('modalNum').textContent = p.num + ' ';
-    document.getElementById('modalTitleText').textContent = p.title;
-    document.getElementById('modalSubtitle').textContent = p.subtitle;
-
-    // 구성 · 역할 요약 줄 (기간 항목은 제거함)
-    const summaryRow = document.getElementById('modalSummaryRow');
-    summaryRow.innerHTML = `
-      <span><span class="s-label">구성</span>${p.team}</span>
-      <span><span class="s-label">역할</span>${p.role}</span>
-    `;
-
-    // ---- 탭 0: 개요 (사진 / 설명 / 기술스택 / 깃허브) ----
-    document.getElementById('modalDesc').textContent = p.desc;
-
-    const tagsWrap = document.getElementById('modalTags');
-    tagsWrap.innerHTML = '';
-    p.stack.forEach(tag => {
-      const span = document.createElement('span');
-      span.textContent = tag;
-      tagsWrap.appendChild(span);
-    });
-
-    const githubWrap = document.getElementById('modalGithub');
-    githubWrap.innerHTML = p.repo
-      ? `<a href="${p.repo}" target="_blank">GitHub →</a>`
-      : `<span class="repo-pending">${p.repoLabel || 'GitHub 업로드 예정'}</span>`;
-
-    // ---- 탭 1: 주요 기능 ----
-    const featuresList = document.getElementById('modalFeatures');
-    featuresList.innerHTML = '';
-    p.features.forEach(item => {
+  // ---- 탭 2: 기여 역할 ----
+  const didList = document.getElementById('modalDid');
+  didList.innerHTML = '';
+  if (p.did && p.did.length > 0) {
+    p.did.forEach(item => {
       const li = document.createElement('li');
       li.textContent = item;
-      featuresList.appendChild(li);
-    });
-
-    // ---- 탭 2: 기여 역할 (한 일 목록 + 직접 작성한 코드) ----
-    // 아직 시작 전인 프로젝트는 did 배열이 비어있을 수 있어서, 그럴 땐 안내 문구를 보여줌
-    const didList = document.getElementById('modalDid');
-    didList.innerHTML = '';
-    if (p.did && p.did.length > 0) {
-      p.did.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        didList.appendChild(li);
-      });
-    } else {
-      const li = document.createElement('li');
-      li.textContent = '아직 진행 전이라 기록된 내용이 없어요.';
-      li.style.listStyle = 'none';
-      li.style.paddingLeft = '0';
       didList.appendChild(li);
-    }
+    });
+  } else {
+    const li = document.createElement('li');
+    li.textContent = '아직 진행 전이라 기록된 내용이 없어요.';
+    li.style.listStyle = 'none';
+    li.style.paddingLeft = '0';
+    didList.appendChild(li);
+  }
 
-    // 기여 역할 탭 안에 코드 보여줄 공간. p.didCode에 코드를 넣으면 여기에 그대로 표시됨
-    const didCodeWrap = document.getElementById('modalDidCodeWrap');
-    didCodeWrap.innerHTML = `
-      <div class="modal-subhead" style="margin-top: 22px;">관련 코드</div>
-      <pre class="trouble-code"><code>${p.didCode || '코드 준비중'}</code></pre>
+  const didCodeWrap = document.getElementById('modalDidCodeWrap');
+  didCodeWrap.innerHTML = `
+    <div class="modal-subhead" style="margin-top: 26px;">관련 코드</div>
+    <pre class="trouble-code"><code>${p.didCode || '코드 준비중'}</code></pre>
+  `;
+
+  // ---- 탭 3: TROUBLE SHOOTING ----
+  const troubleWrap = document.getElementById('modalTrouble');
+  if (p.trouble) {
+    troubleWrap.innerHTML = `
+      <div class="trouble-problem">${p.trouble.problem}</div>
+      <div class="trouble-explain">→ ${p.trouble.explain}</div>
+      <pre class="trouble-code"><code>${p.trouble.code}</code></pre>
     `;
-
-    // ---- 탭 3: TROUBLE SHOOTING ----
-    const troubleWrap = document.getElementById('modalTrouble');
-    if (p.trouble) {
-      troubleWrap.innerHTML = `
-        <div class="trouble-problem">${p.trouble.problem}</div>
-        <div class="trouble-explain">→ ${p.trouble.explain}</div>
-        <pre class="trouble-code"><code>${p.trouble.code}</code></pre>
-      `;
-    } else {
-      troubleWrap.innerHTML = `<div class="trouble-empty">아직 기록된 트러블슈팅이 없어요.</div>`;
-    }
-
-    // 모달을 열 때는 항상 첫 번째 탭("개요")부터 보이게 초기화
-    switchTab(0);
-
-    // 모달 보이기 + 뒤 배경 스크롤 막기
-    document.getElementById('projectModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden'; // html 태그의 스크롤도 같이 막기
+  } else {
+    troubleWrap.innerHTML = `<div class="trouble-empty">아직 기록된 트러블슈팅이 없어요.</div>`;
   }
 
-  // 3) 탭 전환 함수: index번째 탭 버튼/패널만 active로 만들고 나머지는 지움
-  function switchTab(index) {
-    const buttons = document.querySelectorAll('.modal-tab-btn');
-    const panels = document.querySelectorAll('.modal-tab-panel');
+  switchTab(0); // 항상 "개요" 탭부터
 
-    buttons.forEach((btn, i) => {
-      btn.classList.toggle('active', i === index);
-    });
-    panels.forEach(panel => {
-      const panelIndex = Number(panel.dataset.tab);
-      panel.classList.toggle('active', panelIndex === index);
-    });
-  }
+  document.getElementById('projectModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+}
 
-  // 4) 닫기 버튼(X) 눌렀을 때
-  function closeProjectModal() {
-    document.getElementById('projectModal').classList.remove('active');
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-  }
-
-  // 5) 모달 바깥 어두운 배경을 클릭했을 때도 닫히게
-  function closeProjectModalOutside(event) {
-    if (event.target.id === 'projectModal') {
-      closeProjectModal();
-    }
-  }
-
-  // 6) Esc 키를 눌러도 닫히게
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      closeProjectModal();
-    }
+// 탭 전환
+function switchTab(index) {
+  document.querySelectorAll('.modal-tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === index);
   });
-  /* ===================== 프로젝트 모달 로직 끝 ===================== */
+  document.querySelectorAll('.modal-tab-panel').forEach(panel => {
+    panel.classList.toggle('active', Number(panel.dataset.tab) === index);
+  });
+}
+
+// 닫기
+function closeProjectModal() {
+  document.getElementById('projectModal').classList.remove('active');
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+}
+function closeProjectModalOutside(event) {
+  if (event.target.id === 'projectModal') closeProjectModal();
+}
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeProjectModal();
+});
 </script>
 </body>
 </html>
