@@ -1406,23 +1406,28 @@ async function uploadGenerated(b64: string): Promise<string> {
     ],
     trouble: [
       {
-        problem: 'API 키를 .env로 빼서 해결했다고 봤는데, 실제로는 APK 안에 그대로 들어가 있었음',
-        explain: '<b>1차 조치</b> 하드코딩된 키를 .env로 옮기고 .gitignore에 등록. 저장소에서 사라졌으니 끝났다고 봤음.<br><b>다시 본 이유</b> react-native-dotenv는 빌드 시점에 값을 번들 코드로 인라인한다. 즉 저장소에만 없을 뿐, 배포한 APK를 열면 OpenAI 키가 그대로 나온다. 앱에 넣는 한 어떤 방식으로도 숨길 수 없다는 게 요점이었음.<br><b>해결</b> 외부 API 호출을 전부 Supabase Edge Function(ai-proxy) 뒤로 옮기고 키는 Supabase 시크릿에만 둠. 앱은 프록시만 호출한다. 분석 프롬프트도 서버로 옮겨 클라이언트가 바꿀 수 없게 했다.',
+        problem: '생성된 이미지가 원본 건물을 참고만 하고, 사실상 다른 집을 만들어냄',
+        explain: '<b>증상</b> 층수가 늘거나 창문 위치가 바뀌어서, 같은 집의 리모델링 후 모습이라고 보여줄 수가 없었음. 빈집 매칭 앱에서 이건 그림이 예쁘고 아니고의 문제가 아니라 서비스의 전제가 무너지는 문제였음.<br><b>원인</b> 프롬프트가 "무엇으로 바꿀지"만 지시하고 "무엇을 지킬지"는 말하지 않았음. 모델 입장에서는 건물 구조도 바꿔도 되는 대상이었던 것.<br><b>해결</b> 구조·창문 위치·비율은 그대로 두고 마감과 가구만 바꾸라는 제약을 카테고리 9종 전부에 강제로 결합. 사용자 자유 입력 경로에도 같은 제약을 붙여 우회로를 없앴고, 이미지 편집 모델도 교체함.<br><b>한계</b> 이건 지시일 뿐 보장이 아니다. 층수 추가나 창문 이동은 여전히 나올 수 있고, 구조 보존율은 자동 판정이 안 돼 육안 평가가 필요하다 — 아직 못 쟀고, 저장소의 측정 문서에 미측정 항목으로 남겨두었다.',
         lang: 'typescript',
-        code: `// src/api/aiProxy.ts — 앱이 아는 것은 함수 이름뿐이다
-export async function invokeAiProxy<T>(body: Record<string, unknown>): Promise<T> {
-  const { data, error } = await supabase.functions.invoke(FUNCTION_SLUG, { body });
-  if (error) throw new Error(await readFunctionError(error));
-  return data as T;
-}
+        code: `// src/api/aiRemodeling.ts
+const REALISM_SUFFIX =
+  ' Photorealistic, like a real photograph shot with a DSLR camera — no 3D render,' +
+  ' CG, or illustration look. Keep the original structure, window positions, and' +
+  ' proportions of the building strictly unchanged; only replace exterior/interior' +
+  ' finishes, furniture, and fixtures.';
 
-// supabase/functions/ai-proxy/index.ts — 키는 서버에만 존재
-const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-const TRADE_API_KEY  = Deno.env.get('TRADE_API_KEY');
-const GOOGLE_API_KEY = Deno.env.get('GOOGLE_API_KEY');
-// supabase secrets set OPENAI_API_KEY=... TRADE_API_KEY=...
+// 용도 9종 전부에 같은 제약을 결합한다 — 빠뜨릴 수 있는 자리를 두지 않는다
+const CATEGORY_PROMPTS: Record<string, string> = {
+  cafe:  'Transform this old Korean house into a modern cozy café ...' + REALISM_SUFFIX,
+  guest: 'Transform this old Korean house into a charming guesthouse ...' + REALISM_SUFFIX,
+  // gall, home, store, office, pension, studio, restaurant ...
+};
 
-// action 하나로 분기 — generate / analyze / trade / places`
+// 사용자가 직접 쓴 요청에도 동일하게 붙인다. 제약을 비껴갈 경로를 남기지 않기 위해
+const prompt = customPrompt
+  ? \`Remodel this old Korean building based on the following request: \${customPrompt}.\`
+    + REALISM_SUFFIX
+  : getCategoryPrompt(category);`
       },
       {
         problem: '지역 시세가 표본 1건으로 뜨거나, 목록 화면에서는 아예 비어서 돌아옴',
@@ -1478,10 +1483,14 @@ if (!valid) return json({ error: '분석 결과 형식이 올바르지 않습니
 const [changesFromAI, setChangesFromAI] = useState(false);`
       },
       {
-        problem: '키를 서버로 옮기고 나니 Edge Function 실행 시간 제한에 이미지 생성이 걸림',
-        explain: '<b>상황</b> 프록시 도입의 대가로 무료 플랜의 150초 실행 제한이 새로 생겼음. quality: high는 이 시간을 넘겨 응답 자체가 끊김.<br><b>선택</b> 품질을 medium으로 낮춰 한 장당 60.6초(실측 22건 100% 성공)에 맞추고, 대신 사진 여러 장을 순차가 아니라 병렬로 호출해 5장 기준 약 300초 → 62~71초로 줄였음. 화질 한 단계보다 대기 시간이 사용자에게 더 크게 걸린다고 봤음.<br><b>남은 것</b> high를 되찾으려면 요청 접수 → 백그라운드 생성 → 완료 후 조회하는 비동기 구조가 필요하다. 대회 기간 안에는 하지 않기로 하고 한계로 남겨둠.',
+        problem: 'React Native 앱에서는 어떤 방법으로도 외부 API 키를 감출 수 없음',
+        explain: '<b>제약</b> 키를 .env로 분리해도 react-native-dotenv는 빌드 시점에 값을 번들 코드로 인라인한다. 저장소에서 감추는 것과 배포물에서 감추는 것은 다른 문제이고, 클라이언트에 두는 한 후자는 성립하지 않는다.<br><b>선택</b> 외부 API 호출을 전부 Supabase Edge Function 뒤로 모으고 키는 서버 시크릿에만 뒀음. 분석 프롬프트도 같이 서버로 옮겨 클라이언트가 임의로 바꿀 수 없게 했다.<br><b>대가</b> 무료 플랜의 150초 실행 제한이 새로 생겨 quality: high가 통째로 끊겼음. medium으로 낮춰 한 장당 60.6초(실측 22건 100% 성공)를 확보하고, 대신 장 단위 병렬 호출로 5장 기준 약 300초 → 62~71초로 줄였다. 화질 한 단계보다 대기 시간이 사용자에게 더 크게 걸린다고 판단.<br><b>남은 것</b> high를 되찾으려면 요청 접수 → 백그라운드 생성 → 완료 후 조회하는 비동기 구조가 필요하다. 기간 안에는 하지 않기로 하고 한계로 남겨둠.',
         lang: 'typescript',
-        code: `// supabase/functions/ai-proxy/index.ts
+        code: `// supabase/functions/ai-proxy/index.ts — 키는 서버에만 존재한다
+const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+const TRADE_API_KEY  = Deno.env.get('TRADE_API_KEY');
+const GOOGLE_API_KEY = Deno.env.get('GOOGLE_API_KEY');
+
 // Edge Function은 150초 안에 끝나야 한다(무료 플랜 IDLE_TIMEOUT).
 // quality: high는 이 시간을 넘기므로 medium을 기본으로 쓴다.
 const quality = typeof body.quality === 'string' ? body.quality : 'medium';
