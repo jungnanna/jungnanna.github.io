@@ -1372,106 +1372,136 @@ public class CorsConfig {
     features: [
       '공공데이터 기반 빈집 매물 탐색 — 흩어져 있던 CSV 데이터를 정제해 915건 규모의 매물 DB 구축',
       'AI 리모델링 시뮬레이션 — 빈집 사진을 분석하고 리모델링된 모습을 이미지로 생성',
-      'Naver / Google 소셜 로그인'
+      'Google 소셜 로그인 (카카오·네이버는 준비중)'
     ],
     did: [
-      'AI 리모델링 기능 구현 — 이미지 분석과 생성형 이미지 API 연동, 결과 이미지 Supabase Storage 저장',
-      '공공데이터 CSV 정제 및 Supabase(PostgreSQL) 매물 테이블 설계·구축',
-      'Naver / Google 소셜 로그인 연동 및 인증 흐름 디버깅'
+      'AI 리모델링 파이프라인 구현 — 사진 → 이미지 생성 → 전후 비교 분석 → 변경 요소 추출. 사진 여러 장은 병렬 호출로 처리(5장 기준 순차 약 300초 → 실측 62~71초)',
+      '외부 API 호출을 Supabase Edge Function(ai-proxy) 한 곳으로 모아 OpenAI · 국토부 실거래가 · Google Places 키를 앱 번들에서 제거',
+      '공공데이터 CSV 정제(주소 → 좌표 변환) 및 Supabase(PostgreSQL) 매물 테이블 설계·구축',
+      '국토부 실거래가 API 연동 — 시군구 단위 지역 시세 집계 및 중복 호출 제거',
+      '호출 계측 로그 도입 — 성공률·소요시간을 서버 로그에서 집계 (이미지 생성 22건 100% 성공, 평균 60.6초)'
     ],
     didCode: [
       {
-        label: 'AI로 생성한 리모델링 이미지를 Supabase Storage에 업로드하고 공개 URL을 반환',
+        label: '생성된 이미지는 Storage에 올리고 URL만 돌려준다 — base64를 응답에 그대로 실으면 Edge Function 워커 메모리 한계에 걸림',
         lang: 'typescript',
-        code: `// api/aiRemodeling.ts
-async function saveGeneratedImage(base64Image: string, propertyId: string, category: string) {
-  const buffer = Buffer.from(base64Image, 'base64');
-  const path = \`remodeling/\${propertyId}/\${category}.png\`;
+        code: `// supabase/functions/ai-proxy/index.ts
+async function uploadGenerated(b64: string): Promise<string> {
+  const admin = createClient(
+    Deno.env.get('SUPABASE_URL')!,
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,          // 키는 서버에만 존재
+  );
 
-  const { error } = await supabase.storage
-    .from('remodeling-results')
-    .upload(path, buffer, { contentType: 'image/png', upsert: true });
+  const path = \`generated/\${crypto.randomUUID()}.png\`;
+  const { error } = await admin.storage
+    .from('remodel-images')
+    .upload(path, base64ToBytes(b64), { contentType: 'image/png', upsert: false });
 
-  if (error) throw error;
+  if (error) throw new Error(\`이미지 저장 실패: \${error.message}\`);
 
-  const { data } = supabase.storage.from('remodeling-results').getPublicUrl(path);
-  return data.publicUrl;
+  const { data } = admin.storage.from('remodel-images').getPublicUrl(path);
+  return data.publicUrl;                                  // 앱에는 URL만 내려간다
 }`
       }
     ],
     trouble: [
       {
-        problem: 'AI 리모델링 이미지 생성 API 호출 시 할당량 초과(429) 오류가 반복 발생',
-        explain: '실시간 생성 방식은 할당량 소진에 취약해서, 사전 준비된 이미지로 우선 폴백하도록 안정화함.',
+        problem: 'API 키를 .env로 빼서 해결했다고 봤는데, 실제로는 APK 안에 그대로 들어가 있었음',
+        explain: '<b>1차 조치</b> 하드코딩된 키를 .env로 옮기고 .gitignore에 등록. 저장소에서 사라졌으니 끝났다고 봤음.<br><b>다시 본 이유</b> react-native-dotenv는 빌드 시점에 값을 번들 코드로 인라인한다. 즉 저장소에만 없을 뿐, 배포한 APK를 열면 OpenAI 키가 그대로 나온다. 앱에 넣는 한 어떤 방식으로도 숨길 수 없다는 게 요점이었음.<br><b>해결</b> 외부 API 호출을 전부 Supabase Edge Function(ai-proxy) 뒤로 옮기고 키는 Supabase 시크릿에만 둠. 앱은 프록시만 호출한다. 분석 프롬프트도 서버로 옮겨 클라이언트가 바꿀 수 없게 했다.',
         lang: 'typescript',
-        code: `// api/aiRemodeling.ts
-async function generateRemodelingImage(photoBase64: string, category: string) {
-  try {
-    const response = await openai.images.edit({
-      model: 'gpt-image-1',
-      image: photoBase64,
-      prompt: categoryPrompts[category],
+        code: `// src/api/aiProxy.ts — 앱이 아는 것은 함수 이름뿐이다
+export async function invokeAiProxy<T>(body: Record<string, unknown>): Promise<T> {
+  const { data, error } = await supabase.functions.invoke(FUNCTION_SLUG, { body });
+  if (error) throw new Error(await readFunctionError(error));
+  return data as T;
+}
+
+// supabase/functions/ai-proxy/index.ts — 키는 서버에만 존재
+const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+const TRADE_API_KEY  = Deno.env.get('TRADE_API_KEY');
+const GOOGLE_API_KEY = Deno.env.get('GOOGLE_API_KEY');
+// supabase secrets set OPENAI_API_KEY=... TRADE_API_KEY=...
+
+// action 하나로 분기 — generate / analyze / trade / places`
+      },
+      {
+        problem: '지역 시세가 표본 1건으로 뜨거나, 목록 화면에서는 아예 비어서 돌아옴',
+        explain: '<b>전제</b> 빈집은 거래된 적이 없어 매물별 실거래가라는 게 존재하지 않는다. 그래서 시군구 단위 평균으로 대신했는데, 이번 달 한 달만 조회하니 표본이 0~1건이라 시세라고 부를 수 없는 숫자가 떴음.<br><b>두 번째 원인</b> 기간을 늘리자 이번엔 목록 화면에서 값이 비어 돌아왔음. 카드 개수만큼 같은 시군구를 동시에 조회해 공공데이터 API 동시 요청 제한에 걸린 것.<br><b>해결</b> 서버에서는 12개월치를 3개씩 끊어 호출해 평균을 내고(표본 300여 건), 앱에서는 결과가 아니라 <b>진행 중인 Promise</b>를 캐싱해 시군구당 한 번만 나가게 했음. 결과가 아니라 요청을 캐싱해야 이미 떠 있는 호출까지 합쳐진다.<br><b>표기</b> 개별 매물가로 오해되지 않도록 화면에 시군구 평균·표본 건수·집계 기간을 함께 표시.',
+        lang: 'typescript',
+        code: `// src/api/tradePrice.ts
+// 목록 화면은 카드 개수만큼 동시에 호출한다. 결과를 캐싱하면 첫 응답이 오기 전의
+// 중복 호출은 못 막으므로, 결과가 아니라 Promise를 캐싱해 시군구당 한 번만 호출한다.
+const inflight = new Map<string, Promise<RegionPriceStats | null>>();
+
+export function fetchRegionPrice(sigunguCode: string) {
+  const cached = inflight.get(sigunguCode);
+  if (cached) return cached;
+
+  const request = invokeAiProxy<{ stats: RegionPriceStats | null }>({
+    action: 'trade', sigunguCode, months: 12,
+  })
+    .then(({ stats }) => stats ?? null)
+    .catch(() => {
+      inflight.delete(sigunguCode);   // 실패한 조회는 다음에 다시 시도
+      return null;
     });
-    return response.data[0].b64_json;
-  } catch (error) {
-    if (error.status === 429) {
-      // 할당량 초과 시 Supabase Storage에 미리 준비해 둔 이미지로 폴백
-      return await getFallbackImage(category);
-    }
-    throw error;
-  }
+
+  inflight.set(sigunguCode, request);
+  return request;
+}
+
+// supabase/functions/ai-proxy/index.ts
+// 공공데이터 API 동시 요청 제한을 피해 3개씩 나눠 호출한다
+for (let i = 0; i < yearMonths.length; i += CHUNK) {
+  const batch = await Promise.all(yearMonths.slice(i, i + CHUNK).map(fetchMonth));
+  deals.push(...batch.flat());
 }`
       },
       {
-        problem: '생성된 리모델링 이미지가 원본 구조를 무시하고 찰흙 같은 질감으로 나오는 퀄리티 문제',
-        explain: 'gpt-image-1의 images/edits 엔드포인트를 quality/input_fidelity 파라미터 없이 쓰고 있었던 게 원인. gpt-image-2로 교체하고 quality: high, 실제 크기(1536x1024), 사실감·구조유지를 강조하는 프롬프트 프리픽스를 추가해 개선.',
+        problem: '변경 요소 분석이 처음부터 계속 실패하고 있었는데, 폴백 때문에 아무도 몰랐음',
+        explain: '<b>증상</b> 화면에는 늘 그럴듯한 변경 항목이 떴는데, 사진이 달라져도 용도가 같으면 내용이 똑같았음.<br><b>원인</b> 분석 호출이 max_tokens를 보내고 있었는데 쓰던 모델은 이 파라미터를 받지 않아 호출이 매번 실패. 실패하면 조용히 용도별 기본 예시로 대체돼, 화면상으로는 정상으로 보였다. 즉 폴백이 버그를 덮고 있었음.<br><b>해결</b> max_completion_tokens로 교체(6건 전부 성공, 평균 13.7초). 여기서 멈추지 않고, 응답 스키마를 서버에서 검증하고 기본 예시가 쓰인 경우 화면에 배지로 표시하도록 바꿔 같은 종류의 실패가 다시 숨지 않게 했다.',
         lang: 'typescript',
-        code: `// api/aiRemodeling.ts
-const REALISM_PREFIX =
-  '기존 건물의 구조(창문, 벽, 층고)는 그대로 유지하고, 사실적인 사진처럼 리모델링 결과만 반영해줘. ';
+        code: `// supabase/functions/ai-proxy/index.ts
+// gpt-5.6-terra는 max_tokens를 받지 않는다
+max_completion_tokens: 1200,
 
-async function generateRemodelingImage(photoBase64: string, category: string) {
-  const response = await openai.images.edit({
-    model: 'gpt-image-2',            // gpt-image-1 → gpt-image-2로 교체
-    image: photoBase64,
-    prompt: REALISM_PREFIX + categoryPrompts[category],
-    quality: 'high',                 // 품질 파라미터 명시
-    size: '1536x1024',
-  });
-  return response.data[0].b64_json;
-}`
+// 형태가 다르면 앱이 기본값을 쓰도록 '실패'로 돌려준다 — 파싱되면 무조건 신뢰하지 않는다
+const valid =
+  Array.isArray(changes) && changes.length > 0 &&
+  changes.every((c: any) =>
+    c && typeof c.category === 'string' &&
+    typeof c.before === 'string' && typeof c.after === 'string');
+if (!valid) return json({ error: '분석 결과 형식이 올바르지 않습니다.' }, 502);
+
+// src/screens/AIRemodelingResultScreen.tsx
+// 변경 요소가 실제 AI 분석 결과인지, 용도별 기본 예시인지 구분해 배지로 표시
+const [changesFromAI, setChangesFromAI] = useState(false);`
       },
       {
-        problem: '소셜 로그인(Naver/Kakao/Google) 연동 시 Android 빌드가 계속 실패함',
-        explain: '각 SDK가 요구하는 AndroidManifest.xml 인텐트 필터와 build.gradle 의존성이 서로 충돌하고 있었음. 매니페스트에 각 SDK용 리다이렉트 스킴을 분리해서 등록하고 build.gradle의 SDK 버전을 맞춰서 해결.',
-        lang: 'plaintext',
-        code: `<!-- AndroidManifest.xml -->
-<activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
-  <intent-filter>
-    <action android:name="android.intent.action.VIEW" />
-    <category android:name="android.intent.category.DEFAULT" />
-    <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="kakao{NATIVE_APP_KEY}" android:host="oauth" />
-  </intent-filter>
-</activity>
+        problem: '키를 서버로 옮기고 나니 Edge Function 실행 시간 제한에 이미지 생성이 걸림',
+        explain: '<b>상황</b> 프록시 도입의 대가로 무료 플랜의 150초 실행 제한이 새로 생겼음. quality: high는 이 시간을 넘겨 응답 자체가 끊김.<br><b>선택</b> 품질을 medium으로 낮춰 한 장당 60.6초(실측 22건 100% 성공)에 맞추고, 대신 사진 여러 장을 순차가 아니라 병렬로 호출해 5장 기준 약 300초 → 62~71초로 줄였음. 화질 한 단계보다 대기 시간이 사용자에게 더 크게 걸린다고 봤음.<br><b>남은 것</b> high를 되찾으려면 요청 접수 → 백그라운드 생성 → 완료 후 조회하는 비동기 구조가 필요하다. 대회 기간 안에는 하지 않기로 하고 한계로 남겨둠.',
+        lang: 'typescript',
+        code: `// supabase/functions/ai-proxy/index.ts
+// Edge Function은 150초 안에 끝나야 한다(무료 플랜 IDLE_TIMEOUT).
+// quality: high는 이 시간을 넘기므로 medium을 기본으로 쓴다.
+const quality = typeof body.quality === 'string' ? body.quality : 'medium';
 
-<!-- Naver, Google도 각각 별도 scheme으로 분리 등록 -->
-<!-- 하나의 scheme으로 묶으려다 충돌 → SDK별로 분리하고서야 해결 -->`
-      },
-      {
-        problem: '팀원과 React Native 기능 브랜치를 나눠 작업하다 병합 시 충돌이 잦음',
-        explain: '네비게이션 구조와 화면 컴포넌트를 각자 건드리면서 같은 파일이 계속 충돌함. 화면 단위로 담당을 명확히 나누고, 공통 컴포넌트(네비게이션 등)는 PR로 먼저 병합한 뒤 각자 브랜치를 리베이스하는 순서로 정리해 충돌을 줄임.',
-        lang: 'plaintext',
-        code: `# 충돌이 잦았던 방식
-main → feature/login, feature/map, feature/remodel 각자 분기 후 개별 병합
-
-# 정리한 방식
-1. 공통 네비게이션/컴포넌트 먼저 PR → main에 병합
-2. 각자 브랜치에서 git rebase main으로 최신 상태 반영
-3. 화면 단위(로그인/지도/리모델링)로 담당을 고정해 같은 파일을 동시에 안 건드리게 함`
+// src/screens/AIRemodelingResultScreen.tsx — 장수만큼 병렬 호출
+const generatedPairs = await Promise.all(
+  photoUris.map(async (uri, i) => {
+    try {
+      const [pair] = await generateRemodeling([uri], [photoBase64s[i] ?? ''], category, customPrompt);
+      return pair;
+    } catch {
+      return { originalUri: uri, generatedUri: '' };   // 한 장 실패가 전체를 무너뜨리지 않게
+    } finally {
+      setLoadingProgress(\`\${++completed}/\${photoUris.length}장 생성 완료\`);
+    }
+  }),
+);`
       }
     ],
-    stack: ['React Native', 'TypeScript', 'Supabase', 'OpenAI API'],
+    stack: ['React Native', 'TypeScript', 'Supabase', 'Edge Functions (Deno)', 'OpenAI API', '공공데이터 API'],
     repo: 'https://github.com/jungnanna/ggabiteo'
   },
   {
