@@ -1637,53 +1637,117 @@ def get_or_generate(cache_key: str, generate_fn):
       'Discord 자동 알림 기반 CS 시스템'
     ],
     did: [
-      'fetch API 기반 공통 헤더·푸터 구조 설계',
-      'Session Storage 활용 로그인/장바구니 상태 유지',
+      'Toss Payments 결제 연동 — 결제수단별 요청 분기와 승인 이후 주문 저장 흐름 설계',
+      'Supabase 스키마 설계 및 RLS 정책 · 컬럼 보호 트리거 작성',
+      'fetch 기반 공통 헤더·푸터 구조 설계',
       '3인 팀 팀장으로서 일정 및 역할 분배'
     ],
     didCode: [
       {
-        label: 'fetch로 공통 헤더/푸터 HTML을 불러와 페이지마다 삽입하는 구조',
+        label: '헤더/푸터를 순차가 아닌 동시 요청으로 불러와 레이아웃 로딩 시간을 줄임',
         lang: 'javascript',
-        code: `// common/loadLayout.js
+        code: `// common.js
 async function loadLayout() {
-  const [headerHtml, footerHtml] = await Promise.all([
-    fetch('/components/header.html').then(res => res.text()),
-    fetch('/components/footer.html').then(res => res.text()),
+  // 순차 fetch가 아닌 Promise.all로 동시에 요청해 로딩 시간을 절반으로 줄인다
+  const [headerRes, footerRes] = await Promise.all([
+    fetch('header.html'),
+    fetch('footer.html'),
   ]);
-  document.getElementById('header-placeholder').innerHTML = headerHtml;
-  document.getElementById('footer-placeholder').innerHTML = footerHtml;
+
+  const headerContainer = document.getElementById('header-container');
+  if (headerContainer) headerContainer.innerHTML = await headerRes.text();
+  // ...footer도 동일
 }`
       }
     ],
-    // ⚠️ 아래 2개는 자세한 내용이 기록돼 있지 않아 'did' 목록만 보고 임시로 작성한 초안입니다.
-    // 실제 겪었던 문제/해결 방식과 다르면 내용을 꼭 확인 후 고쳐주세요.
     trouble: [
       {
-        problem: '(초안) 새로고침하면 로그인 상태와 장바구니 내용이 사라짐',
-        explain: '(초안) Session Storage에 로그인 토큰과 장바구니 목록을 저장해두고, 페이지 로드 시 다시 불러와 상태를 복원하도록 처리했다고 가정하고 작성함 — 실제 구현과 다르면 수정 필요',
+        problem: '주문을 언제 DB에 쓸 것인가 — 결제 승인 전에 쓰면 안 되는 이유',
+        explain: '<b>문제</b> 주문서를 제출할 때 orders에 INSERT하고 그다음 결제창을 띄우면, 사용자가 결제창을 닫은 주문까지 status "결제완료"로 남는다. 결제 사실과 주문 기록이 따로 놀게 되고, 관리자 화면에서는 둘을 구분할 방법이 없다.<br><b>선택</b> 주문서 단계에서는 DB를 건드리지 않고 sessionStorage에 임시 보관만 한 뒤, 결제 승인 콜백(success.html)에 도달했을 때만 INSERT하도록 순서를 잡았음. 저장 직후 임시 데이터를 지워 새로고침으로 같은 주문이 두 번 들어가는 것도 함께 막았다.<br><b>남은 한계</b> 결제는 승인됐는데 그 직후 브라우저가 닫히면 주문이 유실된다. 저장 시점을 브라우저에 맡기는 구조 자체의 한계이고, 제대로 막으려면 결제사 서버 웹훅을 받아 서버에서 기록해야 한다.',
         lang: 'javascript',
-        code: `// (초안) common/session.js
-function saveCartToSession(cart) {
-  sessionStorage.setItem('cart', JSON.stringify(cart));
-}
+        code: `// orderform.html — 결제 요청 전에는 DB에 쓰지 않는다
+sessionStorage.setItem('pendingOrder', JSON.stringify({
+  user_id: userId, user_name: name, email, phone,
+  items: orderData, total_price: amount,
+  pay_method: currentPayMethod, status: '결제완료',
+  order_number: orderNumber,
+}));
+tossPayments.requestPayment('카드', { ...baseOptions });
 
-function restoreCartFromSession() {
-  const saved = sessionStorage.getItem('cart');
-  return saved ? JSON.parse(saved) : [];
+// success.html — 결제 승인 후 딱 한 번만 저장
+const pendingOrder = JSON.parse(sessionStorage.getItem('pendingOrder') || 'null');
+if (pendingOrder) {
+  const { error } = await sb.from('orders').insert([pendingOrder]);
+  if (!error) sessionStorage.removeItem('pendingOrder');   // 새로고침 중복 저장 방지
 }`
       },
       {
-        problem: '(초안) 페이지마다 헤더/푸터를 복붙하다 보니 수정할 때마다 모든 페이지를 일일이 고쳐야 함',
-        explain: '(초안) fetch로 공통 헤더/푸터 HTML을 한 곳에서 관리하고 각 페이지에서 불러와 삽입하는 구조로 정리했다고 가정하고 작성함 — 실제 구현과 다르면 수정 필요',
-        lang: 'plaintext',
-        code: `기존: 각 page.html마다 <header>...</header> 코드가 그대로 중복
-개선: header.html / footer.html로 분리 후 loadLayout()에서 fetch로 불러와 삽입
-      → 헤더/푸터 수정 시 파일 하나만 고치면 모든 페이지에 반영됨`
+        problem: '주문 내역이 상품 테이블을 참조하면 과거 주문 금액이 흔들린다',
+        explain: '<b>문제</b> 주문 상세를 products와 조인해서 그리면 조인은 항상 <b>현재</b> 값을 가져온다. 관리자가 가격을 고치는 순간 이미 결제가 끝난 주문의 표시 금액까지 따라 움직이고, 상품을 삭제하면 주문 내역이 비어버린다.<br><b>판단</b> 주문 내역은 "지금 이 상품이 얼마인가"가 아니라 "그때 얼마에 샀는가"를 보여줘야 하는 기록이다. 상품과 주문은 수명이 다른 데이터라 참조로 묶으면 안 된다고 봤음.<br><b>선택</b> orders.items를 JSONB로 두고 주문 시점의 상품명·단가·수량을 그대로 복사해 저장. 정규화를 일부러 깬 선택이다.<br><b>대가</b> 상품 기준으로 판매량을 집계하려면 JSONB 안을 파고들어야 하고, 스냅샷이라 나중에 상품 정보가 바뀌어도 주문 쪽은 갱신되지 않는다. 후자는 의도한 것이고 전자는 감수한 쪽이다.',
+        lang: 'sql',
+        code: `CREATE TABLE IF NOT EXISTS public.orders (
+    id           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id      UUID REFERENCES auth.users(id) ON DELETE SET NULL,  -- 비회원 주문은 NULL
+    user_name    TEXT,
+    ...
+    items        JSONB,   -- products FK가 아니라 주문 시점 스냅샷
+    total_price  INT,
+    status       TEXT DEFAULT '결제완료',
+    order_number TEXT,    -- 비회원은 이 번호로 주문을 조회한다
+    created_at   TIMESTAMPTZ DEFAULT NOW()
+);`
+      },
+      {
+        problem: '헤더를 공통 파일로 분리했더니 헤더 안의 스크립트가 아예 동작하지 않음',
+        explain: '<b>증상</b> 페이지마다 복붙돼 있던 헤더를 header.html 한 곳으로 모으고 fetch로 주입했는데, 마크업은 잘 붙는데 헤더 안에 있던 스크립트가 전혀 실행되지 않았음.<br><b>원인</b> innerHTML로 삽입된 script 태그는 브라우저가 실행하지 않는다. 파싱은 되지만 실행 대상으로 취급되지 않음.<br><b>해결</b> 삽입된 script를 찾아 같은 내용의 태그를 새로 만들어 document에 붙였다 떼는 방식으로 실행시킴.<br><b>두 번째 함정</b> 로그인/로그아웃 버튼이 header.html 안에 있어서, 로그인 상태를 반영하는 함수를 헤더 삽입 <b>이후</b>에 호출해야 요소를 찾을 수 있었음. 비동기로 붙는 마크업에 의존하는 코드는 실행 순서를 직접 보장해야 한다는 걸 여기서 알았음.',
+        lang: 'javascript',
+        code: `// common.js
+headerContainer.innerHTML = await headerRes.text();
+
+// innerHTML로 삽입된 <script>는 브라우저가 자동 실행하지 않으므로,
+// 태그를 새로 만들어 다시 appendChild 해줘야 안의 코드가 동작한다.
+headerContainer.querySelectorAll('script').forEach(old => {
+  const s = document.createElement('script');
+  s.text = old.text;
+  document.body.appendChild(s).parentNode.removeChild(s);
+});
+
+// 로그인/로그아웃 버튼은 header.html 안에 있으므로, 헤더가 실제로
+// DOM에 삽입된 이후에 호출해야 요소를 찾을 수 있다.
+updateLoginStatus();`
+      },
+      {
+        problem: 'RLS를 걸고도 회원이 자기 등급을 admin으로 바꿀 수 있었음',
+        explain: '<b>상황</b> "본인 행만 수정 가능"이라는 정책을 넣은 뒤 권한을 점검하는 과정에서 빈 곳이 드러났다. RLS는 <b>어떤 행</b>을 건드리는지만 보고 <b>어떤 컬럼</b>을 바꾸는지는 보지 않는다. 본인 행이 맞으니 profiles.role을 admin으로 바꾸는 UPDATE도 정책을 그대로 통과했다.<br><b>같은 구멍이 하나 더</b> orders에도 "본인 주문 수정 가능" 정책이 있었다. 의도는 주문 취소만 열어주는 것이었는데, 실제로는 가격·상품구성·배송상태까지 바꿀 수 있었다.<br><b>대응</b> 컬럼 단위 제한은 RLS로 되지 않아 BEFORE INSERT/UPDATE 트리거로 막았다. 막는 방식은 두 가지로 나눴다 — role 변경처럼 조용히 이전 값으로 되돌려도 되는 것과, 주문 상태를 임의로 바꾸려는 시도처럼 예외를 던져 명시적으로 거부해야 하는 것.<br><b>정리하면</b> 정책을 한 겹 넣었다고 끝이 아니라, 그 정책이 무엇을 보지 않는지까지 확인해야 한다는 걸 알게 된 건이다.',
+        lang: 'sql',
+        code: `-- profiles의 "본인 행 UPDATE 허용" 정책은 행 단위 체크만 하기 때문에,
+-- 본인이 role을 'admin'으로 바꿔 셀프 승격하는 것까지 막아주지 않는다.
+-- 컬럼 단위 제한은 RLS만으로는 안 되므로 트리거로 role 필드를 보호한다.
+CREATE OR REPLACE FUNCTION public.protect_profile_role()
+RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        IF NOT public.is_admin() THEN NEW.role := 'member'; END IF;
+    ELSIF TG_OP = 'UPDATE' THEN
+        IF NEW.role IS DISTINCT FROM OLD.role AND NOT public.is_admin() THEN
+            NEW.role := OLD.role;          -- 거부가 아니라 원복
+        END IF;
+    END IF;
+    RETURN NEW;
+END; $$;
+
+CREATE TRIGGER profiles_protect_role
+    BEFORE INSERT OR UPDATE ON public.profiles
+    FOR EACH ROW EXECUTE FUNCTION public.protect_profile_role();
+
+-- orders도 동일한 이유로 보호한다. 관리자가 아니면 취소 외의 변경은 원복.
+CREATE TRIGGER orders_protect_fields
+    BEFORE UPDATE ON public.orders
+    FOR EACH ROW EXECUTE FUNCTION public.protect_order_fields();`
       }
     ],
-    stack: ['HTML5', 'JavaScript', 'Supabase', 'Toss Payments API'],
-    repo: null // 아직 업로드 전이면 null
+    stack: ['HTML5', 'JavaScript', 'Supabase', 'PostgreSQL (RLS)', 'Toss Payments API'],
+    repo: 'https://github.com/jungnanna/ready-play'
   }
 ];
 
