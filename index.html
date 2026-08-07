@@ -851,7 +851,7 @@ footer {
         <span class="p-num">03</span>
         <div class="p-thumb">
           <span class="thumb-fallback">IMAGE</span>
-          <img src="images/project-canieat.jpg" alt="먹어도 돼? 서비스 화면" onerror="this.style.display='none'">
+          <img src="images/CANIEAT.png" alt="먹어도 돼? 서비스 화면" onerror="this.style.display='none'">
         </div>
         <div class="p-main">
           <h3>먹어도 돼?</h3>
@@ -971,8 +971,8 @@ footer {
 
   <!-- ===================== 05 CONTACT ===================== -->
   <section class="contact reveal" id="contact">
-    <p class="big">NEXT PROBLEM,<br><span class="stroke">PLEASE.</span></p>
-    <p>원인이 풀릴 때까지 파고드는 개발자입니다. 다음 문제를 기다리고 있어요.</p>
+    <p class="big">STILL MILES<br><span class="stroke">TO GO.</span></p>
+    <p>원인이 풀릴 때까지 파고듭니다. 알게 된 만큼 모르는 것도 늘어서, 아직 갈 길이 멉니다.</p>
     <!-- 마그네틱 버튼: 마우스를 따라 살짝 끌려오는 인터랙션 -->
     <a href="mailto:nannamaisons@gmail.com" class="magnet-btn" id="magnetBtn">SEND E-MAIL →</a>
     <div class="contact-links">
@@ -1407,7 +1407,7 @@ async function uploadGenerated(b64: string): Promise<string> {
     trouble: [
       {
         problem: '생성된 이미지가 원본 건물을 참고만 하고, 사실상 다른 집을 만들어냄',
-        explain: '<b>증상</b> 층수가 늘거나 창문 위치가 바뀌어서, 같은 집의 리모델링 후 모습이라고 보여줄 수가 없었음. 빈집 매칭 앱에서 이건 그림이 예쁘고 아니고의 문제가 아니라 서비스의 전제가 무너지는 문제였음.<br><b>원인</b> 프롬프트가 "무엇으로 바꿀지"만 지시하고 "무엇을 지킬지"는 말하지 않았음. 모델 입장에서는 건물 구조도 바꿔도 되는 대상이었던 것.<br><b>해결</b> 구조·창문 위치·비율은 그대로 두고 마감과 가구만 바꾸라는 제약을 카테고리 9종 전부에 강제로 결합. 사용자 자유 입력 경로에도 같은 제약을 붙여 우회로를 없앴고, 이미지 편집 모델도 교체함.<br><b>한계</b> 이건 지시일 뿐 보장이 아니다. 층수 추가나 창문 이동은 여전히 나올 수 있고, 구조 보존율은 자동 판정이 안 돼 육안 평가가 필요하다 — 아직 못 쟀고, 저장소의 측정 문서에 미측정 항목으로 남겨두었다.',
+        explain: '<b>원인</b> 프롬프트가 "무엇으로 바꿀지"만 지시하고 "무엇을 지킬지"는 말하지 않았음. 모델 입장에서는 건물 구조도 바꿔도 되는 대상이었던 것. 층수나 창문이 바뀌면 같은 집이라고 보여줄 수가 없다.<br><b>해결</b> 구조·창문·비율은 유지하고 마감과 가구만 바꾸라는 제약을 카테고리 9종과 자유 입력 경로 전부에 결합해 우회로를 없앴음.<br><b>한계</b> 지시일 뿐 보장은 아니다. 구조 보존율은 자동 판정이 안 돼 아직 못 쟀고, 측정 문서에 미측정 항목으로 남겨두었다.',
         lang: 'typescript',
         code: `// src/api/aiRemodeling.ts
 const REALISM_SUFFIX =
@@ -1431,7 +1431,7 @@ const prompt = customPrompt
       },
       {
         problem: '지역 시세가 표본 1건으로 뜨거나, 목록 화면에서는 아예 비어서 돌아옴',
-        explain: '<b>전제</b> 빈집은 거래된 적이 없어 매물별 실거래가라는 게 존재하지 않는다. 그래서 시군구 단위 평균으로 대신했는데, 이번 달 한 달만 조회하니 표본이 0~1건이라 시세라고 부를 수 없는 숫자가 떴음.<br><b>두 번째 원인</b> 기간을 늘리자 이번엔 목록 화면에서 값이 비어 돌아왔음. 카드 개수만큼 같은 시군구를 동시에 조회해 공공데이터 API 동시 요청 제한에 걸린 것.<br><b>해결</b> 서버에서는 12개월치를 3개씩 끊어 호출해 평균을 내고(표본 300여 건), 앱에서는 결과가 아니라 <b>진행 중인 Promise</b>를 캐싱해 시군구당 한 번만 나가게 했음. 결과가 아니라 요청을 캐싱해야 이미 떠 있는 호출까지 합쳐진다.<br><b>표기</b> 개별 매물가로 오해되지 않도록 화면에 시군구 평균·표본 건수·집계 기간을 함께 표시.',
+        explain: '<b>전제</b> 빈집은 거래된 적이 없어 매물별 실거래가가 존재하지 않는다. 시군구 평균으로 대신했는데 한 달치만 조회하니 표본이 0~1건이었음.<br><b>연쇄</b> 기간을 늘리자 이번엔 목록 화면에서 값이 비었다. 카드 개수만큼 같은 시군구를 동시 조회해 공공데이터 API 동시 요청 제한에 걸린 것.<br><b>해결</b> 12개월치를 3개씩 끊어 호출하고(표본 300여 건), 앱에서는 결과가 아니라 <b>진행 중인 Promise</b>를 캐싱했음. 요청을 캐싱해야 이미 떠 있는 호출까지 합쳐진다. 화면에는 평균·표본 수·기간을 함께 적어 개별 매물가로 오해되지 않게 했다.',
         lang: 'typescript',
         code: `// src/api/tradePrice.ts
 // 목록 화면은 카드 개수만큼 동시에 호출한다. 결과를 캐싱하면 첫 응답이 오기 전의
@@ -1464,7 +1464,7 @@ for (let i = 0; i < yearMonths.length; i += CHUNK) {
       },
       {
         problem: '변경 요소 분석이 처음부터 계속 실패하고 있었는데, 폴백 때문에 아무도 몰랐음',
-        explain: '<b>증상</b> 화면에는 늘 그럴듯한 변경 항목이 떴는데, 사진이 달라져도 용도가 같으면 내용이 똑같았음.<br><b>원인</b> 분석 호출이 max_tokens를 보내고 있었는데 쓰던 모델은 이 파라미터를 받지 않아 호출이 매번 실패. 실패하면 조용히 용도별 기본 예시로 대체돼, 화면상으로는 정상으로 보였다. 즉 폴백이 버그를 덮고 있었음.<br><b>해결</b> max_completion_tokens로 교체(6건 전부 성공, 평균 13.7초). 여기서 멈추지 않고, 응답 스키마를 서버에서 검증하고 기본 예시가 쓰인 경우 화면에 배지로 표시하도록 바꿔 같은 종류의 실패가 다시 숨지 않게 했다.',
+        explain: '<b>증상</b> 화면에는 늘 그럴듯한 변경 항목이 떴는데, 사진이 달라져도 용도가 같으면 내용이 똑같았음.<br><b>원인</b> 쓰던 모델이 max_tokens를 받지 않아 분석 호출이 매번 실패했고, 실패하면 조용히 용도별 기본 예시로 대체됐다. 폴백이 버그를 덮고 있었던 것.<br><b>해결</b> max_completion_tokens로 교체(6건 전부 성공). 여기서 멈추지 않고 응답 스키마를 서버에서 검증하고, 기본 예시가 쓰이면 배지로 표시해 같은 실패가 다시 숨지 않게 했다.',
         lang: 'typescript',
         code: `// supabase/functions/ai-proxy/index.ts
 // gpt-5.6-terra는 max_tokens를 받지 않는다
@@ -1484,7 +1484,7 @@ const [changesFromAI, setChangesFromAI] = useState(false);`
       },
       {
         problem: 'React Native 앱에서는 어떤 방법으로도 외부 API 키를 감출 수 없음',
-        explain: '<b>제약</b> 키를 .env로 분리해도 react-native-dotenv는 빌드 시점에 값을 번들 코드로 인라인한다. 저장소에서 감추는 것과 배포물에서 감추는 것은 다른 문제이고, 클라이언트에 두는 한 후자는 성립하지 않는다.<br><b>선택</b> 외부 API 호출을 전부 Supabase Edge Function 뒤로 모으고 키는 서버 시크릿에만 뒀음. 분석 프롬프트도 같이 서버로 옮겨 클라이언트가 임의로 바꿀 수 없게 했다.<br><b>대가</b> 무료 플랜의 150초 실행 제한이 새로 생겨 quality: high가 통째로 끊겼음. medium으로 낮춰 한 장당 60.6초(실측 22건 100% 성공)를 확보하고, 대신 장 단위 병렬 호출로 5장 기준 약 300초 → 62~71초로 줄였다. 화질 한 단계보다 대기 시간이 사용자에게 더 크게 걸린다고 판단.<br><b>남은 것</b> high를 되찾으려면 요청 접수 → 백그라운드 생성 → 완료 후 조회하는 비동기 구조가 필요하다. 기간 안에는 하지 않기로 하고 한계로 남겨둠.',
+        explain: '<b>제약</b> .env로 분리해도 react-native-dotenv는 빌드 시점에 값을 번들에 인라인한다. 저장소에서 감추는 것과 배포물에서 감추는 것은 다른 문제이고, 클라이언트에 두는 한 후자는 성립하지 않는다.<br><b>선택</b> 외부 API 호출을 전부 Supabase Edge Function 뒤로 모으고 키는 서버 시크릿에만 뒀음.<br><b>대가</b> 무료 플랜 150초 제한에 걸려 quality: high가 끊겼다. medium으로 낮추고 장 단위 병렬 호출로 5장 기준 약 300초 → 62~71초. 화질 한 단계보다 대기 시간이 더 크게 걸린다고 봤다.',
         lang: 'typescript',
         code: `// supabase/functions/ai-proxy/index.ts — 키는 서버에만 존재한다
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -1528,98 +1528,123 @@ const generatedPairs = await Promise.all(
       '개인별 영양 분석 리포트 제공'
     ],
     did: [
-      'Firebase / SQLite 이중 저장 구조 설계',
-      'AI 프롬프트 개인화 설계',
+      'AI 챗봇 — 알레르기·건강정보·주간 섭취 이력을 프롬프트에 결합한 개인화 설계',
+      'AI 주간 식단 추천 — 7일 21끼 생성과 장보기 목록 산출',
+      '기상청 식중독 지수 — 발표 시각 역산과 기온·습도 기반 위험도 산출',
+      '영양분석 — 공공 영양 API 3종과 Firebase 원본 병렬 조회 통합',
       '백엔드 팀장으로서 협업 구조와 오류 대응 방향 결정'
     ],
     didCode: [
       {
-        label: 'Firestore(실시간 동기화)와 SQLite(로컬 캐시) 이중 저장 구조',
+        label: '모델에 넘길 맥락을 조립하는 부분 — 알레르기는 금지, 이번 주 먹은 것은 제외',
         lang: 'python',
-        code: `# services/meal_plan_service.py
-def save_meal_plan(user_id: str, plan: dict):
-    firestore_db.collection('meal_plans').document(user_id).set(plan)
+        code: `# pybo/views.py — chatbot_recommend()
+prompt  = "너는 한국 영양사 챗봇이야. 사용자 상황에 맞는 식단을 추천해줘.\\n"
+if health_text:     prompt += f"사용자 정보: {health_text}\\n"
+if allergy_text:    prompt += f"절대 포함 금지 (알레르기): {allergy_text}\\n"
+if ingredient_text: prompt += f"좋아하는 식재료 (최대한 활용): {ingredient_text}\\n"
 
-    with sqlite3.connect('local_cache.db') as conn:
-        conn.execute(
-            'INSERT OR REPLACE INTO meal_plans (user_id, plan_json, updated_at) VALUES (?, ?, ?)',
-            (user_id, json.dumps(plan), datetime.utcnow().isoformat())
-        )`
+if weekly_diet_text:
+    # 모델은 지난 대화도 섭취 이력도 모른다. 매 요청마다 다시 넣어줘야 한다.
+    prompt += f"이번 주에 이미 먹은 음식 목록: {weekly_diet_text}\\n"
+    prompt += "위 음식들은 절대 추천하지 마. 재료도 겹치지 않게 해줘.\\n"
+
+prompt += f"사용자 메시지: {user_message}\\n"`
       }
     ],
     trouble: [
       {
-        problem: 'Gemini API 503 오류 및 할당량 소진',
-        explain: '기능(챗봇/주간 식단 계획)별로 API 키를 분리해서 한 기능의 할당량 소진이 다른 기능까지 막지 않도록 격리하고, 503 응답에는 지수 백오프로 재시도하도록 안정화',
+        problem: '챗봇이 이번 주에 이미 먹은 메뉴를 또 추천함',
+        explain: '<b>원인</b> 모델은 지난 대화도 사용자 섭취 이력도 모른다. 어제 먹은 메뉴를 오늘 또 추천해도 모델 입장에서는 정상이다.<br><b>해결</b> 이번 주 월요일부터 오늘까지 먹은 음식을 Firebase에서 모아 추천 금지 목록으로 프롬프트에 넣었음. 알레르기·건강목표·선호 재료도 같은 방식으로 결합.<br><b>판단</b> 상태가 없는 모델에 상태를 주는 일은, 결국 매 요청마다 맥락을 다시 조립하는 것이라고 봤다.',
         lang: 'python',
-        code: `# services/gemini_service.py
-API_KEYS = {
-    'chatbot': settings.GEMINI_API_KEY_CHATBOT,
-    'meal_plan': settings.GEMINI_API_KEY_MEALPLAN,
-}
+        code: `# pybo/views.py — chatbot_recommend()
+# 이번 주 월요일부터 오늘까지 먹은 음식을 모은다
+start_of_week = today - timedelta(days=today.weekday())
+weekly_foods  = []
 
-def call_gemini(feature: str, prompt: str, retries: int = 3):
-    api_key = API_KEYS[feature]  # 기능별 키 분리로 할당량 소진 격리
-    for attempt in range(retries):
-        try:
-            return genai.generate_content(prompt, api_key=api_key)
-        except ServiceUnavailableError:  # 503
-            time.sleep(2 ** attempt)  # 지수 백오프
-    raise Exception('Gemini API 재시도 실패')`
+for i in range((today - start_of_week).days + 1):
+    day   = start_of_week + timedelta(days=i)
+    meals = get_diet_from_firebase(request.user.id, str(day))
+    for meal_type, items in meals.items():
+        for item in items:
+            name = item.get('name', '')
+            if name and name not in weekly_foods:
+                weekly_foods.append(name)
+
+# 503만 재시도한다. 401·400은 다시 보내도 같은 결과라 즉시 중단.
+for attempt in range(3):
+    response = requests.post(GEMINI_URL, json=payload, timeout=30)
+    if response.status_code != 503:
+        break
+    time.sleep(2)`
       },
       {
-        problem: '사용자가 입력한 알레르기 명칭이 공공데이터 표기와 달라 안전성 검증에서 누락되는 경우 발생',
-        explain: '"새우"/"갑각류" 같은 동의어 표기 차이로 매칭이 실패하는 문제. 동의어 사전을 만들고, 공공 식품 API로 이중 검증하도록 구성.',
+        problem: '장보기 목록을 모델에게 만들게 할 것인가, 코드로 만들 것인가',
+        explain: '<b>문제</b> 7일 21끼 재료를 사용자가 직접 추리면 기능이 반쪽이다. 그렇다고 중복 없는 장보기 목록까지 프롬프트로 시키면 모델이 빠뜨리거나 중복시키는데, 틀려도 확인할 방법이 없다.<br><b>선택</b> 모델에게는 날짜별 재료 배열까지만 받고, 중복 제거는 서버에서 처리했음.<br><b>판단</b> 답이 정해져 있는 작업은 모델에 맡기지 않는다. 검증할 수 없는 것을 시키면 틀린 채로 나간다.',
         lang: 'python',
-        code: `# services/allergen_service.py
-ALLERGEN_SYNONYMS = {
-    '새우': ['갑각류', '새우류', 'shrimp'],
-    '땅콩': ['견과류', '낙화생', 'peanut'],
-    # ...
-}
+        code: `# pybo/views.py — ai_weekly_planner()
+# 모델에게는 7일치 식단과 날짜별 재료 배열까지만 받는다
+weekly_plan = json.loads(text)
 
-def check_food_safety(user_allergens: list[str], food_name: str) -> bool:
-    expanded = {syn for a in user_allergens for syn in ALLERGEN_SYNONYMS.get(a, [a])}
+# 중복 제거는 서버에서. 답이 정해진 작업을 모델에 맡기면 틀려도 알 수 없다.
+all_ingredients = []
+for day in weekly_plan:
+    for ingredient in day.get('ingredients', []):
+        if ingredient not in all_ingredients:
+            all_ingredients.append(ingredient)
 
-    # 1차: 로컬 동의어 사전으로 우선 매칭
-    if any(term in food_name for term in expanded):
-        return False
-
-    # 2차: 공공 식품안전 API로 성분 이중 검증
-    ingredients = public_food_api.get_ingredients(food_name)
-    return not any(term in ingredients for term in expanded)`
+return JsonResponse({
+    'weekly_plan':   weekly_plan,
+    'shopping_list': all_ingredients,
+})`
       },
       {
-        problem: 'AI 챗봇 응답 생성이 여러 요청을 순차 처리하면서 사용자 대기 시간이 길어짐',
-        explain: 'ThreadPoolExecutor로 요청을 병렬 처리하도록 바꿔 대기 시간을 줄임.',
+        problem: '기상청 API가 계속 빈 값을 돌려줌',
+        explain: '<b>원인</b> 기상청은 하루 8번(02·05·08·11·14·17·20·23시)만 자료를 갱신한다. 현재 시각으로 요청하면 아직 발표되지 않은 데이터를 달라는 셈이라 빈 응답이 온다.<br><b>해결</b> 현재 시각에서 가장 최근 발표 시각을 역산해 base_time으로 넣었음.<br><b>함정</b> 자정~02시는 그날 발표분이 없어 전날 23시로 <b>날짜까지</b> 되돌려야 한다. 여기서 하루가 밀리면 새벽 내내 빈 화면이 된다.',
         lang: 'python',
-        code: `# services/chatbot_service.py
-from concurrent.futures import ThreadPoolExecutor
+        code: `# pybo/views.py — food_safety()
+# 기상청은 하루 8번만 자료를 갱신한다. 지금 시각으로 요청하면 빈 응답이 온다.
+if   hour >= 23: base_time = '2300'
+elif hour >= 20: base_time = '2000'
+elif hour >= 17: base_time = '1700'
+elif hour >= 14: base_time = '1400'
+# ... 1100, 0800, 0500, 0200
+base_date = now.strftime('%Y%m%d')
 
-executor = ThreadPoolExecutor(max_workers=4)
+if hour < 2:
+    # 자정~02시는 그날 발표분이 아직 없다. 전날 23시로 날짜까지 되돌린다.
+    base_time = '2300'
+    base_date = (now - timedelta(days=1)).strftime('%Y%m%d')
 
-def handle_batch_questions(questions: list[str]) -> list[str]:
-    futures = [executor.submit(call_gemini, 'chatbot', q) for q in questions]
-    return [f.result() for f in futures]`
+# 기온·습도를 뽑아 자체 위험도로 환산 (공식 식중독지수가 아닌 단순 지표)
+risk_score = (temp * 1.5) + (humidity * 0.5)`
       },
       {
-        problem: '같은 질문이 반복되는데도 매번 AI API를 새로 호출해 비용과 응답 시간이 낭비됨',
-        explain: '자주 반복되는 질문 유형(음식 안전성 확인 등)에 24시간 캐싱을 도입해 API 호출 횟수를 줄임.',
+        problem: '영양성분 API가 3개로 쪼개져 있고 표기법도 서로 다름',
+        explain: '<b>문제</b> 공공데이터 영양 API가 원재료·가공식품·품목별로 나뉘어 있고 파라미터명까지 다르다(food_nm vs foodNm). 한 곳만 조회하면 있는 식품도 없다고 나온다.<br><b>해결</b> 3개와 Firebase 원본을 병렬로 조회해 식품명 기준으로 합치고, 정확히 일치하는 항목을 앞으로 정렬했음.<br><b>함정</b> 사용자는 계란이라 치는데 DB에는 달걀로 들어 있다. 동의어 사전을 앞단에 둬 검색어를 먼저 바꿨다.',
         lang: 'python',
-        code: `# services/cache_service.py
-CACHE_TTL = 60 * 60 * 24  # 24시간
+        code: `# pybo/views.py — nutrition()
+# 사용자는 "계란"이라 치는데 공공DB에는 "달걀"로 들어 있다
+synonyms = {'계란': '달걀', '흰쌀밥': '쌀밥', '밥': '쌀밥',
+            '소고기': '쇠고기', '돼지고기': '돼지', '닭고기': '닭'}
+search_query = synonyms.get(query, query)
 
-def get_or_generate(cache_key: str, generate_fn):
-    cached = redis_client.get(cache_key)
-    if cached:
-        return json.loads(cached)
+# 같은 영양정보인데 API가 셋으로 나뉘고 파라미터명도 다르다
+apis = [
+    (settings.NUTRI_INFO_URL,     {'food_nm': search_query, ...}),
+    (settings.NUTRI_PROCESS_URL,  {'food_nm': search_query, ...}),
+    (settings.NUTRI_MATERIAL_URL, {'foodNm':  search_query, ...}),
+]
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    results = list(executor.map(lambda x: fetch_api(*x), apis))
 
-    result = generate_fn()
-    redis_client.setex(cache_key, CACHE_TTL, json.dumps(result))
-    return result`
+# 식품명 기준 중복 제거 후, 정확히 일치하는 항목을 앞으로
+exact    = [i for i in unique_items if i.get('foodNm') == search_query]
+contains = [i for i in unique_items if i.get('foodNm') != search_query]
+search_result = (exact + contains)[:20]`
       }
     ],
-    stack: ['Django', 'Firebase', 'Gemini API', 'Celery'],
+    stack: ['Django', 'Firebase', 'Gemini API', 'Celery', '공공데이터 API'],
     repo: 'https://github.com/jungnanna/CANIEAT'
   },
   {
@@ -1663,7 +1688,7 @@ async function loadLayout() {
     trouble: [
       {
         problem: '주문을 언제 DB에 쓸 것인가 — 결제 승인 전에 쓰면 안 되는 이유',
-        explain: '<b>문제</b> 주문서를 제출할 때 orders에 INSERT하고 그다음 결제창을 띄우면, 사용자가 결제창을 닫은 주문까지 status "결제완료"로 남는다. 결제 사실과 주문 기록이 따로 놀게 되고, 관리자 화면에서는 둘을 구분할 방법이 없다.<br><b>선택</b> 주문서 단계에서는 DB를 건드리지 않고 sessionStorage에 임시 보관만 한 뒤, 결제 승인 콜백(success.html)에 도달했을 때만 INSERT하도록 순서를 잡았음. 저장 직후 임시 데이터를 지워 새로고침으로 같은 주문이 두 번 들어가는 것도 함께 막았다.<br><b>남은 한계</b> 결제는 승인됐는데 그 직후 브라우저가 닫히면 주문이 유실된다. 저장 시점을 브라우저에 맡기는 구조 자체의 한계이고, 제대로 막으려면 결제사 서버 웹훅을 받아 서버에서 기록해야 한다.',
+        explain: '<b>문제</b> 주문서 제출 때 INSERT하고 결제창을 띄우면, 결제창을 닫은 주문까지 status "결제완료"로 남는다. 결제 사실과 주문 기록이 따로 놀고, 관리자 화면에서 둘을 구분할 방법이 없다.<br><b>선택</b> 주문서 단계에서는 DB를 건드리지 않고 sessionStorage에 임시 보관만 하다가, 결제 승인 콜백에 도달했을 때만 INSERT하도록 순서를 잡았음. 저장 직후 임시 데이터를 지워 새로고침 중복도 막았다.<br><b>한계</b> 승인 직후 브라우저가 닫히면 주문이 유실된다. 제대로 막으려면 결제사 웹훅을 받아 서버에서 기록해야 한다.',
         lang: 'javascript',
         code: `// orderform.html — 결제 요청 전에는 DB에 쓰지 않는다
 sessionStorage.setItem('pendingOrder', JSON.stringify({
@@ -1683,7 +1708,7 @@ if (pendingOrder) {
       },
       {
         problem: '주문 내역이 상품 테이블을 참조하면 과거 주문 금액이 흔들린다',
-        explain: '<b>문제</b> 주문 상세를 products와 조인해서 그리면 조인은 항상 <b>현재</b> 값을 가져온다. 관리자가 가격을 고치는 순간 이미 결제가 끝난 주문의 표시 금액까지 따라 움직이고, 상품을 삭제하면 주문 내역이 비어버린다.<br><b>판단</b> 주문 내역은 "지금 이 상품이 얼마인가"가 아니라 "그때 얼마에 샀는가"를 보여줘야 하는 기록이다. 상품과 주문은 수명이 다른 데이터라 참조로 묶으면 안 된다고 봤음.<br><b>선택</b> orders.items를 JSONB로 두고 주문 시점의 상품명·단가·수량을 그대로 복사해 저장. 정규화를 일부러 깬 선택이다.<br><b>대가</b> 상품 기준으로 판매량을 집계하려면 JSONB 안을 파고들어야 하고, 스냅샷이라 나중에 상품 정보가 바뀌어도 주문 쪽은 갱신되지 않는다. 후자는 의도한 것이고 전자는 감수한 쪽이다.',
+        explain: '<b>문제</b> 주문 상세를 products와 조인하면 조인은 항상 <b>현재</b> 값을 가져온다. 관리자가 가격을 고치면 이미 결제가 끝난 주문의 표시 금액까지 따라 움직이고, 상품을 삭제하면 주문 내역이 비어버린다.<br><b>선택</b> 주문 내역은 "지금 얼마인가"가 아니라 "그때 얼마에 샀는가"를 보여주는 기록이다. orders.items를 JSONB로 두고 주문 시점의 상품명·단가·수량을 복사해 저장했음. 정규화를 일부러 깬 선택이다.<br><b>대가</b> 상품 기준 판매량 집계는 JSONB 안을 파고들어야 한다. 감수한 쪽이다.',
         lang: 'sql',
         code: `CREATE TABLE IF NOT EXISTS public.orders (
     id           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -1699,7 +1724,7 @@ if (pendingOrder) {
       },
       {
         problem: '헤더를 공통 파일로 분리했더니 헤더 안의 스크립트가 아예 동작하지 않음',
-        explain: '<b>증상</b> 페이지마다 복붙돼 있던 헤더를 header.html 한 곳으로 모으고 fetch로 주입했는데, 마크업은 잘 붙는데 헤더 안에 있던 스크립트가 전혀 실행되지 않았음.<br><b>원인</b> innerHTML로 삽입된 script 태그는 브라우저가 실행하지 않는다. 파싱은 되지만 실행 대상으로 취급되지 않음.<br><b>해결</b> 삽입된 script를 찾아 같은 내용의 태그를 새로 만들어 document에 붙였다 떼는 방식으로 실행시킴.<br><b>두 번째 함정</b> 로그인/로그아웃 버튼이 header.html 안에 있어서, 로그인 상태를 반영하는 함수를 헤더 삽입 <b>이후</b>에 호출해야 요소를 찾을 수 있었음. 비동기로 붙는 마크업에 의존하는 코드는 실행 순서를 직접 보장해야 한다는 걸 여기서 알았음.',
+        explain: '<b>증상</b> 페이지마다 복붙돼 있던 헤더를 header.html로 모아 fetch로 주입했는데, 마크업은 붙는데 안에 있던 스크립트가 전혀 실행되지 않았음.<br><b>원인</b> innerHTML로 삽입된 script 태그는 브라우저가 실행하지 않는다. 파싱은 되지만 실행 대상으로 취급되지 않음.<br><b>해결</b> 삽입된 script를 찾아 같은 내용의 태그를 새로 만들어 붙였다 떼는 방식으로 실행시킴. 로그인 버튼도 header.html 안에 있어서 상태 반영 함수를 헤더 삽입 <b>이후</b>에 호출해야 했다 — 비동기로 붙는 마크업에 의존하는 코드는 실행 순서를 직접 보장해야 한다.',
         lang: 'javascript',
         code: `// common.js
 headerContainer.innerHTML = await headerRes.text();
@@ -1718,7 +1743,7 @@ updateLoginStatus();`
       },
       {
         problem: 'RLS를 걸고도 회원이 자기 등급을 admin으로 바꿀 수 있었음',
-        explain: '<b>상황</b> "본인 행만 수정 가능"이라는 정책을 넣은 뒤 권한을 점검하는 과정에서 빈 곳이 드러났다. RLS는 <b>어떤 행</b>을 건드리는지만 보고 <b>어떤 컬럼</b>을 바꾸는지는 보지 않는다. 본인 행이 맞으니 profiles.role을 admin으로 바꾸는 UPDATE도 정책을 그대로 통과했다.<br><b>같은 구멍이 하나 더</b> orders에도 "본인 주문 수정 가능" 정책이 있었다. 의도는 주문 취소만 열어주는 것이었는데, 실제로는 가격·상품구성·배송상태까지 바꿀 수 있었다.<br><b>대응</b> 컬럼 단위 제한은 RLS로 되지 않아 BEFORE INSERT/UPDATE 트리거로 막았다. 막는 방식은 두 가지로 나눴다 — role 변경처럼 조용히 이전 값으로 되돌려도 되는 것과, 주문 상태를 임의로 바꾸려는 시도처럼 예외를 던져 명시적으로 거부해야 하는 것.<br><b>정리하면</b> 정책을 한 겹 넣었다고 끝이 아니라, 그 정책이 무엇을 보지 않는지까지 확인해야 한다는 걸 알게 된 건이다.',
+        explain: '<b>발견</b> 정책을 넣은 뒤 점검하다 드러났다. RLS는 어떤 <b>행</b>인지만 보고 어떤 <b>컬럼</b>인지는 보지 않는다. 본인 행이 맞으니 role을 admin으로 바꾸는 UPDATE도 통과했음. orders도 같아서, 취소만 열어줬는데 가격·배송상태까지 바뀌었다.<br><b>해결</b> 컬럼 단위 제한은 RLS로 안 되므로 BEFORE UPDATE 트리거로 막았다. role은 조용히 원복, 주문 상태 조작은 예외를 던져 거부.<br><b>판단</b> 정책을 한 겹 넣었다고 끝이 아니라, 그 정책이 무엇을 보지 않는지까지 확인해야 했다.',
         lang: 'sql',
         code: `-- profiles의 "본인 행 UPDATE 허용" 정책은 행 단위 체크만 하기 때문에,
 -- 본인이 role을 'admin'으로 바꿔 셀프 승격하는 것까지 막아주지 않는다.
