@@ -713,6 +713,21 @@ footer {
   white-space: pre-wrap;
 }
 .trouble-empty { font-size: 0.88rem; color: var(--ink-soft); font-style: italic; }
+
+/* 시연 영상 탭: 구글 드라이브·유튜브를 16:9로 감싸 반응형으로 보여준다 */
+.modal-demo-item { margin-bottom: 30px; }
+.modal-demo-item:last-child { margin-bottom: 0; }
+.modal-demo-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1.5px solid var(--line);
+  overflow: hidden;
+}
+.modal-demo-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.modal-demo-label { font-size: 0.88rem; color: var(--ink-soft); margin-top: 12px; padding-left: 16px; border-left: 3px solid var(--accent); }
+.modal-demo-empty { font-size: 0.88rem; color: var(--ink-soft); font-style: italic; }
 @media (max-width: 760px) { .modal-content { padding: 30px 22px 40px; } }
 
 /* ============================================================
@@ -1002,9 +1017,10 @@ footer {
 
       <div class="modal-tabs">
         <button class="modal-tab-btn active" onclick="switchTab(0)">개요</button>
-        <button class="modal-tab-btn" onclick="switchTab(1)">주요 기능</button>
-        <button class="modal-tab-btn" onclick="switchTab(2)">기여 역할</button>
-        <button class="modal-tab-btn" onclick="switchTab(3)">TROUBLE SHOOTING</button>
+        <button class="modal-tab-btn" onclick="switchTab(1)">시연 영상</button>
+        <button class="modal-tab-btn" onclick="switchTab(2)">주요 기능</button>
+        <button class="modal-tab-btn" onclick="switchTab(3)">기여 역할</button>
+        <button class="modal-tab-btn" onclick="switchTab(4)">TROUBLE SHOOTING</button>
       </div>
 
       <div class="modal-tab-panel active" data-tab="0">
@@ -1016,15 +1032,19 @@ footer {
       </div>
 
       <div class="modal-tab-panel" data-tab="1">
-        <ul id="modalFeatures" class="modal-bullet-list"></ul>
+        <div id="modalDemo"></div>
       </div>
 
       <div class="modal-tab-panel" data-tab="2">
+        <ul id="modalFeatures" class="modal-bullet-list"></ul>
+      </div>
+
+      <div class="modal-tab-panel" data-tab="3">
         <ul id="modalDid" class="modal-bullet-list"></ul>
         <div id="modalDidCodeWrap"></div>
       </div>
 
-      <div class="modal-tab-panel" data-tab="3">
+      <div class="modal-tab-panel" data-tab="4">
         <div id="modalTrouble"></div>
       </div>
     </div>
@@ -1358,6 +1378,11 @@ public class CorsConfig {
     ],
     stack: ['Spring Boot', 'Java', 'React', 'TypeScript', 'PostgreSQL (pgvector)', 'AWS', 'OpenAI API'],
     repo: 'https://github.com/jungnanna/yeonyeon',
+    // 시연 영상. 구글 드라이브 "공유 → 링크 복사"로 나온 주소를 그대로 넣으면 된다
+    // (파일 공유 범위를 "링크가 있는 모든 사용자"로 열어둬야 재생된다).
+    // 유튜브 주소도 그대로 받는다. 여러 개면 배열에 계속 추가하면 됨.
+    //   demo: [{ url: 'https://drive.google.com/file/d/1AbC.../view?usp=sharing', label: '전체 시연' }],
+    demo: [],
     repoLabel: 'GitHub 저장소'
   },
   {
@@ -1511,7 +1536,8 @@ const generatedPairs = await Promise.all(
       }
     ],
     stack: ['React Native', 'TypeScript', 'Supabase', 'Edge Functions (Deno)', 'OpenAI API', '공공데이터 API'],
-    repo: 'https://github.com/jungnanna/ggabiteo'
+    repo: 'https://github.com/jungnanna/ggabiteo',
+    demo: []
   },
   {
     // index 2: 먹어도 돼?
@@ -1645,7 +1671,8 @@ search_result = (exact + contains)[:20]`
       }
     ],
     stack: ['Django', 'Firebase', 'Gemini API', 'Celery', '공공데이터 API'],
-    repo: 'https://github.com/jungnanna/CANIEAT'
+    repo: 'https://github.com/jungnanna/CANIEAT',
+    demo: []
   },
   {
     // index 3: 레디플레이
@@ -1772,7 +1799,8 @@ CREATE TRIGGER orders_protect_fields
       }
     ],
     stack: ['HTML5', 'JavaScript', 'Supabase', 'PostgreSQL (RLS)', 'Toss Payments API'],
-    repo: 'https://github.com/jungnanna/ready-play'
+    repo: 'https://github.com/jungnanna/ready-play',
+    demo: []
   }
 ];
 
@@ -1782,6 +1810,18 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+// 시연 영상 URL을 임베드용 주소로 바꾼다.
+// 구글 드라이브/유튜브에서 복사한 공유 링크를 그대로 붙여넣어도 되게 하려는 것.
+function toEmbedUrl(url) {
+  const drive = url.match(/drive\.google\.com\/file\/d\/([^/?]+)/);
+  if (drive) return `https://drive.google.com/file/d/${drive[1]}/preview`;
+
+  const youtube = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([^&?/]+)/);
+  if (youtube) return `https://www.youtube.com/embed/${youtube[1]}`;
+
+  return url;  // 이미 임베드 주소면 그대로 쓴다
 }
 
 function openProjectModal(index) {
@@ -1813,7 +1853,22 @@ function openProjectModal(index) {
     ? `<a href="${p.repo}" target="_blank">GitHub →</a>`
     : `<span class="repo-pending">${p.repoLabel || 'GitHub 업로드 예정'}</span>`;
 
-  // ---- 탭 1: 주요 기능 ----
+  // ---- 탭 1: 시연 영상 ----
+  const demoWrap = document.getElementById('modalDemo');
+  if (p.demo && p.demo.length > 0) {
+    demoWrap.innerHTML = p.demo.map(v => `
+      <div class="modal-demo-item">
+        <div class="modal-demo-frame">
+          <iframe src="${toEmbedUrl(v.url)}" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
+        </div>
+        ${v.label ? `<div class="modal-demo-label">${v.label}</div>` : ''}
+      </div>
+    `).join('');
+  } else {
+    demoWrap.innerHTML = `<div class="modal-demo-empty">시연 영상을 준비하고 있어요.</div>`;
+  }
+
+  // ---- 탭 2: 주요 기능 ----
   const featuresList = document.getElementById('modalFeatures');
   featuresList.innerHTML = '';
   p.features.forEach(item => {
@@ -1822,7 +1877,7 @@ function openProjectModal(index) {
     featuresList.appendChild(li);
   });
 
-  // ---- 탭 2: 기여 역할 ----
+  // ---- 탭 3: 기여 역할 ----
   const didList = document.getElementById('modalDid');
   didList.innerHTML = '';
   if (p.did && p.did.length > 0) {
@@ -1852,7 +1907,7 @@ function openProjectModal(index) {
     didCodeWrap.innerHTML = '';
   }
 
-  // ---- 탭 3: TROUBLE SHOOTING ----
+  // ---- 탭 4: TROUBLE SHOOTING ----
   const troubleWrap = document.getElementById('modalTrouble');
   if (p.trouble && p.trouble.length > 0) {
     troubleWrap.innerHTML = p.trouble.map((t, i) => `
@@ -1894,6 +1949,8 @@ function switchTab(index) {
 // 닫기
 function closeProjectModal() {
   document.getElementById('projectModal').classList.remove('active');
+  // iframe을 비워야 모달을 닫은 뒤에도 영상이 계속 재생되지 않는다
+  document.getElementById('modalDemo').innerHTML = '';
   document.body.style.overflow = '';
   document.documentElement.style.overflow = '';
 }
