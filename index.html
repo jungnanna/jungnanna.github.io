@@ -619,17 +619,6 @@ footer {
 .modal-tab-panel.active { display: block; animation: panel-in 0.35s ease both; }
 @keyframes panel-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.modal-photo-box {
-  border: 1.5px dashed var(--line);
-  background: #fff;
-  height: 190px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--ink-soft);
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  margin-bottom: 26px;
-}
-.modal-photo-box img { width: 100%; height: 100%; object-fit: cover; }
 .modal-desc { font-size: 0.94rem; margin-bottom: 28px; padding-left: 16px; border-left: 3px solid var(--accent); }
 .modal-subhead { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--ink-soft); margin-bottom: 12px; }
 .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
@@ -951,7 +940,6 @@ footer {
       </div>
 
       <div class="modal-tab-panel active" data-tab="0">
-        <div id="modalPhotoBox" class="modal-photo-box">사진 준비중</div>
         <p id="modalDesc" class="modal-desc"></p>
         <div class="modal-subhead">TECH STACK</div>
         <div id="modalTags" class="modal-tags"></div>
